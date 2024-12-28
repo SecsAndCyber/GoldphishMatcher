@@ -38,5 +38,4 @@ class Cracker extends FlxSprite
 	{
 		super.update(elapsed);
 	}
-
 }

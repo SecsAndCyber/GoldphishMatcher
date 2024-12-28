@@ -10,6 +10,7 @@ import flixel.math.FlxRandom;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import flixel.util.FlxSpriteUtil;
+import flixel.util.FlxTimer;
 import haxe.EntryPoint;
 
 private var END_COLOR_O:FlxColor = 0xE00400FF;
@@ -29,15 +30,58 @@ class Board extends FlxGroup
 	private var crackers:FlxTypedGroup<Cracker>;
 	private var selector:Selector;
 	public var rebuilding:Bool = false;
+	public var rebuild_speed:Float = .25;
+	public var moving:Bool = false;
+	private var moved:Bool = false;
 	private var rng:FlxRandom;
 
 	private var new_blocks:Array<Array<Cracker>>;
-	private var new_xs: Int;
-	private var new_ys: Int;
+	private var new_xs:Int;
+	private var new_ys:Int;
 	
 	private var has_match (get, default):Bool;
+	
+	public var score (get, set):Int;
+	private var _score:Int;
+	private var combo_score:Int;
+	private var combo_count:Int;
 
-	function get_has_match() {
+	private var points_per_fish:Int = 5;
+	private var cost_per_move:Int = -1;
+	private var moves:Int = 0;
+
+	private var loss:Bool = false;
+	private var closing:Bool = false;
+	private var matching:Bool = false;
+	private var dragged:Bool = false;
+
+	function get_score():Int
+	{
+		if(_score >= 0)
+			return _score;
+		return 0;
+	}
+
+	function set_score(newScore:Int):Int
+	{
+		if(newScore >= 0)
+			_score = newScore;
+		else
+			_score = 0;
+		Reg.Score = _score;
+		return _score;
+	}
+
+	function get_has_match() 
+	{
+		if(matching) return false;
+		if(moved) {
+			matching = true;
+			FlxTimer.wait(.25, () -> {
+				is_match();
+				matching = false;
+			});
+		}
 		for (c in 0...xs){
 			if(map[0][c]) return true;
 		}
@@ -45,7 +89,7 @@ class Board extends FlxGroup
 			if(map[1][r]) return true;
 		}		
 		return false;
-	  }
+	}
 
 	public function new(x_size:Int = 3, y_size:Int = 3, _location:FlxPoint, _width:Int, _height:Int)
 	{
@@ -53,6 +97,10 @@ class Board extends FlxGroup
 		background = new FlxSprite(_location.x, _location.y);
 		background.width=_width;
 		background.height=_height;
+		score = 0;
+		
+		combo_score = 0;
+		combo_count = 0;
 		
 		xs = x_size;
 		ys = y_size;
@@ -84,33 +132,52 @@ class Board extends FlxGroup
 		
 		selector = new Selector();
 		add(selector);
+		add(selector.toastText);
 	}
 
-	private function blocks_correct() {	
+	private function blocks_correct(speed:Float) 
+	{	
 		if(rebuilding) return false;
-		var moved = false;
+		var blocks_moved = false;
 		for (r in 0...xs){
 			for(c in 0...ys){
 				var block = blocks[r][c];
+				if(block == null) continue;
 				if(Math.abs(block.x - (background.x + r * col_width)) > 1)
 				{
-					block.x = FlxMath.lerp(block.x, background.x + r * col_width, .075);
-					moved = true;
+					block.x = FlxMath.lerp(block.x, background.x + r * col_width, speed);
+					blocks_moved = true;
 				}
 				if(Math.abs(block.y - (background.y + c * row_height)) > 1)
 				{
-					block.y = FlxMath.lerp(block.y, background.y + c * row_height, .075);
-					moved = true;
+					block.y = FlxMath.lerp(block.y, background.y + c * row_height, speed);
+					blocks_moved = true;
 				}
 			}
 		}
-		return !moved;
+		return !blocks_moved;
 	}
 
 	override public function update(elapsed:Float)
 	{
-		if(!blocks_correct()) return;
+		if(closing) return;
+		if(loss)
+		{
+			selector.toast("Failed");
+			closing = true;
+			FlxG.camera.fade(FlxColor.BLACK, 3, () -> {
+				FlxTimer.wait(2, () -> {
+					Reg.saveScore();
+					FlxG.switchState(new MenuState());
+				});
+			});
+			return;
+		}
+		if(!blocks_correct(rebuild_speed)) return;
+		moving = false;
 		if(!has_match){
+			combo_score = 0;
+			combo_count = 0;
 			if (FlxG.keys.pressed.SPACE)
 			{
 				// Space pressed, move board state
@@ -140,34 +207,7 @@ class Board extends FlxGroup
 					clicked = true;
 				}
 				if(clicked){
-					var _X = blocks[SourceX][SourceY].x;
-					var _Y = blocks[SourceX][SourceY].y;
-					var deltaX = SourceX - TargetX;
-					var deltaY = SourceY - TargetY;
-					var tmpBlockTarget = blocks[TargetX][TargetY];
-					while(tmpBlockTarget.x != _X || tmpBlockTarget.y != _Y)
-					{
-						var tmpBlockSource = blocks[SourceX][SourceY];
-						var tmpsourceX = tmpBlockSource.x;
-						var tmpsourceY = tmpBlockSource.y;
-						var tmptargetX = tmpBlockTarget.x;
-						var tmptargetY = tmpBlockTarget.y;
-						blocks[TargetX][TargetY] = tmpBlockSource;
-						blocks[TargetX][TargetY].setPosition(tmptargetX, tmptargetY);
-						blocks[SourceX][SourceY] = tmpBlockTarget;
-						blocks[SourceX][SourceY].setPosition(tmpsourceX, tmpsourceY);
-						SourceX = TargetX;
-						SourceY = TargetY;
-						TargetX = (xs + SourceX - deltaX) % xs;
-						TargetY = (ys + SourceY - deltaY) % ys;
-						tmpBlockTarget = blocks[TargetX][TargetY];
-					}
-					// selector.SelectionX += deltaX;
-					// selector.SelectionY += deltaY;
-					if(is_match())
-					{
-						trace("Match made!");
-					}
+					swap_spots(TargetX, TargetY, SourceX, SourceY);
 				}
 			}
 			else
@@ -190,36 +230,120 @@ class Board extends FlxGroup
 					selector.SelectionX += 1;
 				}
 			}
+			if (FlxG.mouse.justReleased)
+			{
+				dragged = false;
+				for (r in 0...xs){
+					for(c in 0...ys){
+						var block = blocks[r][c];
+						if(FlxG.mouse.overlaps(block) && !moving)
+						{
+							if((selector.SelectionX == r && Math.abs(selector.SelectionY - c)==1) || 
+								(selector.SelectionY == c && Math.abs(selector.SelectionX - r)==1))
+							{
+								var SourceX:Int = selector.SelectionX;
+								var SourceY:Int = selector.SelectionY;
+								var TargetX:Int = r;
+								var TargetY:Int = c;
+
+								swap_spots(SourceX, SourceY, TargetX, TargetY);
+							}
+							else
+							{
+								trace("click:",r,c);
+								selector.SelectionX = r;
+								selector.SelectionY = c;
+							}
+						}
+					}
+				}
+			}
+			if (FlxG.mouse.pressed && FlxG.mouse.justMoved && !dragged)
+			{
+				for (r in 0...xs){
+					for(c in 0...ys){
+						var block = blocks[r][c];
+						if(FlxG.mouse.overlaps(block) && !moving)
+						{
+							if((selector.SelectionX == r && Math.abs(selector.SelectionY - c)==1) || 
+								(selector.SelectionY == c && Math.abs(selector.SelectionX - r)==1))
+							{
+								dragged = true;
+								var SourceX:Int = r;
+								var SourceY:Int = c;
+								var TargetX:Int = selector.SelectionX;
+								var TargetY:Int = selector.SelectionY;
+
+								swap_spots(TargetX, TargetY,SourceX, SourceY);
+							}
+							else
+							{
+								selector.SelectionX = r;
+								selector.SelectionY = c;
+							}
+						}
+					}
+				}
+
+			}
 		}
 		else{	
-			draw_matched_lines();
+			handle_match_state();
 		}
 		super.update(elapsed);
 	}
 
-	public function draw_matched_lines():Void
+	public function swap_spots(SourceX:Int, SourceY:Int, TargetX:Int, TargetY:Int)
+	{
+		moving = true;
+		rebuild_speed = .25;
+		var _X = TargetX;
+		var _Y = TargetY;
+		var deltaX = SourceX - TargetX;
+		var deltaY = SourceY - TargetY;
+		var tmpBlockTarget:Cracker = blocks[TargetX][TargetY];
+		var tmpBlockSource:Cracker = blocks[SourceX][SourceY];
+		blocks[SourceX][SourceY] = null;
+		moves += 1;
+		score = score + cost_per_move;
+		var steps:Int = 0;
+		while(tmpBlockTarget != null)
+		{
+			blocks[TargetX][TargetY] = tmpBlockSource;
+			tmpBlockSource = tmpBlockTarget;
+			SourceX = TargetX;
+			SourceY = TargetY;
+			TargetX = (xs + SourceX - deltaX) % xs;
+			TargetY = (ys + SourceY - deltaY) % ys;
+			tmpBlockTarget = blocks[TargetX][TargetY];
+			steps += 1 ;
+		}
+		blocks[TargetX][TargetY] = tmpBlockSource;
+		moved = true;
+	}
+
+	public function handle_match_state():Void
 	{
 		if(rebuilding) return;
+		rebuild_speed = .05;
 		new_xs = xs;
 		for (c in 0...xs){
 			if(map[0][c])
 			{
-				#if debug
 				FlxSpriteUtil.drawLine(background,
-					blocks[c][0].getMidpoint().x - background.x, blocks[c][0].getMidpoint().y - background.y,
-					blocks[c][ys - 1].getMidpoint().x - background.x, blocks[c][ys - 1].getMidpoint().y - background.y, {
+					blocks[c][0].getMidpoint().x - background.x,		blocks[c][0].getMidpoint().y - background.y,
+					blocks[c][ys - 1].getMidpoint().x - background.x,	blocks[c][ys - 1].getMidpoint().y - background.y, {
 					thickness: 50,
 					color: 0xFFFFFFFF
 				});
-				#end
 				new_xs -= 1;
 			}
 			else
 			{
 				#if debug
 				FlxSpriteUtil.drawLine(background,
-					blocks[c][0].getMidpoint().x - background.x, blocks[c][0].getMidpoint().y - background.y,
-					blocks[c][ys - 1].getMidpoint().x - background.x, blocks[c][ys - 1].getMidpoint().y - background.y, {
+					blocks[c][0].getMidpoint().x - background.x,		blocks[c][0].getMidpoint().y - background.y,
+					blocks[c][ys - 1].getMidpoint().x - background.x,	blocks[c][ys - 1].getMidpoint().y - background.y, {
 					thickness: 10,
 					color: 0xFFB92323
 				});
@@ -230,22 +354,20 @@ class Board extends FlxGroup
 		for(r in 0...ys){
 			if(map[1][r])
 			{
-				#if debug
 				FlxSpriteUtil.drawLine(background,
-					blocks[0][r].getMidpoint().x - background.x,blocks[0][r].getMidpoint().y - background.y,
-					blocks[xs - 1][r].getMidpoint().x - background.x,blocks[xs - 1][r].getMidpoint().y - background.y, {
+					blocks[0][r].getMidpoint().x - background.x,		blocks[0][r].getMidpoint().y - background.y,
+					blocks[xs - 1][r].getMidpoint().x - background.x,	blocks[xs - 1][r].getMidpoint().y - background.y, {
 					thickness: 50,
 					color: 0xFFFFFFFF
 				});
-				#end
 				new_ys -= 1;
 			}
 			else
 			{
 				#if debug
 				FlxSpriteUtil.drawLine(background,
-					blocks[0][r].getMidpoint().x - background.x,blocks[0][r].getMidpoint().y - background.y,
-					blocks[xs - 1][r].getMidpoint().x - background.x,blocks[xs - 1][r].getMidpoint().y - background.y, {
+					blocks[0][r].getMidpoint().x - background.x,		blocks[0][r].getMidpoint().y - background.y,
+					blocks[xs - 1][r].getMidpoint().x - background.x,	blocks[xs - 1][r].getMidpoint().y - background.y, {
 					thickness: 10,
 					color: 0xFFB92323
 				});
@@ -254,35 +376,33 @@ class Board extends FlxGroup
 		}
 		rebuilding = true;
 		if(new_ys > 0 && new_xs > 0)
-		{
-			var selected_point = new FlxPoint(0,0);
-			trace("Rebuild as ",new_xs,new_ys);
-			new_blocks = new Array<Array<Cracker>>();
-			var new_r = 0;
-			for (r in 0...xs){
-				if(!map[0][r])
-				{
-					new_blocks[new_r] = new Array<Cracker>();
-				}
-				for(c in 0...ys){
-					var block = blocks[r][c];
-					if(map[1][c] || map[0][r])
-						crackers.remove(block);
-					else{
-						new_blocks[new_r].push(block);
-						if(selector.SelectionX == r && selector.SelectionY == c)
-						{
-							selected_point.x = new_r;
-							selected_point.y = new_blocks[new_r].length - 1;
+			FlxTimer.wait(.25, () ->{
+				var selected_point = new FlxPoint(selector.SelectionX,selector.SelectionY);
+				new_blocks = new Array<Array<Cracker>>();
+				var new_r = 0;
+				for (r in 0...xs){
+					if(!map[0][r])
+					{
+						new_blocks[new_r] = new Array<Cracker>();
+					}
+					for(c in 0...ys){
+						var block = blocks[r][c];
+						if(map[1][c] || map[0][r])
+							crackers.remove(block);
+						else{
+							new_blocks[new_r].push(block);
+							if(selector.SelectionX == r && selector.SelectionY == c)
+							{
+								selected_point.x = new_r;
+								selected_point.y = new_blocks[new_r].length - 1;
+							}
 						}
 					}
+					if(!map[0][r])
+					{
+						new_r += 1;
+					}
 				}
-				if(!map[0][r])
-				{
-					new_r += 1;
-				}
-			}
-			FlxG.camera.fade(FlxColor.BLACK, .3, () -> {
 				blocks = new_blocks;
 				xs = new_xs;
 				ys = new_ys;
@@ -294,17 +414,26 @@ class Board extends FlxGroup
 				selector.SelectionX = Std.int(selected_point.x);
 				selector.SelectionY = Std.int(selected_point.y);
 				FlxSpriteUtil.fill(background, FlxColor.GRAY);
-				FlxG.camera.fade(FlxColor.BLACK, .3, true, () -> {
-					rebuilding = false;
-				});
+				rebuilding = false;
+				
 			});
-			
-		}
 		else
 		{
-			Reg.Levels += 1;
-			Reg.saveScore();
-			FlxG.camera.fade(FlxColor.BLACK, 3, () -> {FlxG.switchState(new MenuState());});
+			FlxG.camera.fade(FlxColor.BLACK, 3, () -> {
+				FlxTimer.wait(.5, () -> {
+				
+				if(Reg.HiScore.exists(Reg.Levels))
+				{
+					if(Reg.HiScore[Reg.Levels] < Reg.Score)
+						Reg.HiScore[Reg.Levels] = Reg.Score;
+				}
+				else
+					Reg.HiScore[Reg.Levels] = Reg.Score;
+				
+				Reg.Levels += 1;
+				Reg.saveScore();
+				FlxG.switchState(new PlayState());});
+			});
 		}
 	}
 
@@ -312,48 +441,72 @@ class Board extends FlxGroup
 	{
 		var columns:Array<Int>	= [for (_ in 0...xs) 1];
 		var rows:Array<Int> 	= [for (_ in 0...ys) 1];
+		var cracker_counts = new Map<Int,Int>();
 		// Check rows
 		for (c in 0...xs){
 			for(r in 0...ys){
-				rows[r] *= blocks[c][r].Value;
-				columns[c] *= blocks[c][r].Value;
+				var cracker_value:Int = blocks[c][r].Value;
+				rows[r] *= cracker_value;
+				columns[c] *= cracker_value;
+				if(!cracker_counts.exists(cracker_value))
+				{
+					cracker_counts[cracker_value] = 1;
+				}
+				else
+				{
+					cracker_counts[cracker_value] += 1;
+				}
 			}
 		}
+
+		// Test for softlock
+		var _loss = Lambda.count(cracker_counts) == 4;
+		for (count in cracker_counts) {
+			if(count != 1) _loss = false;
+		}
+		loss = _loss;
+
 		return [rows, columns];
 	}
 
 	public function is_match():Bool
 	{
+		var sweep_up:Bool = true;
 		var game_state:Array<Array<Int>> = get_game_state();
 		var rows:Array<Int> = game_state[0];
 		var columns:Array<Int> = game_state[1];
+		var scored:Bool = false;
+		var points_gained:Int = 0;
 
 		for (i in 0...ys){
-			map[1][i] = rows[i] == Math.pow(blocks[0][i].Value, xs);
-			if(rows[i] == Math.pow(blocks[0][i].Value, xs))
+			if(xs > 1 || sweep_up)
+				map[1][i] = rows[i] == Math.pow(blocks[0][i].Value, xs);
+			if(xs > 1 && map[1][i])
 			{
-				trace("Row",i,"is matched");
-				map[1][i] = true;
-			}
-			else
-			{
-				trace("Row",i,"is not matched", rows[i], Math.pow(blocks[0][i].Value, xs));
+				points_gained += xs * points_per_fish;
+				trace("Points added ", xs * points_per_fish);
+				scored = true;
 			}
 		}
 
 		for (i in 0...xs){
-			map[0][i] = columns[i] == Math.pow(blocks[i][0].Value, ys);
-			if(columns[i] == Math.pow(blocks[i][0].Value, ys))
+			if(ys > 1 || sweep_up)
+				map[0][i] = columns[i] == Math.pow(blocks[i][0].Value, ys);
+			if(ys > 1 && map[0][i])
 			{
-				trace("Column",i,"is matched");
-				map[0][i] = true;
-			}
-			else
-			{
-				trace("Column",i,"is not matched", columns[i], Math.pow(blocks[i][0].Value, ys));
+				points_gained += ys * points_per_fish;
+				trace("Points added ", ys * points_per_fish);
+				scored = true;
 			}
 		}
-
-		return false;
+		if(points_gained > 0)
+		{
+			combo_count += 1;
+			combo_score += points_gained * combo_count;
+			score += combo_score;
+			selector.toast(Std.string(combo_score));
+		}
+		moved = false;
+		return scored;
 	}
 }

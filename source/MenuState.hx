@@ -9,48 +9,71 @@ import flixel.util.FlxColor;
 
 using flixel.util.FlxSpriteUtil;
 
-class MenuState extends FlxState
+class MenuState extends UiState
 {
-	private var title:FlxText;
-	private var copyright:FlxText;
 	private var play:FlxButton;
 	private var exit:FlxButton;
 	private var reset:FlxButton;
+	private var about:FlxButton;
+	private var reset_ready:Bool;
+	private var current_level:FlxText;
 
 	override public function create():Void
 	{
-		Reg.loadScore();
-		title = new FlxText(50,20, 0, "Goldphish\nMatch", 18);
-		title.alignment = CENTER;
-		title.screenCenter(X);
-		add(title);
+		super.create();
+		reset_ready = false;
 
-		play = new FlxButton(0,0,"Play", onClickPlay);
+		play = new FlxButton(0,0,"", onClickPlay);
+		play.loadGraphic("assets/UI/Play_Button.png");
+		play.scale.x = Reg.UI_Scale;
+		play.scale.y = Reg.UI_Scale;
+		play.updateHitbox();
 		play.x = (FlxG.width) / 2 -(play.width / 2);
 		play.y = (FlxG.height) / 2 -(play.height / 2);
 		add(play);
 		
-		exit = new FlxButton(0,0,"Exit", onClickExit);
+		exit = new FlxButton(0,0,"", onClickExit);
+		exit.loadGraphic("assets/UI/Exit_Button.png");
+		exit.scale.x = Reg.UI_Scale;
+		exit.scale.y = Reg.UI_Scale;
+		exit.updateHitbox();
 		exit.x = (FlxG.width) / 2 -(exit.width / 2);
-		exit.y = play.y + play.height + 5;
+		exit.y = play.y + play.height + exit.height / 2;
 		add(exit);
 		
-		copyright = new FlxText(50,FlxG.height-50,0, "Copyright 2024 S1air Coding", 8);
-		copyright.alignment = CENTER;
-		copyright.screenCenter(X);
-		add(copyright);
-		
-		reset = new FlxButton(0,0,"Reset", onClickReset);
-		reset.x = (FlxG.width) / 2 -(exit.width / 2);
-		reset.y = copyright.y - copyright.height - 10;
+		reset = new FlxButton(0,0,"", onClickReset);
+		reset.loadGraphic("assets/UI/Reset_Button.png");
+		reset.scale.x = Reg.UI_Scale;
+		reset.scale.y = Reg.UI_Scale;
+		reset.updateHitbox();
+		reset.x = (FlxG.width) / 2 -(reset.width / 2);
+		reset.y = copyright.y - copyright.height - reset.height / 2;
 		add(reset);
-
-		super.create();
+		
+		about = new FlxButton(0,0,"", onClickAbout);
+		about.loadGraphic("assets/UI/About_Button.png");
+		about.scale.x = Reg.UI_Scale;
+		about.scale.y = Reg.UI_Scale;
+		about.updateHitbox();
+		about.x = (FlxG.width) / 2 -(about.width / 2);
+		about.y = reset.y - reset.height - about.height / 2;
+		add(about);
+		
+		current_level = new FlxText(0,20 * Reg.UI_Scale, 0, "Level\n1", 64 * Reg.UI_Scale);
+		current_level.alignment = CENTER;
+		current_level.screenCenter(X);
+		current_level.y = title.y + title.height + current_level.height / 2;
+		add(current_level);
 	}
 
 	private function onClickPlay():Void
 	{
 		FlxG.camera.fade(FlxColor.BLACK, 0.33, () -> {FlxG.switchState(new PlayState());});
+	}
+
+	private function onClickAbout():Void
+	{
+		FlxG.camera.fade(FlxColor.BLACK, 0.33, () -> {FlxG.switchState(new AboutState());});
 	}
 
 	private function onClickExit():Void
@@ -65,15 +88,23 @@ class MenuState extends FlxState
 
 	private function onClickReset():Void
 	{
-		if(reset.text == "For sure?")
+		if(reset_ready)
 		{
 			Reg.clearSave();
 			Reg.loadScore();
-			reset.text = "Reset";
+			reset.visible = false;
 		}
 		else 
 		{
-			reset.text = "For sure?";
+			reset_ready = true;
+			reset.loadGraphic("assets/UI/Reset_Button2.png");
+			reset.updateHitbox();
 		}
+	}
+
+	override public function update(elapsed:Float):Void
+	{
+		super.update(elapsed);
+		current_level.text = "Level\n" + Reg.Levels;
 	}
 }
