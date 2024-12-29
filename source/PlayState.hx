@@ -10,7 +10,7 @@ import flixel.util.FlxColor;
 
 using flixel.util.FlxSpriteUtil;
 
-class PlayState extends FlxState
+class PlayState extends GameState
 {
 	public var board:Board;
 	private var done:Int;
@@ -23,14 +23,16 @@ class PlayState extends FlxState
 	override public function create():Void
 	{
 		super.create();
+
+		// Keep a reference to this state in Reg for global access.
+		Reg.PS = this;
+
 		FlxG.mouse.visible = !Reg.hideMouse;
+		
 		var background:FlxSprite;
 		background = new FlxSprite(0, 0);
 		background.loadGraphic("assets/GameBackground-1.png");
 		add(background);
-
-		// Keep a reference to this state in Reg for global access.
-		Reg.PS = this;
 		Reg.Score = 0;
 
 		var rows:Int = 4 + Std.int(Reg.Levels / 5);

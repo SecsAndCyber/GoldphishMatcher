@@ -73,7 +73,10 @@ class MenuState extends UiState
 
 	private function onClickAbout():Void
 	{
-		FlxG.camera.fade(FlxColor.BLACK, 0.33, () -> {FlxG.switchState(new AboutState());});
+		Reg.Sounds.menu(true);
+		FlxG.camera.fade(FlxColor.BLACK, 0.33, () -> {
+			FlxG.switchState(new AboutState());
+		});
 	}
 
 	private function onClickExit():Void
@@ -92,6 +95,7 @@ class MenuState extends UiState
 		{
 			Reg.clearSave();
 			Reg.loadScore();
+			Reg.Sounds.reset_stats();
 			reset.visible = false;
 		}
 		else 
@@ -106,5 +110,8 @@ class MenuState extends UiState
 	{
 		super.update(elapsed);
 		current_level.text = "Level\n" + Reg.Levels;
+		if (FlxG.keys.pressed.SPACE){
+			onClickPlay();
+		}
 	}
 }

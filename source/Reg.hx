@@ -1,15 +1,16 @@
 package;
 
 import flixel.FlxG;
-import flixel.util.FlxSave;
 import flixel.math.FlxPoint;
+import flixel.util.FlxSave;
 
 class Reg
 {
 	/**
 	* A reference to the active playstate. Lets you call Reg.PS globally to access the playstate.
 	*/
-	static public var PS:PlayState;
+	static public var PS:PlayState = null;
+	static public var Sounds:AudioController = null;
 
 	static public var Levels:Int = 0;
 	static public var Score:Int = 0;

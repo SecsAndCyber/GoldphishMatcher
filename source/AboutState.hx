@@ -55,6 +55,7 @@ class AboutState extends UiState
 		{
 			Reg.clearSave();
 			Reg.loadScore();
+			Reg.Sounds.reset_stats();
 			wipe.visible = false;
 			draw_scores();
 		}
@@ -90,6 +91,9 @@ class AboutState extends UiState
 
 	private function onClickReturn():Void
 	{
-		FlxG.camera.fade(FlxColor.BLACK, 0.33, () -> {FlxG.switchState(new MenuState());});
+		Reg.Sounds.menu(false);
+		FlxG.camera.fade(FlxColor.BLACK, 0.33, () -> {
+			FlxG.switchState(new MenuState());
+		});
 	}
 }

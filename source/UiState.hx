@@ -1,18 +1,19 @@
 package;
 
 import flixel.FlxG;
-import flixel.FlxState;
-import flixel.input.mouse.FlxMouse;
-import flixel.text.FlxText;
 import flixel.FlxSprite;
-import flixel.math.FlxMath;
+import flixel.FlxState;
 import flixel.group.FlxGroup;
+import flixel.input.mouse.FlxMouse;
+import flixel.math.FlxMath;
 import flixel.math.FlxRandom;
+import flixel.text.FlxText;
 import haxe.Timer;
+import openfl.ui.Mouse;
 
 using flixel.util.FlxSpriteUtil;
 
-class UiState extends FlxState
+class UiState extends GameState
 {
 	private var title:FlxText;
 	private var copyright:FlxText;
