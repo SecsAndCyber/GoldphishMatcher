@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project xmlns="http://lime.software/project/1.0.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://lime.software/project/1.0.2 http://lime.software/xsd/project-1.0.2.xsd">
+<project
+	xmlns="http://lime.openfl.org/project/1.0.4"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://lime.openfl.org/project/1.0.4 http://lime.openfl.org/xsd/project-1.0.4.xsd">
 
 	<!-- _________________________ Application Settings _________________________ -->
 	
@@ -39,6 +41,7 @@
 	
 	<!--In case you want to use the addons package-->
 	<haxelib name="flixel-addons" />
+	<haxelib name="uuid" version="2.4.1" />
 	
 	<!--In case you want to use the ui package-->
 	<!--<haxelib name="flixel-ui" />-->
@@ -86,5 +89,10 @@
 	
 	<!-- This is required to create a non-debug APK, but you should NOT store the alias or password in a public repo! -->
 	<!--<certificate path="GoldphishMatcher.keystore" alias="YOUR_ALIAS" password="YOUR_PASSWORD" if="android" unless="debug"/>-->
-	<template path="libs/AndroidManifest.xml" rename="AndroidManifest.xml" if="android"/>
+	<template path="libs/AndroidManifest.xml" rename="app/src/main/AndroidManifest.xml" if="android"/>
+	
+	<template path="libs/app.build.gradle" rename="app/build.gradle" if="android"/>
+	<template path="libs/build.gradle" rename="build.gradle" if="android"/>
+	<template path="libs/gradle.properties" rename="gradle.properties" if="android"/>
+	<template path="libs/gradle-wrapper.properties" rename="gradle\wrapper\gradle-wrapper.properties" if="android"/>
 </project>
