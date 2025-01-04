@@ -26,7 +26,9 @@ class UiState extends GameState
 		super.create();
 		Reg.loadScore();
 		fish_rng = new FlxRandom(Reg.Levels);
+		#if !android
 		FlxG.mouse.visible = !Reg.hideMouse;
+		#end
 
 		fish = new Array<FlxSprite>();
 		for (index in 0...Reg.Levels)
@@ -39,13 +41,15 @@ class UiState extends GameState
 			add(fish[index]);
 		}
 
-		title = new FlxText(0,20 * Reg.UI_Scale, 0, "Goldphish\nMatch", 64 * Reg.UI_Scale);
+		title = new FlxText(0, 20 * Reg.UI_Scale, 0, "Goldphish\nMatch", 96 * Reg.UI_Scale);
 		title.alignment = CENTER;
+		title.font = "monsterrat";
 		title.screenCenter(X);
 		add(title);
 		
-		copyright = new FlxText(50,FlxG.height-50*Reg.UI_Scale,0, "Copyright 2024 S1air Coding", 36 * Reg.UI_Scale);
+		copyright = new FlxText(50, FlxG.height - 50 * Reg.UI_Scale, 0, "Copyright 2025 S1air Coding", 36 * Reg.UI_Scale);
 		copyright.alignment = CENTER;
+		copyright.font = "monsterrat";
 		copyright.screenCenter(X);
 		add(copyright);
 	}

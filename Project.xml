@@ -6,7 +6,7 @@
 
 	<!-- _________________________ Application Settings _________________________ -->
 	
-	<app title="Goldphish Matcher" file="GoldphishMatcher" main="Main" version="1.0.0" company="S1air Coding" />
+	<app title="Goldphish Matcher" file="GoldphishMatcher" main="Main" version="1.0.1" company="S1air Coding" package="com.S1airCoding.GoldphishMatcher"/>
 	
 	<!--The flixel preloader is not accurate in Chrome. You can use it regularly if you embed the swf into a html file
 		or you can set the actual size of your file manually at "FlxPreloaderBase-onUpdate-bytesTotal"!-->
@@ -89,6 +89,7 @@
 	
 	<!-- This is required to create a non-debug APK, but you should NOT store the alias or password in a public repo! -->
 	<!--<certificate path="GoldphishMatcher.keystore" alias="YOUR_ALIAS" password="YOUR_PASSWORD" if="android" unless="debug"/>-->
+	
 	<template path="libs/AndroidManifest.xml" rename="app/src/main/AndroidManifest.xml" if="android"/>
 	
 	<template path="libs/app.build.gradle" rename="app/build.gradle" if="android"/>

@@ -21,9 +21,11 @@ class GameState extends FlxState
 	{
 		super.update(elapsed);
 
+		#if !android
 		if(FlxG.mouse.justReleased)
 		{
 			Reg.Sounds.click();
 		}
+		#end
 	}
 }

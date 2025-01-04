@@ -12,6 +12,7 @@ class AudioController extends FlxBasic
 	private var col:FlxSound;
 	private var points:FlxSound;
 	private var lost:FlxSound;
+	private var won:FlxSound;
 	private var combo_1:FlxSound;
 	private var combo_2:FlxSound;
 	private var combo_3:FlxSound;
@@ -37,6 +38,7 @@ class AudioController extends FlxBasic
 		col = FlxG.sound.load("assets/Audio/rotate_col.mp3");
 		points = FlxG.sound.load("assets/Audio/basic_score.wav");
 		lost = FlxG.sound.load("assets/Audio/level_lost.wav");
+		won = FlxG.sound.load("assets/Audio/level_won.wav");
 		combo_1 = FlxG.sound.load("assets/Audio/combo_score_1.wav");
 		combo_2 = FlxG.sound.load("assets/Audio/combo_score_2.wav");
 		combo_3 = FlxG.sound.load("assets/Audio/combo_score_3.wav");
@@ -51,30 +53,42 @@ class AudioController extends FlxBasic
 
 	public function click(){
 		for (snd in actions) if(snd.playing) return;
+		cursor_click.volume = Reg.SFXVolume;
 		cursor_click.play(true);
 	}
 
 	public function reset_stats(){
 		if(cursor_click.playing)
 			cursor_click.stop();
+		reset.volume = Reg.SFXVolume;
 		reset.play(true);
 	}
 
 	public function row_shift(){
 		if(cursor_click.playing)
 			cursor_click.stop();
+		row.volume = Reg.SFXVolume;
 		row.play(true);
 	}
 
 	public function level_lost(){
 		if(cursor_click.playing)
 			cursor_click.stop();
+		lost.volume = Reg.SFXVolume;
 		lost.play(true);
+	}
+
+	public function level_won()
+	{
+		won.volume = Reg.SFXVolume;
+		won.play(true);
 	}
 
 	public function menu(open:Bool){
 		if(cursor_click.playing)
 			cursor_click.stop();
+		menu_open.volume = Reg.SFXVolume;
+		menu_close.volume = Reg.SFXVolume;
 		if(open)
 			menu_open.play(true);
 		else
@@ -84,6 +98,7 @@ class AudioController extends FlxBasic
 	public function col_shift(){
 		if(cursor_click.playing)
 			cursor_click.stop();
+		col.volume = Reg.SFXVolume;
 		col.play(true);
 	}
 
@@ -144,7 +159,7 @@ class AudioController extends FlxBasic
 			playing_level = FlxG.sound.load("assets/Audio/Background/UpbeatMelodic1.mp3");
 		}
 		playing_level.looped = true;
-		playing_level.volume = .125;
+		playing_level.volume = Reg.MusicVolume;
 		playing_level.play(bg_time);
 	}
 }

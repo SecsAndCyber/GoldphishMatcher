@@ -14,6 +14,6 @@ class Main extends Sprite
 		{
 			Reg.hideMouse = true;
 		}
-		addChild(new FlxGame(1600, 2400, SplashState));
+		addChild(new FlxGame(1600, 2400, MenuState));
 	}
 }

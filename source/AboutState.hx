@@ -20,7 +20,8 @@ class AboutState extends UiState
 	{
 		super.create();
 		reset_ready = false;
-		title.text = "Created for\nHaxe Jam 2024";
+		title.text = "Hi Scores";
+		title.updateHitbox();
 		title.screenCenter(X);
 
 		hi_score = new FlxText(0,title.y + title.height + 10 * Reg.UI_Scale, 0, "", 36 * Reg.UI_Scale);
@@ -30,19 +31,16 @@ class AboutState extends UiState
 		hi_score.screenCenter(X);
 		add(hi_score);
 
-		wipe = new FlxButton(0,0,"", onClickWipe);
-		wipe.loadGraphic("assets/UI/Wipe_Button.png");
-		wipe.scale.x = Reg.UI_Scale;
-		wipe.scale.y = Reg.UI_Scale;
-		wipe.updateHitbox();
+		wipe = new FlxButton(0, 0, onClickWipe);
+		wipe.loadGraphic("assets/UI/Wipe_Button_Frames.png", true, 298);
 		wipe.x = (FlxG.width) / 2 -(wipe.width / 2);
 		wipe.y = copyright.y - copyright.height - wipe.height / 2;
 		add(wipe);
 		
-		return_button = new FlxButton(0,0,"", onClickReturn);
-		return_button.loadGraphic("assets/UI/Return_Button.png");
-		return_button.scale.x = Reg.UI_Scale * 1.5;
-		return_button.scale.y = Reg.UI_Scale * 1.5;
+		return_button = new FlxButton(0, 0, onClickReturn);
+		return_button.loadGraphic("assets/UI/Return_Button_Frames.png", true, 298);
+		return_button.scale.x *= 1.5;
+		return_button.scale.y *= 1.5;
 		return_button.updateHitbox();
 		return_button.x = (FlxG.width) / 2 -(return_button.width / 2);
 		return_button.y = wipe.y - return_button.height;
@@ -53,7 +51,7 @@ class AboutState extends UiState
 	{
 		if(reset_ready)
 		{
-			Reg.clearSave();
+			Reg.clearSave(true);
 			Reg.loadScore();
 			Reg.Sounds.reset_stats();
 			wipe.visible = false;
@@ -69,7 +67,7 @@ class AboutState extends UiState
 
 	private function draw_scores():Void
 	{
-		hi_score.text = "Hi Scores\n";
+		hi_score.text = "";
 		for (k in 0...16)
 			if(k > 0)
 			{

@@ -12,14 +12,12 @@ using flixel.util.FlxSpriteUtil;
 class SplashState extends UiState
 {
 	private var play:FlxButton;
-	private var exit:FlxButton;
-	private var reset:FlxButton;
 
 	override public function create():Void
 	{
 		super.create();
 
-		play = new FlxButton(0,0,"", onClickPlay);
+		play = new FlxButton(0, 0, onClickPlay);
 		play.loadGraphic("assets/HaxeJam2024-logo-without-text.png");
 		play.updateHitbox();
 		play.x = (FlxG.width) / 2 -(play.width / 2);

@@ -54,6 +54,7 @@ class Selector extends FlxSprite
 		toastText.x = (FlxG.width) / 2 -(toastText.width / 2);
 		toastText.y = y;
 		toastText.visible = true;
+		visible = false;
 	}
 
 	override public function update(elapsed:Float)
@@ -65,8 +66,10 @@ class Selector extends FlxSprite
 			if(toastText.y < -0.75 * toastText.height)
 			{
 				toastText.visible = false;
+				visible = true;
 			}
 		}
+		#if !android
 		if (FlxG.keys.pressed.SPACE)
 		{
 			color = 0x0000FF;
@@ -75,6 +78,7 @@ class Selector extends FlxSprite
 		{
 			color = 0xFF0000;
 		}
+		#end
 
 		if(Reg.PS == null || Reg.PS.board == null || Reg.PS.board.moving || Reg.PS.board.rebuilding) {
 			color = 0xFFFFFF;

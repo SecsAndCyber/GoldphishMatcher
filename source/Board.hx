@@ -24,7 +24,7 @@ class Board extends FlxGroup
 	private var row_height: Int;
 	private var col_width: Int;
 
-	private var background:FlxSprite;
+	private var matching_space:FlxSprite;
 	private var map:Array<Array<Bool>>;
 	public var blocks:Array<Array<Cracker>>;
 	private var crackers:FlxTypedGroup<Cracker>;
@@ -51,7 +51,6 @@ class Board extends FlxGroup
 	private var moves:Int = 0;
 	private var end_only:Bool = false;
 
-	private var loss:Bool = false;
 	private var closing:Bool = false;
 	private var matching:Bool = false;
 	private var dragged:Bool = false;
@@ -99,9 +98,10 @@ class Board extends FlxGroup
 	public function new(x_size:Int = 3, y_size:Int = 3, _location:FlxPoint, _width:Int, _height:Int)
 	{
 		super();
-		background = new FlxSprite(_location.x, _location.y);
-		background.width=_width;
-		background.height=_height;
+		Reg.HiScoreSet = false;
+		matching_space = new FlxSprite(_location.x, _location.y);
+		matching_space.width = _width;
+		matching_space.height = _height;
 		score = 0;
 		
 		combo_score = 0;
@@ -109,27 +109,25 @@ class Board extends FlxGroup
 		
 		xs = x_size;
 		ys = y_size;
+		map = [[for (_ in 0...xs) false], [for (_ in 0...ys) false]];
 		
 		row_height = Std.int(_height / ys);
 		col_width = Std.int(_width / xs);
 
-		background.makeGraphic(_width, _height, FlxColor.GRAY);
-		add(background);
+		matching_space.makeGraphic(_width, _height, FlxColor.TRANSPARENT);
+		FlxSpriteUtil.fill(matching_space, FlxColor.TRANSPARENT);
+		add(matching_space);
 
 		crackers = new FlxTypedGroup<Cracker>();
 		add(crackers);
 		rng = new FlxRandom(Reg.Levels);
 
-		map = [
-			[for(_ in 0...xs) false],
-			[for(_ in 0...ys) false]
-		];
 
 		blocks = new Array<Array<Cracker>>();
 		for (r in 0...xs){
 			blocks[r] = new Array<Cracker>();
 			for(c in 0...ys){
-				var block = new Cracker(rng.int(0, Cracker.Max), background.x + r * col_width,background.y + c * row_height);
+				var block = new Cracker(rng.int(0, Cracker.Max), matching_space.x + r * col_width, matching_space.y + c * row_height);
 				crackers.add(block);
 				blocks[r][c]=block;
 			}
@@ -148,30 +146,34 @@ class Board extends FlxGroup
 			for(c in 0...ys){
 				var block = blocks[r][c];
 				if(block == null) continue;
-				if(Math.abs(block.x - (background.x + r * col_width)) > 1)
+				if (Math.abs(block.x - (matching_space.x + r * col_width)) > 1)
 				{
-					block.x = FlxMath.lerp(block.x, background.x + r * col_width, speed);
+					block.x = FlxMath.lerp(block.x, matching_space.x + r * col_width, speed);
 					blocks_moved = true;
 				}
 				else
-					block.x = background.x + r * col_width;
-				if(Math.abs(block.y - (background.y + c * row_height)) > 1)
+					block.x = matching_space.x + r * col_width;
+				if (Math.abs(block.y - (matching_space.y + c * row_height)) > 1)
 				{
-					block.y = FlxMath.lerp(block.y, background.y + c * row_height, speed);
+					block.y = FlxMath.lerp(block.y, matching_space.y + c * row_height, speed);
 					blocks_moved = true;
 				}
 				else
-					block.y = background.y + c * row_height;
+					block.y = matching_space.y + c * row_height;
 			}
 		}
+		if (blocks_moved)
+			matching_space.visible = false;
 		return !blocks_moved;
 	}
 
 	override public function update(elapsed:Float)
 	{
 		if(closing) return;
-		if(loss)
+		if (Reg.Loss)
 		{
+			Reg.HiScoreSet = false;
+			matching_space.loadGraphic("assets/GameBackground-5.png");
 			selector.toast("Failed");
 			Reg.Sounds.level_lost();
 			closing = true;
@@ -188,8 +190,11 @@ class Board extends FlxGroup
 		super.update(elapsed);
 		moving = false;
 		if(!has_match && !moved){
+			matching_space.visible = false;
+			selector.visible = true;
 			combo_score = 0;
 			combo_count = 0;
+			#if !android
 			if (FlxG.keys.pressed.SPACE)
 			{
 				// Space pressed, move board state
@@ -297,8 +302,11 @@ class Board extends FlxGroup
 				}
 
 			}
+			#end
 		}
-		if(has_match){	
+		if (has_match)
+		{
+			matching_space.visible = true;
 			handle_match_state();
 		}
 	}
@@ -343,9 +351,8 @@ class Board extends FlxGroup
 		for (c in 0...xs){
 			if(map[0][c])
 			{
-				FlxSpriteUtil.drawLine(background,
-					blocks[c][0].getMidpoint().x - background.x,		blocks[c][0].getMidpoint().y - background.y,
-					blocks[c][ys - 1].getMidpoint().x - background.x,	blocks[c][ys - 1].getMidpoint().y - background.y, {
+				FlxSpriteUtil.drawLine(matching_space, blocks[c][0].getMidpoint().x - matching_space.x, blocks[c][0].getMidpoint().y - matching_space.y,
+					blocks[c][ys - 1].getMidpoint().x - matching_space.x, blocks[c][ys - 1].getMidpoint().y - matching_space.y, {
 					thickness: 50,
 					color: 0xFFFFFFFF
 				});
@@ -354,9 +361,8 @@ class Board extends FlxGroup
 			else
 			{
 				#if debug
-				FlxSpriteUtil.drawLine(background,
-					blocks[c][0].getMidpoint().x - background.x,		blocks[c][0].getMidpoint().y - background.y,
-					blocks[c][ys - 1].getMidpoint().x - background.x,	blocks[c][ys - 1].getMidpoint().y - background.y, {
+				FlxSpriteUtil.drawLine(matching_space, blocks[c][0].getMidpoint().x - matching_space.x, blocks[c][0].getMidpoint().y - matching_space.y,
+					blocks[c][ys - 1].getMidpoint().x - matching_space.x, blocks[c][ys - 1].getMidpoint().y - matching_space.y, {
 					thickness: 10,
 					color: 0xFFB92323
 				});
@@ -367,9 +373,8 @@ class Board extends FlxGroup
 		for(r in 0...ys){
 			if(map[1][r])
 			{
-				FlxSpriteUtil.drawLine(background,
-					blocks[0][r].getMidpoint().x - background.x,		blocks[0][r].getMidpoint().y - background.y,
-					blocks[xs - 1][r].getMidpoint().x - background.x,	blocks[xs - 1][r].getMidpoint().y - background.y, {
+				FlxSpriteUtil.drawLine(matching_space, blocks[0][r].getMidpoint().x - matching_space.x, blocks[0][r].getMidpoint().y - matching_space.y,
+					blocks[xs - 1][r].getMidpoint().x - matching_space.x, blocks[xs - 1][r].getMidpoint().y - matching_space.y, {
 					thickness: 50,
 					color: 0xFFFFFFFF
 				});
@@ -378,9 +383,8 @@ class Board extends FlxGroup
 			else
 			{
 				#if debug
-				FlxSpriteUtil.drawLine(background,
-					blocks[0][r].getMidpoint().x - background.x,		blocks[0][r].getMidpoint().y - background.y,
-					blocks[xs - 1][r].getMidpoint().x - background.x,	blocks[xs - 1][r].getMidpoint().y - background.y, {
+				FlxSpriteUtil.drawLine(matching_space, blocks[0][r].getMidpoint().x - matching_space.x, blocks[0][r].getMidpoint().y - matching_space.y,
+					blocks[xs - 1][r].getMidpoint().x - matching_space.x, blocks[xs - 1][r].getMidpoint().y - matching_space.y, {
 					thickness: 10,
 					color: 0xFFB92323
 				});
@@ -391,7 +395,7 @@ class Board extends FlxGroup
 		{
 			var rebuild_delay = .2;
 			if(end_only)
-				rebuild_delay = .75;
+				rebuild_delay = .5;
 			FlxTimer.wait(rebuild_delay, () ->{ // Rebuilding board
 				var selected_point = new FlxPoint(selector.SelectionX,selector.SelectionY);
 				new_blocks = new Array<Array<Cracker>>();
@@ -430,27 +434,33 @@ class Board extends FlxGroup
 				selector.blocks = blocks;
 				selector.SelectionX = Std.int(selected_point.x);
 				selector.SelectionY = Std.int(selected_point.y);
-				FlxSpriteUtil.fill(background, FlxColor.GRAY);
+				FlxSpriteUtil.fill(matching_space, FlxColor.TRANSPARENT);
 				rebuilding = false;
 				moved = true;
 			});
 		}
 		else
 		{
-			FlxG.camera.fade(FlxColor.BLACK, 3, () -> {
-				FlxTimer.wait(.5, () -> { // Moving to next level
-				
+			FlxSpriteUtil.fill(matching_space, FlxColor.TRANSPARENT);
+			FlxTimer.wait(.5, () ->
+			{ // Moving to next level
 				if(Reg.HiScore.exists(Reg.Levels))
 				{
-					if(Reg.HiScore[Reg.Levels] < Reg.Score)
+					if (Reg.HiScore[Reg.Levels] < Reg.Score)
+					{
+						Reg.HiScoreSet = true;
 						Reg.HiScore[Reg.Levels] = Reg.Score;
+					}
 				}
 				else
+				{
+					Reg.HiScoreSet = true;
 					Reg.HiScore[Reg.Levels] = Reg.Score;
-				
-				Reg.Levels += 1;
+				}
+
 				Reg.saveScore();
-				FlxG.switchState(new PlayState());});
+				Reg.PS.remove(this);
+				Reg.PS.popup();
 			});
 		}
 	}
@@ -482,7 +492,7 @@ class Board extends FlxGroup
 		for (count in cracker_counts) {
 			if(count != 1) _loss = false;
 		}
-		loss = _loss;
+		Reg.Loss = _loss;
 
 		return [rows, columns];
 	}

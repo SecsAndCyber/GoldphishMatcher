@@ -2,7 +2,6 @@ package;
 
 import flixel.FlxG;
 import flixel.math.FlxPoint;
-import flixel.util.FlxSave;
 
 class Reg
 {
@@ -11,12 +10,17 @@ class Reg
 	*/
 	static public var PS:PlayState = null;
 	static public var Sounds:AudioController = null;
+	static public var GameId:String = null;
 
 	static public var Levels:Int = 0;
 	static public var Score:Int = 0;
 	static public var HiScore:Map<Int,Int> = [0=>0];
+	static public var HiScoreSet:Bool = false;
+	static public var Loss:Bool = false;
 
 	static public var UI_Scale:Int = 2;
+	static public var MusicVolume:Float = .125;
+	static public var SFXVolume:Float = .75;
 	static public var hideMouse:Bool = false;
 	
 	static public var fish_speed:Float = 50.0;
@@ -28,8 +32,10 @@ class Reg
 	 static public function saveScore():Void
 	{
 		// Have to do this in order for saves to work on native targets!
-		if ((FlxG.save.data.Levels == null) || (FlxG.save.data.Levels < Reg.Levels))
+		if ((FlxG.save.data.Levels == null) || (Reg.Levels > 0))
 			FlxG.save.data.Levels = Reg.Levels;
+		if ((FlxG.save.data.GameId == null) || (FlxG.save.data.GameId != Reg.GameId))
+			FlxG.save.data.GameId = Reg.GameId;
 		FlxG.save.data.HiScore = Reg.HiScore;
 
 		FlxG.save.flush();
@@ -47,6 +53,11 @@ class Reg
 		if ((FlxG.save.data != null) && (FlxG.save.data.Levels != null))
 			Reg.Levels = FlxG.save.data.Levels;
 
+		if ((FlxG.save.data != null) && (FlxG.save.data.GameId != null))
+			Reg.GameId = FlxG.save.data.GameId;
+		else
+			Reg.GameId = Uuid.v4();
+
 		if ((FlxG.save.data != null) && (FlxG.save.data.HiScore != null))
 			Reg.HiScore = FlxG.save.data.HiScore;
 		return 0;
@@ -55,11 +66,13 @@ class Reg
 	/**
 		* Wipe save data.
 		*/
-	static public function clearSave():Void
+	static public function clearSave(fullClear:Bool = false):Void
 	{
 		trace("Clearing saved state");
-		FlxG.save.erase();
-		FlxG.save.data.HiScore = Reg.HiScore;
-		FlxG.save.flush();
+		Reg.Levels = 1;
+		if (fullClear)
+			Reg.HiScore = [0 => 0];
+		Reg.Score = 0;
+		saveScore();
 	}
 }
