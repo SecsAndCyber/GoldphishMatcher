@@ -13,10 +13,12 @@ class Reg
 	static public var GameId:String = null;
 
 	static public var Levels:Int = 0;
+	static public var RunningScore:Int = 0;
 	static public var Score:Int = 0;
 	static public var HiScore:Map<Int,Int> = [0=>0];
 	static public var HiScoreSet:Bool = false;
 	static public var Loss:Bool = false;
+	static public var Done:Bool = false;
 
 	static public var UI_Scale:Int = 2;
 	static public var MusicVolume:Float = .125;
@@ -34,6 +36,8 @@ class Reg
 		// Have to do this in order for saves to work on native targets!
 		if ((FlxG.save.data.Levels == null) || (Reg.Levels > 0))
 			FlxG.save.data.Levels = Reg.Levels;
+		if ((FlxG.save.data.RunningScore == null) || (Reg.RunningScore >= 0))
+			FlxG.save.data.RunningScore = Reg.RunningScore;
 		if ((FlxG.save.data.GameId == null) || (FlxG.save.data.GameId != Reg.GameId))
 			FlxG.save.data.GameId = Reg.GameId;
 		FlxG.save.data.HiScore = Reg.HiScore;
@@ -50,8 +54,12 @@ class Reg
 	{
 		if(fish_location == null) fish_location = new FlxPoint(20*Reg.UI_Scale, fish_speed*Reg.UI_Scale);
 		Reg.Levels = 1;
+		Reg.RunningScore = 0;
+
 		if ((FlxG.save.data != null) && (FlxG.save.data.Levels != null))
 			Reg.Levels = FlxG.save.data.Levels;
+		if ((FlxG.save.data != null) && (FlxG.save.data.RunningScore != null))
+			Reg.RunningScore = FlxG.save.data.RunningScore;
 
 		if ((FlxG.save.data != null) && (FlxG.save.data.GameId != null))
 			Reg.GameId = FlxG.save.data.GameId;
@@ -60,6 +68,7 @@ class Reg
 
 		if ((FlxG.save.data != null) && (FlxG.save.data.HiScore != null))
 			Reg.HiScore = FlxG.save.data.HiScore;
+		Reg.Done = Reg.Levels > 30;
 		return 0;
 	}
 
@@ -70,6 +79,7 @@ class Reg
 	{
 		trace("Clearing saved state");
 		Reg.Levels = 1;
+		Reg.RunningScore = 0;
 		if (fullClear)
 			Reg.HiScore = [0 => 0];
 		Reg.Score = 0;

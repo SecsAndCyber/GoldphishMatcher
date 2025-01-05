@@ -24,6 +24,8 @@ class PlayState extends GameState
 	private var current_level:FlxText;
 	private var current_score:FlxText;
 	private var hi_score:FlxText;
+	private var run_score:FlxText;
+	private var done_banner:FlxText;
 	
 	override public function create():Void
 	{
@@ -31,6 +33,7 @@ class PlayState extends GameState
 
 		// Keep a reference to this state in Reg for global access.
 		Reg.PS = this;
+		Reg.RunningScore += Reg.Score;
 		Reg.Score = 0;
 		Reg.HiScoreSet = false;
 		Reg.Loss = false;
@@ -82,6 +85,17 @@ class PlayState extends GameState
 		hi_score.y = return_button.y - return_button.height - hi_score.height / 2;
 		add(hi_score);
 
+		run_score = new FlxText(0, 0, 0, "Run Score\n0", 48 * Reg.UI_Scale);
+		run_score.alignment = CENTER;
+		run_score.font = "monsterrat";
+		run_score.x = current_score.x + current_score.width + (run_score.width / 4);
+		run_score.y = current_score.y - current_score.height - run_score.height / 2;
+		add(run_score);
+
+		done_banner = new FlxText(0, 0, 0, "Winner!", 48 * Reg.UI_Scale);
+		done_banner.alignment = CENTER;
+		done_banner.font = "monsterrat";
+
 		retry_button = new FlxButton(0, 0, onClickRetry);
 		retry_button.loadGraphic("assets/UI/Retry_Button_Frames.png", true, 298);
 		retry_button.x = (FlxG.width) / 2 - (return_button.width / 2);
@@ -89,7 +103,10 @@ class PlayState extends GameState
 		retry_button.visible = false;
 
 		next_button = new FlxButton(0, 0, onClickNext);
-		next_button.loadGraphic("assets/UI/Next_Button_Frames.png", true, 298);
+		if (Reg.Levels < 30)
+			next_button.loadGraphic("assets/UI/Next_Button_Frames.png", true, 298);
+		else
+			next_button.loadGraphic("assets/UI/FreePlay_Button_Frames.png", true, 298);
 		next_button.x = (FlxG.width) / 2 - (next_button.width / 2);
 		next_button.y = FlxG.height - next_button.height * 1.2;
 		next_button.visible = false;
@@ -103,6 +120,10 @@ class PlayState extends GameState
 
 		current_level.text = "Level\n" + Reg.Levels;
 		current_score.text = "Score\n" + Reg.Score;
+		if (Reg.Done && Reg.Levels > 30)
+			run_score.text = "Free Score\n" + (Reg.RunningScore + Reg.Score);
+		else
+			run_score.text = "Run Score\n" + (Reg.RunningScore + Reg.Score);
 		if(Reg.HiScore.exists(Reg.Levels))
 			hi_score.text = "Hi Score\n" + Reg.HiScore[Reg.Levels];
 		if (FlxG.keys.justPressed.ESCAPE && return_button.visible)
@@ -132,6 +153,7 @@ class PlayState extends GameState
 				}
 				retry_button.visible = true;
 				next_button.visible = true;
+				return_button.visible = true;
 			}
 		if (Reg.Loss)
 		{
@@ -148,6 +170,9 @@ class PlayState extends GameState
 	{
 		FlxG.camera.fade(FlxColor.BLACK, 0.33, () ->
 		{
+			Reg.saveScore();
+			Reg.Score = 0;
+			Reg.RunningScore = 0;
 			FlxG.switchState(new PlayState());
 		});
 	}
@@ -167,6 +192,11 @@ class PlayState extends GameState
 		return_button.visible = false;
 		retry_button.visible = false;
 		next_button.visible = false;
+		if (Reg.Levels >= 30)
+		{
+			Reg.Done = true;
+			add(done_banner);
+		}
 		add(retry_button);
 		add(next_button);
 	}
@@ -177,6 +207,9 @@ class PlayState extends GameState
 		current_level.y = FlxMath.lerp(current_level.y, 128, .02);
 		current_level.x = FlxMath.lerp(current_level.x, 128 * 2, .02);
 
+		run_score.y = FlxMath.lerp(run_score.y, 128 * 6, .02);
+		run_score.x = FlxMath.lerp(run_score.x, 128 * 2, .02);
+
 		current_score.y = FlxMath.lerp(current_score.y, 128 * 3, .02);
 		current_score.x = FlxMath.lerp(current_score.x, 128 * 2, .02);
 		retry_button.y = current_score.y + current_score.height;
@@ -186,6 +219,9 @@ class PlayState extends GameState
 		hi_score.x = FlxMath.lerp(hi_score.x, 128 * 6, .02);
 		next_button.y = retry_button.y;
 		next_button.x = hi_score.x + 32;
+
+		done_banner.y = current_level.y;
+		done_banner.x = hi_score.x;
 
 		return Math.abs(delta - current_level.y);
 	}

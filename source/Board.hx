@@ -180,7 +180,7 @@ class Board extends FlxGroup
 			FlxG.camera.fade(FlxColor.BLACK, 3, () -> {
 				Reg.saveScore();
 				FlxTimer.wait(.5, () -> { // Move back to menu
-					FlxG.switchState(new MenuState());
+					FlxG.switchState(new FinishedState());
 				});
 			});
 			return;
@@ -441,9 +441,26 @@ class Board extends FlxGroup
 		}
 		else
 		{
+			var end_delay:Float = .5;
+			if (new_ys == 1)
+			{
+				selector.toast(Std.string(-1 * xs * Reg.Levels));
+				score -= Reg.Levels * xs;
+				end_delay = 1;
+			}
+			if (new_xs == 1)
+			{
+				selector.toast(Std.string(-1 * ys * Reg.Levels));
+				score -= Reg.Levels * ys;
+				end_delay = 1;
+			}
 			FlxSpriteUtil.fill(matching_space, FlxColor.TRANSPARENT);
-			FlxTimer.wait(.5, () ->
+			FlxTimer.wait(end_delay, () ->
 			{ // Moving to next level
+				if (!Reg.Done && Reg.HiScore[0] < Reg.Score + Reg.RunningScore)
+				{
+					Reg.HiScore[0] = Reg.Score + Reg.RunningScore;
+				}
 				if(Reg.HiScore.exists(Reg.Levels))
 				{
 					if (Reg.HiScore[Reg.Levels] < Reg.Score)

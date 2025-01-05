@@ -17,6 +17,7 @@ class MenuState extends UiState
 	private var about:FlxButton;
 	private var reset_ready:Bool;
 	private var current_level:FlxText;
+	private var run_score:FlxText;
 
 	override public function create():Void
 	{
@@ -25,6 +26,9 @@ class MenuState extends UiState
 
 		play = new FlxButton(0, 0, onClickPlay);
 		play.loadGraphic("assets/UI/Play_Button_Frames.png", true, 298);
+		play.scale.x *= Reg.UI_Scale;
+		play.scale.y *= Reg.UI_Scale;
+		play.updateHitbox();
 		play.x = (FlxG.width) / 2 -(play.width / 2);
 		play.y = (FlxG.height) / 2 -(play.height / 2);
 		add(play);
@@ -53,10 +57,16 @@ class MenuState extends UiState
 		
 		current_level = new FlxText(0,20 * Reg.UI_Scale, 0, "Level\n1", 64 * Reg.UI_Scale);
 		current_level.alignment = CENTER;
-		current_level.screenCenter(X);
+		current_level.x = current_level.width / 2;
 		current_level.y = title.y + title.height + current_level.height / 2;
 		current_level.font = "monsterrat";
 		add(current_level);
+		run_score = new FlxText(0, 0, 0, "Run Score\n0", 64 * Reg.UI_Scale);
+		run_score.alignment = CENTER;
+		run_score.font = "monsterrat";
+		run_score.x = current_level.x + current_level.width + (run_score.width / 4);
+		run_score.y = current_level.y;
+		add(run_score);
 	}
 
 	private function onClickPlay():Void
@@ -86,6 +96,7 @@ class MenuState extends UiState
 	{
 		if(reset_ready)
 		{
+			Reg.RunningScore = 0;
 			Reg.Levels = 1;
 			Reg.saveScore();
 			Reg.Sounds.reset_stats();
@@ -103,6 +114,10 @@ class MenuState extends UiState
 	{
 		super.update(elapsed);
 		current_level.text = "Level\n" + Reg.Levels;
+		if (Reg.Done)
+			run_score.text = "Free Score\n" + (Reg.RunningScore);
+		else
+			run_score.text = "Run Score\n" + (Reg.RunningScore);
 		#if !android
 		if (FlxG.keys.pressed.SPACE){
 			onClickPlay();

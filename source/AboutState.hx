@@ -20,7 +20,7 @@ class AboutState extends UiState
 	{
 		super.create();
 		reset_ready = false;
-		title.text = "Hi Scores";
+		title.text = "Best Run\n" + Reg.HiScore[0];
 		title.updateHitbox();
 		title.screenCenter(X);
 
@@ -60,13 +60,14 @@ class AboutState extends UiState
 		else 
 		{
 			reset_ready = true;
-			wipe.loadGraphic("assets/UI/Reset_Button2.png");
+			wipe.loadGraphic("assets/UI/Reset_Button2_Frames.png", true, 298);
 			wipe.updateHitbox();
 		}
 	}
 
 	private function draw_scores():Void
 	{
+		title.text = "Best Run\n" + Reg.HiScore[0];
 		hi_score.text = "";
 		for (k in 0...16)
 			if(k > 0)
@@ -78,7 +79,7 @@ class AboutState extends UiState
 					hi_score.text += StringTools.lpad(Std.string("----")," ",5);
 				if(Reg.HiScore.exists(k+15))
 				{
-					hi_score.text += "|";
+					hi_score.text += " |";
 					hi_score.text += StringTools.lpad(Std.string(k+15)," ",3) + " :";
 					hi_score.text += StringTools.lpad(Std.string(Reg.HiScore[k+15])," ",5);
 				}
