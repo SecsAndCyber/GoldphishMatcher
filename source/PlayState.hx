@@ -126,6 +126,7 @@ class PlayState extends GameState
 			run_score.text = "Run Score\n" + (Reg.RunningScore + Reg.Score);
 		if(Reg.HiScore.exists(Reg.Levels))
 			hi_score.text = "Hi Score\n" + Reg.HiScore[Reg.Levels];
+		#if !android
 		if (FlxG.keys.justPressed.ESCAPE && return_button.visible)
 			onClickReturn();
 		if (FlxG.keys.justPressed.SPACE && retry_button.visible)
@@ -137,6 +138,7 @@ class PlayState extends GameState
 		}
 		if (FlxG.keys.justPressed.ESCAPE && retry_button.visible)
 			onClickRetry();
+		#end
 		if (!return_button.visible && !retry_button.visible)
 			if (1 > animate_popup())
 			{
