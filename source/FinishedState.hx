@@ -76,8 +76,22 @@ class FinishedState extends GameState
 		play.scale.y *= Reg.UI_Scale;
 		play.updateHitbox();
 		play.x = (FlxG.width) / 2 -(play.width / 2);
-		play.y = (FlxG.height) / 2 - (play.height);
-		add(play);		
+		play.y = (FlxG.height) / 2 + (play.height);
+		add(play);
+		current_level.text = "Level\n" + Reg.Levels;
+		current_score.text = "Score\n" + Reg.Score;
+		if (Reg.HiScore.exists(Reg.Levels))
+			hi_score.text = "Hi Score\n" + Reg.HiScore[Reg.Levels];
+		if (Reg.Done)
+			run_score.text = "Free Score\n" + (Reg.RunningScore + Reg.Score);
+		else
+			run_score.text = "Run Score\n" + (Reg.RunningScore + Reg.Score);
+		best_run_score.text = "Best Run\n" + Reg.HiScore[0];
+
+		Reg.Levels = 1;
+		Reg.Score = 0;
+		Reg.RunningScore = 0;
+		Reg.saveScore();
 	}
 
 	private function onClickPlay():Void
@@ -88,15 +102,6 @@ class FinishedState extends GameState
 	override public function update(elapsed:Float):Void
 	{
 		super.update(elapsed);
-		current_level.text = "Level\n" + Reg.Levels;
-		current_score.text = "Score\n" + Reg.Score;
-		if(Reg.HiScore.exists(Reg.Levels))
-			hi_score.text = "Hi Score\n" + Reg.HiScore[Reg.Levels];
-		if(Reg.Done)
-			run_score.text = "Free Score\n" + (Reg.RunningScore + Reg.Score);
-		else
-			run_score.text = "Run Score\n" + (Reg.RunningScore + Reg.Score);
-		best_run_score.text = "Best Run\n" + Reg.HiScore[0];
 		#if !android
 		if (FlxG.keys.pressed.SPACE){
 			onClickPlay();

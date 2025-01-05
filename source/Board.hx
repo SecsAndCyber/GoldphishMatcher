@@ -174,6 +174,7 @@ class Board extends FlxGroup
 		{
 			Reg.HiScoreSet = false;
 			matching_space.loadGraphic("assets/GameBackground-5.png");
+			matching_space.visible = false;
 			selector.toast("Failed");
 			Reg.Sounds.level_lost();
 			closing = true;
