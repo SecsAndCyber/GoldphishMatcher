@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://cy368nsaffk14"]
+
+[ext_resource type="Script" path="res://source/scripts/puzzle_item.gd" id="1_r4oby"]
+
+[node name="PuzzleItem" type="TextureButton"]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_r4oby")
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

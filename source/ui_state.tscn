@@ -1,0 +1,38 @@
+[gd_scene load_steps=2 format=3 uid="uid://ckp3ibri4n0dp"]
+
+[ext_resource type="Script" path="res://source/scripts/ui_state.gd" id="1_m4sox"]
+
+[node name="UiState" type="Node2D"]
+
+[node name="Container" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 480.0
+offset_bottom = 720.0
+script = ExtResource("1_m4sox")
+
+[node name="Title" type="Label" parent="Container"]
+layout_mode = 2
+offset_left = 166.0
+offset_top = 64.0
+offset_right = 310.0
+offset_bottom = 87.0
+text = "Goldphish
+Match"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Copyright" type="Label" parent="Container"]
+layout_mode = 0
+offset_left = 162.0
+offset_top = 643.0
+offset_right = 306.0
+offset_bottom = 692.0
+text = "Copyright 2025 S1air Coding"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Fishes" type="Control" parent="Container"]
+anchors_preset = 0
+offset_right = 480.0
+offset_bottom = 720.0

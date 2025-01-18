@@ -1,0 +1,191 @@
+[gd_scene load_steps=16 format=3 uid="uid://dqor7kln5ts76"]
+
+[ext_resource type="Script" path="res://source/scripts/menu_state.gd" id="1_kgwti"]
+[ext_resource type="Texture2D" uid="uid://oimu8os7fkqs" path="res://assets/UI/Play_Button_Frames.png" id="2_nl4mn"]
+[ext_resource type="Texture2D" uid="uid://evnc6abvigs0" path="res://assets/UI/Exit_Button_Frames.png" id="3_cq476"]
+[ext_resource type="Texture2D" uid="uid://crdqvf1tfac1d" path="res://assets/UI/Reset_Button_Frames.png" id="4_5pedo"]
+[ext_resource type="Texture2D" uid="uid://dsfh3vins26hq" path="res://assets/UI/About_Button_Frames.png" id="5_elpri"]
+
+[sub_resource type="Theme" id="Theme_jtxkl"]
+default_font_size = 80
+
+[sub_resource type="Theme" id="Theme_tl81p"]
+default_font_size = 30
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mblkl"]
+atlas = ExtResource("2_nl4mn")
+region = Rect2(0, 0, 298, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q0jbl"]
+atlas = ExtResource("2_nl4mn")
+region = Rect2(298, 0, 298, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h3tl6"]
+atlas = ExtResource("3_cq476")
+region = Rect2(0, 0, 298, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vjndw"]
+atlas = ExtResource("3_cq476")
+region = Rect2(298, 0, 298, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g86k6"]
+atlas = ExtResource("4_5pedo")
+region = Rect2(0, 0, 298, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yvtt7"]
+atlas = ExtResource("4_5pedo")
+region = Rect2(298, 0, 298, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lislm"]
+atlas = ExtResource("5_elpri")
+region = Rect2(0, 0, 298, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_srj47"]
+atlas = ExtResource("5_elpri")
+region = Rect2(298, 0, 298, 0)
+
+[node name="MenuState" type="Node2D"]
+
+[node name="Container" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 480.0
+offset_bottom = 720.0
+script = ExtResource("1_kgwti")
+
+[node name="ColorRect" type="ColorRect" parent="Container"]
+layout_mode = 0
+offset_right = 480.0
+offset_bottom = 720.0
+color = Color(0, 0, 0, 1)
+
+[node name="Fishes" type="Control" parent="Container"]
+anchors_preset = 0
+offset_right = 480.0
+offset_bottom = 720.0
+
+[node name="Title" type="Label" parent="Container"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -235.0
+offset_right = 235.0
+offset_bottom = 267.0
+grow_horizontal = 2
+theme = SubResource("Theme_jtxkl")
+text = "Goldphish
+Match"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Copyright" type="Label" parent="Container"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -243.0
+offset_top = -50.0
+offset_right = 243.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = SubResource("Theme_tl81p")
+text = "Copyright 2025 S1air Coding"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PlayButton" type="TextureButton" parent="Container"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -67.0
+offset_top = 338.0
+offset_right = 231.0
+offset_bottom = 488.0
+grow_horizontal = 2
+scale = Vector2(0.5, 0.5)
+texture_normal = SubResource("AtlasTexture_mblkl")
+texture_hover = SubResource("AtlasTexture_q0jbl")
+stretch_mode = 3
+
+[node name="ExitButton" type="TextureButton" parent="Container"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -47.0
+offset_top = 130.0
+offset_right = 251.0
+offset_bottom = 280.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.333, 0.333)
+texture_normal = SubResource("AtlasTexture_h3tl6")
+texture_hover = SubResource("AtlasTexture_vjndw")
+
+[node name="ResetButton" type="TextureButton" parent="Container"]
+layout_mode = 0
+offset_left = 195.0
+offset_top = 427.0
+offset_right = 493.0
+offset_bottom = 577.0
+scale = Vector2(0.333, 0.333)
+texture_normal = SubResource("AtlasTexture_g86k6")
+texture_hover = SubResource("AtlasTexture_yvtt7")
+stretch_mode = 0
+
+[node name="AboutButton" type="TextureButton" parent="Container"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -45.0
+offset_top = 196.0
+offset_right = 253.0
+offset_bottom = 346.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.333, 0.333)
+texture_normal = SubResource("AtlasTexture_lislm")
+texture_hover = SubResource("AtlasTexture_srj47")
+
+[node name="CurrentLevel" type="Label" parent="Container"]
+layout_mode = 0
+offset_left = 46.0
+offset_top = 246.0
+offset_right = 516.0
+offset_bottom = 513.0
+scale = Vector2(0.333, 0.333)
+theme = SubResource("Theme_jtxkl")
+text = "Level
+1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RunScore" type="Label" parent="Container"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -214.0
+offset_top = 246.0
+offset_right = -22.0
+offset_bottom = 333.0
+grow_horizontal = 0
+theme = SubResource("Theme_tl81p")
+text = "Run Score
+0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="Container/PlayButton" to="Container" method="_on_play_button_pressed"]
+[connection signal="pressed" from="Container/ExitButton" to="Container" method="_on_exit_button_pressed"]
+[connection signal="pressed" from="Container/ResetButton" to="Container" method="_on_reset_button_pressed"]
+[connection signal="pressed" from="Container/AboutButton" to="Container" method="_on_about_button_pressed"]

@@ -1,0 +1,38 @@
+[gd_scene load_steps=4 format=3 uid="uid://0pcn0au1iugk"]
+
+[ext_resource type="Script" path="res://source/scripts/selector.gd" id="1_bvbp5"]
+[ext_resource type="Texture2D" uid="uid://cggdw6gjha" path="res://assets/Selector.png" id="1_ubn33"]
+
+[sub_resource type="Theme" id="Theme_xgxju"]
+default_font_size = 90
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Selector" type="TextureRect" parent="."]
+z_index = 5
+z_as_relative = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+texture = ExtResource("1_ubn33")
+script = ExtResource("1_bvbp5")
+
+[node name="toastText" type="RichTextLabel" parent="."]
+visible = false
+z_index = 10
+layout_mode = 0
+offset_left = 7.0
+offset_top = 6.0
+offset_right = 482.0
+offset_bottom = 203.0
+mouse_filter = 2
+theme = SubResource("Theme_xgxju")
+text = "TOAST"
+fit_content = true
+deselect_on_focus_loss_enabled = false
+drag_and_drop_selection_enabled = false

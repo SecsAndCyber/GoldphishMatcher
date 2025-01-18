@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://itniewpprdwf"]
+
+[ext_resource type="Script" path="res://source/scripts/board.gd" id="1_6r70o"]
+[ext_resource type="Script" path="res://source/scripts/puzzle_item.gd" id="2_n526x"]
+[ext_resource type="PackedScene" uid="uid://0pcn0au1iugk" path="res://source/selector.tscn" id="3_mfbb7"]
+
+[node name="Board" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 350.0
+offset_bottom = 350.0
+mouse_filter = 2
+script = ExtResource("1_6r70o")
+
+[node name="Selector" parent="." instance=ExtResource("3_mfbb7")]
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 128.0
+
+[node name="Crackers" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+
+[node name="PuzzleItem" type="TextureButton" parent="Crackers"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("2_n526x")

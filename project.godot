@@ -1,0 +1,36 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="Puzzler"
+config/version="1.0.0"
+run/main_scene="res://source/menu_state.tscn"
+config/features=PackedStringArray("4.3", "Mobile")
+boot_splash/show_image=false
+boot_splash/image="res://assets/Icon_512.png"
+config/icon="res://assets/Icon_512.png"
+
+[autoload]
+
+GlobalReg="*res://source/scripts/global_reg.gd"
+
+[display]
+
+window/size/viewport_width=480
+window/size/viewport_height=720
+window/size/resizable=false
+window/stretch/mode="viewport"
+window/handheld/orientation=1
+
+[rendering]
+
+renderer/rendering_method="mobile"
+textures/vram_compression/import_etc2_astc=true
