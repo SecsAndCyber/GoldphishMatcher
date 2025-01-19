@@ -18,9 +18,9 @@ static var fish_rng:RandomNumberGenerator
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	super._ready()
-	call_deferred("do_setup")
+	call_deferred("do_ui_setup")
 	
-func do_setup():
+func do_ui_setup():
 	# Do initialization here
 	Reg.loadScore()
 	fish = []

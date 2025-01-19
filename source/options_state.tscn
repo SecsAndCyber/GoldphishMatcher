@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://dfo7ma27m1dmu"]
+[gd_scene load_steps=8 format=3 uid="uid://dfo7ma27m1dmu"]
 
 [ext_resource type="Script" path="res://source/scripts/options_state.gd" id="1_6t24f"]
+[ext_resource type="Theme" uid="uid://docpmippif7jn" path="res://source/resources/PlayStateText.tres" id="2_ku5hh"]
 [ext_resource type="Texture2D" uid="uid://bxvbt63obr7j1" path="res://assets/UI/Return_Button_Frames.png" id="2_t1ikj"]
 
 [sub_resource type="Theme" id="Theme_wm1ng"]
@@ -24,6 +25,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 480.0
 offset_bottom = 720.0
+focus_mode = 1
 script = ExtResource("1_6t24f")
 
 [node name="ColorRect" type="ColorRect" parent="Container"]
@@ -50,6 +52,38 @@ theme = SubResource("Theme_wm1ng")
 text = "Options Menu"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="ClientIDContainer" type="Control" parent="Container"]
+anchors_preset = 0
+offset_left = 5.0
+offset_right = 45.0
+offset_bottom = 40.0
+
+[node name="GameId" type="LineEdit" parent="Container/ClientIDContainer"]
+layout_mode = 2
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 107.0
+offset_top = 51.0
+offset_right = 455.0
+offset_bottom = 119.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = SubResource("Theme_tl81p")
+placeholder_text = "Your-Game-ID"
+context_menu_enabled = false
+shortcut_keys_enabled = false
+selecting_enabled = false
+
+[node name="GameIdLabel" type="Label" parent="Container/ClientIDContainer"]
+layout_mode = 2
+offset_top = 95.0
+offset_right = 123.0
+offset_bottom = 137.0
+theme = ExtResource("2_ku5hh")
+text = "Client ID"
 
 [node name="Copyright" type="Label" parent="Container"]
 layout_mode = 1
@@ -85,4 +119,7 @@ scale = Vector2(0.333, 0.333)
 texture_normal = SubResource("AtlasTexture_ia884")
 texture_hover = SubResource("AtlasTexture_rrvnh")
 
+[connection signal="focus_entered" from="Container/ClientIDContainer/GameId" to="Container" method="_on_game_id_focus_entered"]
+[connection signal="focus_exited" from="Container/ClientIDContainer/GameId" to="Container" method="_on_game_id_focus_exited"]
+[connection signal="text_changed" from="Container/ClientIDContainer/GameId" to="Container" method="_on_game_id_text_changed"]
 [connection signal="pressed" from="Container/ReturnButton" to="Container" method="_on_return_button_pressed"]

@@ -1,7 +1,6 @@
 extends Node
 class_name Reg
 
-@export var _ps:GameState = null
 # This is a singleton class, ensuring only one instance exists
 static var instance:Reg = null
 func _init():
@@ -11,6 +10,9 @@ func _init():
 		return
 	Reg.instance = self
 	Reg.Sounds = load("res://source/audio_controller.tscn").instantiate()
+	_gameId = UUID.v4()
+
+@export var _ps:GameState = null
 static var PS:GameState:
 	set(val):
 		instance._ps = val
@@ -18,7 +20,12 @@ static var PS:GameState:
 		return instance._ps
 
 static var Sounds:AudioController 
-static var GameId:String = "";
+@export var _gameId:String = "";
+static var GameId:String:
+	set(val):
+		instance._gameId = val
+	get:
+		return instance._gameId
 
 @export var _levels:int
 static var Levels:int:
@@ -94,7 +101,7 @@ static func saveScore():
 	file.store_line(JSON.stringify({
 		'levels':instance._levels,
 		'runningscore':instance._runningscore,
-		'GameId':instance.GameId,
+		'GameId':instance._gameId,
 		'HiScore':instance._hiscore,
 		'HiScoreMoves':instance._hiscore_moves,
 	}))
@@ -106,7 +113,6 @@ static func loadScore():
 		fish_location = Vector2(20*Reg.UI_Scale, fish_speed*Reg.UI_Scale)
 	Reg.Levels = 1
 	Reg.RunningScore = 0
-	Reg.GameId = ""
 	if file:
 		var json_string = file.get_line()
 		var json = JSON.new()
@@ -115,7 +121,8 @@ static func loadScore():
 			var node_data = json.data
 			instance._levels=node_data['levels']
 			instance._runningscore=node_data['runningscore']
-			instance.GameId=node_data['GameId']
+			if node_data['GameId']:
+				instance._gameId=node_data['GameId']
 			for k in node_data['HiScore']:
 				instance._hiscore[int(k)]=node_data['HiScore'][k]
 			for k in node_data['HiScoreMoves']:

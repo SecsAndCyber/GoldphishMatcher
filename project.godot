@@ -21,6 +21,7 @@ config/icon="res://assets/Icon_512.png"
 [autoload]
 
 GlobalReg="*res://source/scripts/global_reg.gd"
+uuid="*res://addons/uuid/uuid.gd"
 
 [display]
 
@@ -29,6 +30,10 @@ window/size/viewport_height=720
 window/size/resizable=false
 window/stretch/mode="viewport"
 window/handheld/orientation=1
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/uuid/plugin.cfg")
 
 [rendering]
 
