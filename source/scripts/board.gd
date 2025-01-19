@@ -114,7 +114,7 @@ func _process(_delta: float) -> void:
 		Reg.Sounds.level_lost();
 		get_tree().create_timer(3).timeout.connect(func():
 			Reg.saveScore();
-			Reg.PS.change_scene_to_file("res://source/menu_state.tscn")
+			Reg.PS.change_scene_to_file("res://source/failed_state.tscn")
 		)
 		return
 	if(!blocks_correct(rebuild_speed)): return;

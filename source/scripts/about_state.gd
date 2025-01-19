@@ -53,3 +53,7 @@ func _on_wipe_button_pressed() -> void:
 		reset_ready = true
 		wipe_button.texture_normal.atlas = load("res://assets/UI/Reset_Button2_Frames.png")
 		wipe_button.texture_hover.atlas = load("res://assets/UI/Reset_Button2_Frames.png")
+
+
+func _on_options_button_pressed() -> void:
+	change_scene_to_file("res://source/options_state.tscn")

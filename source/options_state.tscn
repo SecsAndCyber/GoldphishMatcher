@@ -1,0 +1,88 @@
+[gd_scene load_steps=7 format=3 uid="uid://dfo7ma27m1dmu"]
+
+[ext_resource type="Script" path="res://source/scripts/options_state.gd" id="1_6t24f"]
+[ext_resource type="Texture2D" uid="uid://bxvbt63obr7j1" path="res://assets/UI/Return_Button_Frames.png" id="2_t1ikj"]
+
+[sub_resource type="Theme" id="Theme_wm1ng"]
+default_font_size = 40
+
+[sub_resource type="Theme" id="Theme_tl81p"]
+default_font_size = 30
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ia884"]
+atlas = ExtResource("2_t1ikj")
+region = Rect2(0, 0, 298, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rrvnh"]
+atlas = ExtResource("2_t1ikj")
+region = Rect2(298, 0, 298, 0)
+
+[node name="OptionsState" type="Node2D"]
+
+[node name="Container" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 480.0
+offset_bottom = 720.0
+script = ExtResource("1_6t24f")
+
+[node name="ColorRect" type="ColorRect" parent="Container"]
+layout_mode = 0
+offset_right = 480.0
+offset_bottom = 720.0
+color = Color(0, 0, 0, 1)
+
+[node name="Fishes" type="Control" parent="Container"]
+anchors_preset = 0
+offset_right = 480.0
+offset_bottom = 720.0
+
+[node name="Title" type="Label" parent="Container"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -235.0
+offset_right = 235.0
+offset_bottom = 91.0
+grow_horizontal = 2
+theme = SubResource("Theme_wm1ng")
+text = "Options Menu"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Copyright" type="Label" parent="Container"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -243.0
+offset_top = -50.0
+offset_right = 243.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = SubResource("Theme_tl81p")
+text = "Copyright 2025 S1air Coding"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ReturnButton" type="TextureButton" parent="Container"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -37.0
+offset_top = 189.0
+offset_right = 261.0
+offset_bottom = 339.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.333, 0.333)
+texture_normal = SubResource("AtlasTexture_ia884")
+texture_hover = SubResource("AtlasTexture_rrvnh")
+
+[connection signal="pressed" from="Container/ReturnButton" to="Container" method="_on_return_button_pressed"]

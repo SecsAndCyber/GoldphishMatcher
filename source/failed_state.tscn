@@ -1,0 +1,172 @@
+[gd_scene load_steps=11 format=3 uid="uid://dhh3gjlk1sdf8"]
+
+[ext_resource type="Script" path="res://source/scripts/failed_state.gd" id="1_aynwv"]
+[ext_resource type="Texture2D" uid="uid://cujg3js88g11v" path="res://assets/backgrounds/background-4.png" id="2_26f1s"]
+[ext_resource type="Texture2D" uid="uid://d3xayflyb0lxx" path="res://assets/backgrounds/foreground-4.png" id="4_e3lga"]
+[ext_resource type="Texture2D" uid="uid://oimu8os7fkqs" path="res://assets/UI/Play_Button_Frames.png" id="5_pr7gn"]
+[ext_resource type="Texture2D" uid="uid://bxvbt63obr7j1" path="res://assets/UI/Return_Button_Frames.png" id="5_ry7gx"]
+[ext_resource type="Theme" uid="uid://docpmippif7jn" path="res://source/resources/PlayStateText.tres" id="8_55qik"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t6qk5"]
+atlas = ExtResource("5_ry7gx")
+region = Rect2(0, 0, 298, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dhwgr"]
+atlas = ExtResource("5_ry7gx")
+region = Rect2(298, 0, 298, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_soy2p"]
+atlas = ExtResource("5_pr7gn")
+region = Rect2(0, 0, 298, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7il42"]
+atlas = ExtResource("5_pr7gn")
+region = Rect2(298, 0, 298, 0)
+
+[node name="FailedState" type="Node2D"]
+
+[node name="Container" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 480.0
+offset_bottom = 720.0
+script = ExtResource("1_aynwv")
+
+[node name="background" type="TextureRect" parent="Container"]
+layout_mode = 0
+offset_right = 480.0
+offset_bottom = 720.0
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("2_26f1s")
+
+[node name="foreground" type="TextureRect" parent="Container"]
+layout_mode = 0
+offset_right = 1600.0
+offset_bottom = 2400.0
+scale = Vector2(0.3, 0.3)
+mouse_filter = 2
+texture = ExtResource("4_e3lga")
+
+[node name="ReturnButton" type="TextureButton" parent="Container"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -15.0
+offset_top = 215.0
+offset_right = 283.0
+offset_bottom = 365.0
+grow_horizontal = 2
+scale = Vector2(0.5, 0.5)
+texture_normal = SubResource("AtlasTexture_t6qk5")
+texture_hover = SubResource("AtlasTexture_dhwgr")
+stretch_mode = 3
+
+[node name="PlayButton" type="TextureButton" parent="Container"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -191.0
+offset_top = -145.0
+offset_right = 107.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
+texture_normal = SubResource("AtlasTexture_soy2p")
+texture_hover = SubResource("AtlasTexture_7il42")
+
+[node name="CurrentLevel" type="Label" parent="Container"]
+layout_mode = 0
+offset_left = 74.0
+offset_top = 37.0
+offset_right = 214.0
+offset_bottom = 127.0
+theme = ExtResource("8_55qik")
+text = "Level
+1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RunScore" type="Label" parent="Container"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -346.0
+offset_top = 538.0
+offset_right = -176.0
+offset_bottom = 628.0
+grow_horizontal = 0
+theme = ExtResource("8_55qik")
+text = "Run Score
+0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BestRunScore" type="Label" parent="Container"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -367.0
+offset_top = 412.0
+offset_right = -151.0
+offset_bottom = 502.0
+grow_horizontal = 0
+theme = ExtResource("8_55qik")
+text = "Best Run Score
+0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CurrentScore" type="Label" parent="Container"]
+layout_mode = 0
+offset_left = 214.0
+offset_top = 37.0
+offset_right = 354.0
+offset_bottom = 127.0
+theme = ExtResource("8_55qik")
+text = "Score
+0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HiScore" type="Label" parent="Container"]
+visible = false
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -200.0
+offset_top = 37.0
+offset_right = -60.0
+offset_bottom = 127.0
+grow_horizontal = 0
+theme = ExtResource("8_55qik")
+text = "Hi Score
+0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DoneBanner" type="Label" parent="Container"]
+visible = false
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -367.0
+offset_top = 309.0
+offset_right = -175.0
+offset_bottom = 396.0
+grow_horizontal = 0
+theme = ExtResource("8_55qik")
+text = "Winner"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="Container/ReturnButton" to="Container" method="_on_menu_button_pressed"]
+[connection signal="pressed" from="Container/PlayButton" to="Container" method="_on_play_button_pressed"]

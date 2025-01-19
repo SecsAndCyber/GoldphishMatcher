@@ -5,6 +5,9 @@ var reset_ready:bool;
 func _ready() -> void:
 	super._ready()
 	reset_ready = false
+	
+	if OS.has_feature("web"):
+		$ExitButton.visible = false
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

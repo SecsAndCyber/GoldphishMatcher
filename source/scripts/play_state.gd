@@ -60,6 +60,9 @@ func _process(_delta: float) -> void:
 	if Reg.Levels in Reg.HiScore:
 		$HiScore.text = "Hi Score\n" + str(Reg.HiScore[Reg.Levels]);
 	if Reg.Loss:
+		return_button.visible = false
+		retry_button.visible = false
+		next_button.visible = false
 		background.texture = load("res://assets/backgrounds/background-4.png")
 		foreground.texture = load("res://assets/backgrounds/foreground-4.png")
 		return
