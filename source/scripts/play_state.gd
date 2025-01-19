@@ -20,7 +20,6 @@ func _ready() -> void:
 	
 func do_setup():
 	# Do initialization here
-	Reg.loadScore()
 	Reg.RunningScore += Reg.Score
 	Reg.PS = self
 	Reg.Score = 0;

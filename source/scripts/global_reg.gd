@@ -87,9 +87,24 @@ static var Level_Scale:float:
 		return UI_Scale
 static var LevelStep:int:
 	get():
-		return int(instance._levels / 5);
-static var MusicVolume:float = .0125;
+		return int(instance._levels / 5)
+static var MusicVolume:float = .0125
+var _music_mute:bool = false
+static var MusicMute:bool:
+	get():
+		print("Music Muted:", str(instance._music_mute))
+		return instance._music_mute
+	set(val):
+		instance._music_mute = val
+		instance.Sounds.settings_updated()
 static var SFXVolume:float = .75;
+var _sfx_mute:bool = false
+static var SfxMute:bool:
+	get():
+		return instance._sfx_mute
+	set(val):
+		instance._sfx_mute = val
+		instance.Sounds.settings_updated()
 static var hideMouse:bool = false;
 
 static var fish_speed:float = 50.0 * UI_Scale;
@@ -104,6 +119,8 @@ static func saveScore():
 		'GameId':instance._gameId,
 		'HiScore':instance._hiscore,
 		'HiScoreMoves':instance._hiscore_moves,
+		'MusicMute':instance._music_mute,
+		'SfxMute':instance._sfx_mute,
 	}))
 
 static func loadScore():
@@ -121,12 +138,16 @@ static func loadScore():
 			var node_data = json.data
 			instance._levels=node_data['levels']
 			instance._runningscore=node_data['runningscore']
-			if node_data['GameId']:
+			if node_data.get('GameId'):
 				instance._gameId=node_data['GameId']
 			for k in node_data['HiScore']:
 				instance._hiscore[int(k)]=node_data['HiScore'][k]
 			for k in node_data['HiScoreMoves']:
 				instance._hiscore_moves[int(k)]=node_data['HiScoreMoves'][k]
+			if node_data.get('MusicMute'):
+				instance._music_mute=node_data['MusicMute']
+			if node_data.get('SfxMute'):
+				instance._sfx_mute=node_data['SfxMute']
 		
 			if not 0 in instance._hiscore:
 				instance._hiscore[0]=0

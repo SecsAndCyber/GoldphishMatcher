@@ -5,6 +5,7 @@ class_name GameState
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	Reg.loadScore()
 	call_deferred("do_gamestate_setup")
 	
 func change_scene_to_file(filename):

@@ -19,7 +19,6 @@ func _ready() -> void:
 	
 func do_setup():
 	# Do initialization here
-	Reg.loadScore()
 	Reg.HiScoreSet = false
 	$CurrentLevel.text = "Level\n" + str(Reg.Levels);
 	$CurrentScore.text = "Score\n" + str(Reg.Score);

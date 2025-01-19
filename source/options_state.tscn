@@ -25,7 +25,6 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 480.0
 offset_bottom = 720.0
-focus_mode = 1
 script = ExtResource("1_6t24f")
 
 [node name="ColorRect" type="ColorRect" parent="Container"]
@@ -56,8 +55,9 @@ vertical_alignment = 1
 [node name="ClientIDContainer" type="Control" parent="Container"]
 anchors_preset = 0
 offset_left = 5.0
-offset_right = 45.0
-offset_bottom = 40.0
+offset_right = 475.0
+offset_bottom = 160.0
+mouse_filter = 2
 
 [node name="GameId" type="LineEdit" parent="Container/ClientIDContainer"]
 layout_mode = 2
@@ -65,10 +65,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = 107.0
-offset_top = 51.0
-offset_right = 455.0
-offset_bottom = 119.0
+offset_left = -112.0
+offset_top = -69.0
+offset_right = 236.0
+offset_bottom = -1.0
 grow_horizontal = 2
 grow_vertical = 0
 theme = SubResource("Theme_tl81p")
@@ -79,11 +79,43 @@ selecting_enabled = false
 
 [node name="GameIdLabel" type="Label" parent="Container/ClientIDContainer"]
 layout_mode = 2
-offset_top = 95.0
+offset_top = 91.0
 offset_right = 123.0
-offset_bottom = 137.0
+offset_bottom = 133.0
 theme = ExtResource("2_ku5hh")
 text = "Client ID"
+
+[node name="MusicContainer" type="Control" parent="Container"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 5.0
+offset_top = 67.0
+offset_right = 475.0
+offset_bottom = 227.0
+mouse_filter = 2
+
+[node name="MusicMute" type="CheckButton" parent="Container/MusicContainer"]
+layout_mode = 2
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -112.0
+offset_top = -69.0
+offset_right = 12.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("2_ku5hh")
+text = "Mute"
+
+[node name="MusicSettingsLabel" type="Label" parent="Container/MusicContainer"]
+layout_mode = 2
+offset_top = 91.0
+offset_right = 123.0
+offset_bottom = 133.0
+theme = ExtResource("2_ku5hh")
+text = "Music"
 
 [node name="Copyright" type="Label" parent="Container"]
 layout_mode = 1
@@ -119,7 +151,41 @@ scale = Vector2(0.333, 0.333)
 texture_normal = SubResource("AtlasTexture_ia884")
 texture_hover = SubResource("AtlasTexture_rrvnh")
 
+[node name="SfxContainer" type="Control" parent="Container"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 5.0
+offset_top = 133.0
+offset_right = 475.0
+offset_bottom = 293.0
+mouse_filter = 2
+
+[node name="SfxMute" type="CheckButton" parent="Container/SfxContainer"]
+layout_mode = 2
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -112.0
+offset_top = -69.0
+offset_right = 12.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("2_ku5hh")
+text = "Mute"
+
+[node name="SfxSettingsLabel" type="Label" parent="Container/SfxContainer"]
+layout_mode = 2
+offset_top = 91.0
+offset_right = 123.0
+offset_bottom = 133.0
+theme = ExtResource("2_ku5hh")
+text = "SFX🔊"
+
 [connection signal="focus_entered" from="Container/ClientIDContainer/GameId" to="Container" method="_on_game_id_focus_entered"]
 [connection signal="focus_exited" from="Container/ClientIDContainer/GameId" to="Container" method="_on_game_id_focus_exited"]
 [connection signal="text_changed" from="Container/ClientIDContainer/GameId" to="Container" method="_on_game_id_text_changed"]
+[connection signal="toggled" from="Container/MusicContainer/MusicMute" to="Container" method="_on_music_mute_toggled"]
 [connection signal="pressed" from="Container/ReturnButton" to="Container" method="_on_return_button_pressed"]
+[connection signal="toggled" from="Container/SfxContainer/SfxMute" to="Container" method="_on_sfx_mute_toggled"]

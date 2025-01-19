@@ -40,38 +40,52 @@ func _ready():
 	actions = [row, col, points, combo_1, combo_2, combo_3, combo_4, menu_open, menu_close]
 
 func click():
+	if Reg.SfxMute:
+		return
 	audio_stream_player.stream = cursor_click
 	audio_stream_player.volume_db = Reg.SFXVolume
 	audio_stream_player.play()
 
 func reset_stats():
+	if Reg.SfxMute:
+		return
 	audio_stream_player.stream = reset
 	audio_stream_player.volume_db = Reg.SFXVolume
 	audio_stream_player.play()
 
 func row_shift():
+	if Reg.SfxMute:
+		return
 	audio_stream_player.stream = row
 	audio_stream_player.pitch_scale = randf_range(.997,1.003)
 	audio_stream_player.volume_db = Reg.SFXVolume
 	audio_stream_player.play()
 
 func col_shift():
+	if Reg.SfxMute:
+		return
 	audio_stream_player.stream = col
 	audio_stream_player.pitch_scale = randf_range(.997,1.003)
 	audio_stream_player.volume_db = Reg.SFXVolume
 	audio_stream_player.play()
 
 func level_won():
+	if Reg.SfxMute:
+		return
 	audio_stream_player.stream = won
 	audio_stream_player.volume_db = Reg.SFXVolume
 	audio_stream_player.play()
 
 func level_lost():
+	if Reg.SfxMute:
+		return
 	audio_stream_player.stream = lost
 	audio_stream_player.volume_db = Reg.SFXVolume
 	audio_stream_player.play()
 
 func menu(open:bool):
+	if Reg.SfxMute:
+		return
 	if open:
 		audio_stream_player.stream = menu_open
 	else:
@@ -80,6 +94,8 @@ func menu(open:bool):
 	audio_stream_player.play()
 	
 func score(combo_count):
+	if Reg.SfxMute:
+		return
 	if combo_count == 1:
 		audio_stream_player.stream = points
 	if combo_count == 2:
@@ -98,26 +114,33 @@ func score(combo_count):
 func start_level():
 		if(Reg.LevelStep == 0):
 			loading_level = load("res://assets/Audio/Background/UpbeatMelodic1.mp3");
-		if(Reg.LevelStep == 1):
+		elif(Reg.LevelStep == 1):
 			loading_level = load("res://assets/Audio/Background/UpbeatMelodic2.mp3");
-		if(Reg.LevelStep == 2):
+		elif(Reg.LevelStep == 2):
 			loading_level = load("res://assets/Audio/Background/UpbeatMelodic3.mp3");
-		if(Reg.LevelStep == 3):
+		elif(Reg.LevelStep == 3):
 			loading_level = load("res://assets/Audio/Background/UpbeatMelodic4.mp3");
-		if(Reg.LevelStep == 4):
+		elif(Reg.LevelStep == 4):
 			loading_level = load("res://assets/Audio/Background/UpbeatMelodic5.mp3");
-		if(Reg.LevelStep == 5):
+		elif(Reg.LevelStep == 5):
 			loading_level = load("res://assets/Audio/Background/UpbeatMelodic6.mp3");
-		if(Reg.LevelStep == 6):
+		elif(Reg.LevelStep == 6):
 			loading_level = load("res://assets/Audio/Background/UpbeatMelodic7.mp3");
-		if(Reg.LevelStep == 7):
+		elif(Reg.LevelStep == 7):
 			loading_level = load("res://assets/Audio/Background/UpbeatMelodic8.mp3");
-		if(Reg.LevelStep == 8):
+		elif(Reg.LevelStep == 8):
 			loading_level = load("res://assets/Audio/Background/UpbeatMelodic9.mp3");
-		if(Reg.LevelStep >= 9):
+		elif(Reg.LevelStep >= 9):
 			loading_level = load("res://assets/Audio/Background/UpbeatMelodic10.mp3");
 		loading_level.loop = true
+		if Reg.MusicMute:
+			background_music_stream_player.stop()
+			return
 		if ! background_music_stream_player.stream == loading_level:
-			background_music_stream_player.volume_db = Reg.MusicVolume*5
 			background_music_stream_player.stream = loading_level
+		if ! background_music_stream_player.playing:
+			background_music_stream_player.volume_db = Reg.MusicVolume*5
 			background_music_stream_player.play()
+			
+func settings_updated():
+	start_level()

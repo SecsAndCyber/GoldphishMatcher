@@ -22,7 +22,6 @@ func _ready() -> void:
 	
 func do_ui_setup():
 	# Do initialization here
-	Reg.loadScore()
 	fish = []
 	fish_rng = RandomNumberGenerator.new()
 	fish_rng.seed = Reg.Levels
