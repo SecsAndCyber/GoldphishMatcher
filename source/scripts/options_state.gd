@@ -54,3 +54,7 @@ func _on_sfx_mute_toggled(toggled_on: bool) -> void:
 		$SfxContainer/SfxSettingsLabel.text = "SFX🔊"
 	Reg.SfxMute = toggled_on
 	Reg.saveScore()
+
+
+func _on_policy_button_pressed() -> void:
+	OS.shell_open("https://blog.molyett.com/2024/02/app-development-privacy-policy-2024.html")

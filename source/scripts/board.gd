@@ -1,16 +1,15 @@
 extends Control
 class_name Board
 
-const LETTERS = 'ABCDEFGHIJKLMNOP'
+const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 var xs: int;
 var ys: int;
 
 var row_height: int;
 var col_width: int;
 
-var matching_space # :FlxSprite;
-var map 	 # :Array<Array<Bool>>;
-var blocks 	 # :Array<Array<PuzzleItem>>;
+var map : Array
+var blocks : Array
 var moves = []
 
 @onready var crackers: Control = $Crackers
@@ -59,16 +58,11 @@ var has_match:bool:
 var _score:int;
 var score:int:
 	set(val):
-		if val >= 0:
-			_score = val
-		else:
-			_score = 0
+		_score = clampi(val,0,0x999999)
 		Reg.Score = _score;
 		return _score;
 	get:
-		if _score >= 0:
-			return _score
-		return 0
+		return clampi(_score,0,0x999999)
 	
 func create(x_size, y_size):
 	Reg.HiScoreSet = false;
@@ -323,14 +317,17 @@ func on_puzzle_item_click(_puzzle_item:PuzzleItem, location:Vector2i):
 	if(rebuilding): return;
 	if(matching): return;
 	if(moving): return;
-	if !selector.visible: return
+	if !selector.cleared and !selector.visible: return
 	var r = location.x
 	var c = location.y
-	if((selector.SelectionX == r && abs(selector.SelectionY - c)==1) || 
-		(selector.SelectionY == c && abs(selector.SelectionX - r)==1)):
-			var Source:Vector2 = selector.selection;
-			var Target:Vector2 = location;
-			swap_spots(Source, Target);
+	if !selector.cleared and ((
+		selector.SelectionX == r and abs(selector.SelectionY - c)==1) or (
+		selector.SelectionY == c and abs(selector.SelectionX - r)==1)
+		):
+			var Source:Vector2 = selector.selection
+			var Target:Vector2 = location
+			swap_spots(Source, Target)
+			selector.clear()
 	else:
 		selector.SelectionX = location.x
 		selector.SelectionY = location.y

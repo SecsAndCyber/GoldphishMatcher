@@ -48,17 +48,20 @@ func popup():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	$CurrentLevel.text = "Level\n" + str(Reg.Levels);
-	$CurrentScore.text = "Score\n" + str(Reg.Score);
+	$CurrentLevel.text = "Level\n" + str(Reg.Levels)
+	$CurrentScore.text = "Score\n" + str(Reg.Score)
 	if Reg.Done && Reg.Levels > 30:
 		run_score.text = "Free Score\n"
 	else:
 		run_score.text = "Run Score\n"
-	run_score.text += str(Reg.RunningScore + Reg.Score);
+	run_score.text += str(Reg.RunningScore + Reg.Score)
 		
 	if Reg.Levels in Reg.HiScore:
-		$HiScore.text = "Hi Score\n" + str(Reg.HiScore[Reg.Levels]);
+		$HiScore.text = "Hi Score\n" + str(Reg.HiScore[Reg.Levels])
 	if Reg.Loss:
+		if return_button.visible:
+			# Code here will run just once after the Loss flag is set
+			pass
 		return_button.visible = false
 		retry_button.visible = false
 		next_button.visible = false

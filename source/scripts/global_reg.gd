@@ -105,6 +105,12 @@ static var SfxMute:bool:
 	set(val):
 		instance._sfx_mute = val
 		instance.Sounds.settings_updated()
+var _network_disable:bool = false
+static var NetworkMute:bool:
+	get():
+		return instance._network_disable
+	set(val):
+		instance._network_disable = val
 static var hideMouse:bool = false;
 
 static var fish_speed:float = 50.0 * UI_Scale;
@@ -121,6 +127,7 @@ static func saveScore():
 		'HiScoreMoves':instance._hiscore_moves,
 		'MusicMute':instance._music_mute,
 		'SfxMute':instance._sfx_mute,
+		'NetworkMute':instance._network_disable
 	}))
 
 static func loadScore():
@@ -148,6 +155,8 @@ static func loadScore():
 				instance._music_mute=node_data['MusicMute']
 			if node_data.get('SfxMute'):
 				instance._sfx_mute=node_data['SfxMute']
+			if node_data.get('NetworkMute'):
+				instance._network_disable=node_data['NetworkMute']
 		
 			if not 0 in instance._hiscore:
 				instance._hiscore[0]=0

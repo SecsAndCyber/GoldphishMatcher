@@ -5,17 +5,26 @@ class_name Selector
 var selection = Vector2i(0,0)
 
 @onready var toast_text: RichTextLabel = $"../toastText"
+var cleared: bool = true
 var toast_top: float = 0
 var blocks = [[]];
 
 var SelectionX:int:
-	set(value): selection.x = (value + len(blocks)) % len(blocks)
+	set(value):
+		cleared = false
+		selection.x = (value + len(blocks)) % len(blocks)
 	get: return selection.x
 
 var SelectionY:int:
-	set(value): selection.y = (value + len(blocks[0])) % len(blocks[0])
+	set(value):
+		cleared = false
+		selection.y = (value + len(blocks[0])) % len(blocks[0])
 	get: return selection.y
-	
+
+func clear():
+	cleared = true
+
+
 func toast(text:String):
 	print("toast:", text, " ", Reg.PS.board)
 	toast_top = -1 * toast_text.get_content_height()
@@ -27,7 +36,7 @@ func toast(text:String):
 	toast_text.modulate = Color(256, 256, 256, 1)
 
 func _process(delta: float) -> void:
-	visible = !Reg.Loss and !toast_text.visible
+	visible = !cleared and (!Reg.Loss and !toast_text.visible)
 	scale = Vector2(Reg.Level_Scale, Reg.Level_Scale)
 	if toast_text.visible:
 		toast_text.global_position.y = lerp(toast_text.global_position.y, toast_top, speed*delta)
@@ -43,7 +52,8 @@ func _process(delta: float) -> void:
 		modulate = Color(256, 256, 256, 1)
 		return
 	blocks = Reg.PS.board.blocks;
-	SelectionX = selection.x
-	SelectionY = selection.y
-	global_position.x = blocks[selection.x][selection.y].global_position.x
-	global_position.y = blocks[selection.x][selection.y].global_position.y
+	if !cleared:
+		SelectionX = selection.x
+		SelectionY = selection.y
+		global_position.x = blocks[selection.x][selection.y].global_position.x
+		global_position.y = blocks[selection.x][selection.y].global_position.y
