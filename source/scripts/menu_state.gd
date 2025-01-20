@@ -30,6 +30,7 @@ func _on_exit_button_pressed() -> void:
 
 func _on_reset_button_pressed() -> void:
 	if reset_ready:
+		Reg.telemetryNode.reset_game()
 		Reg.RunningScore = 0;
 		Reg.Levels = 1;
 		Reg.saveScore();

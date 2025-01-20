@@ -10,16 +10,20 @@ func _ready() -> void:
 	
 func change_scene_to_file(filename):
 	remove_child(Reg.Sounds)
+	remove_child(Reg.telemetryNode)
 	get_tree().change_scene_to_file(filename)
 	
 func reload_current_scene():
 	remove_child(Reg.Sounds)
+	remove_child(Reg.telemetryNode)
 	get_tree().reload_current_scene()
 	
 func do_gamestate_setup():
 	# Do initialization here
 	add_child(Reg.Sounds)
+	add_child(Reg.telemetryNode)
 	Reg.Sounds.start_level()
+	Reg.telemetryNode.start_level()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:

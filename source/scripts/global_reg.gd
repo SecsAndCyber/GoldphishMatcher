@@ -10,6 +10,7 @@ func _init():
 		return
 	Reg.instance = self
 	Reg.Sounds = load("res://source/audio_controller.tscn").instantiate()
+	Reg.telemetryNode = load("res://source/telemetry_node.tscn").instantiate()
 	_gameId = UUID.v4()
 
 @export var _ps:GameState = null
@@ -19,6 +20,7 @@ static var PS:GameState:
 	get:
 		return instance._ps
 
+static var telemetryNode:TelemetryNode 
 static var Sounds:AudioController 
 @export var _gameId:String = "";
 static var GameId:String:

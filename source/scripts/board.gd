@@ -5,8 +5,7 @@ const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 var xs: int;
 var ys: int;
 
-var row_height: int;
-var col_width: int;
+var level_block_count: int;
 
 var map : Array
 var blocks : Array
@@ -71,6 +70,7 @@ func create(x_size, y_size):
 	combo_count = 0
 	xs = x_size
 	ys = y_size
+	level_block_count = x_size * y_size
 	map = [[],[]]
 	for r in range(xs):
 		map[0].append(false)
@@ -106,6 +106,7 @@ func _process(_delta: float) -> void:
 		Reg.HiScoreSet = false;
 		selector.toast("Failed");
 		Reg.Sounds.level_lost();
+		Reg.telemetryNode.failed_level(moves)
 		get_tree().create_timer(3).timeout.connect(func():
 			Reg.saveScore();
 			Reg.PS.change_scene_to_file("res://source/failed_state.tscn")
@@ -286,15 +287,13 @@ func handle_match_state():
 	else:
 		# End of level
 		var end_delay:float = .5;
-		if new_ys == 1:
-			selector.toast(str(-1 * xs * Reg.Levels));
-			score -= Reg.Levels * xs;
-			end_delay = 1;
-		if new_xs == 1:
-			selector.toast(str(-1 * ys * Reg.Levels));
-			score -= Reg.Levels * ys;
-			end_delay = 1;
+		if new_ys == 0 and new_xs == 0:
+			selector.toast("[center]Cleared!\n"+str(level_block_count));
+			score += level_block_count;
+			end_delay = 3;
+			
 		get_tree().create_timer(end_delay).timeout.connect(func():
+			Reg.telemetryNode.finish_level(moves)
 			# Moving to next level
 			if !Reg.Done && Reg.HiScore[0] < Reg.Score + Reg.RunningScore:
 				Reg.HiScore[0] = Reg.Score + Reg.RunningScore

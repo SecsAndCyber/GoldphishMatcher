@@ -34,7 +34,6 @@ func draw_scores():
 				hi_score.text += "%3s :" % str(k+15)
 				hi_score.text += "%5s" % str(Reg.HiScore[k+15])
 			hi_score.text += "\n";
-	print(hi_score.text)
 
 
 func _on_return_button_pressed() -> void:
@@ -43,12 +42,13 @@ func _on_return_button_pressed() -> void:
 
 func _on_wipe_button_pressed() -> void:
 	if reset_ready:
+		Reg.telemetryNode.reset_scores()
+		Reg.Sounds.reset_stats()
 		Reg.clearSave()
 		Reg.loadScore()
-		Reg.Sounds.reset_stats()
 		wipe_button.visible = false
 		draw_scores()
-		wipe_button.visible = false;
+		wipe_button.visible = false
 	else:
 		reset_ready = true
 		wipe_button.texture_normal.atlas = load("res://assets/UI/Reset_Button2_Frames.png")

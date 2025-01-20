@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bwxw0n3rqstkv"]
+
+[ext_resource type="Script" path="res://source/scripts/telemetry_node.gd" id="1_jgli1"]
+
+[node name="TelemetryNode" type="HTTPRequest"]
+script = ExtResource("1_jgli1")

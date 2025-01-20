@@ -31,7 +31,7 @@ func toast(text:String):
 	toast_text.text = text
 	toast_text.visible = true
 	
-	toast_text.global_position.x = 115.0;
+	toast_text.global_position.x = 35.0;
 	toast_text.global_position.y = 310.0;
 	toast_text.modulate = Color(256, 256, 256, 1)
 
