@@ -15,12 +15,12 @@ func _process(delta: float) -> void:
 
 
 func buildUrl(endpoint:String, parameters:Dictionary = {}):
-	var _r = baseUrl + endpoint
+	var _r = baseUrl + "?endpoint=" + endpoint
 	var enc_parameters:Dictionary = {}
 	for p in parameters:
 		enc_parameters[urlB64(p)] = urlB64(parameters[p])
 	if parameters:
-		_r += "?" + http_client.query_string_from_dict(enc_parameters)
+		_r += "&" + http_client.query_string_from_dict(enc_parameters)
 	return _r
 			
 func urlB64(to_encode:Variant):
@@ -30,14 +30,15 @@ func urlB64(to_encode:Variant):
 	b64 = b64.replace('=','.')
 	return b64
 
-func start_level():
+func start_level(gs:GameState):
 	request(buildUrl('new_game_state',{
 		'GameClient' : Reg.GameId,
 		'Level' : Reg.Levels,
 		'Settings' : {
 			'Music': Reg.MusicMute,
 			'Sfx': Reg.SfxMute,
-			}
+			},
+		'GameState': gs.get_parent().name
 	}))
 
 func reset_game():

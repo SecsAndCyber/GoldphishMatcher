@@ -23,7 +23,7 @@ func do_gamestate_setup():
 	add_child(Reg.Sounds)
 	add_child(Reg.telemetryNode)
 	Reg.Sounds.start_level()
-	Reg.telemetryNode.start_level()
+	Reg.telemetryNode.start_level(self)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
