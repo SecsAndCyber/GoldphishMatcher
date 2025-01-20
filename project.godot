@@ -10,8 +10,8 @@ config_version=5
 
 [application]
 
-config/name="Puzzler"
-config/version="1.0.0"
+config/name="GoldphishMatcher"
+config/version="1.1.0"
 run/main_scene="res://source/menu_state.tscn"
 config/features=PackedStringArray("4.3", "Mobile")
 boot_splash/show_image=false
