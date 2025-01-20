@@ -279,8 +279,7 @@ func handle_match_state():
 			for c in range(ys):
 				map[1].append(false)
 			
-			selector.SelectionX = int(selected_point.x)
-			selector.SelectionY = int(selected_point.y)
+			selector.clear()
 			rebuilding = false
 			moved = true
 		)
