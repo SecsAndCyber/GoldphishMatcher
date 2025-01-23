@@ -1,0 +1,196 @@
+[gd_scene load_steps=15 format=3 uid="uid://b2a53t6xtelye"]
+
+[ext_resource type="Script" path="res://source/scripts/replay_state.gd" id="1_gjarw"]
+[ext_resource type="Texture2D" uid="uid://dve8vqj2hvbn0" path="res://assets/backgrounds/background-1.png" id="2_w1um8"]
+[ext_resource type="PackedScene" uid="uid://itniewpprdwf" path="res://source/board.tscn" id="3_3t3dp"]
+[ext_resource type="Texture2D" uid="uid://drisw86hb5du7" path="res://assets/backgrounds/foreground-1.png" id="4_3ebe3"]
+[ext_resource type="Texture2D" uid="uid://bxvbt63obr7j1" path="res://assets/UI/Return_Button_Frames.png" id="5_h01aw"]
+[ext_resource type="Texture2D" uid="uid://bqxd4alrxfhtv" path="res://assets/UI/Retry_Button_Frames.png" id="6_51e74"]
+[ext_resource type="Texture2D" uid="uid://bwlaom8gjjk4f" path="res://assets/UI/Next_Button_Frames.png" id="7_trif6"]
+[ext_resource type="Theme" uid="uid://docpmippif7jn" path="res://source/resources/PlayStateText.tres" id="8_l5b6s"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t6qk5"]
+atlas = ExtResource("5_h01aw")
+region = Rect2(0, 0, 298, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dhwgr"]
+atlas = ExtResource("5_h01aw")
+region = Rect2(298, 0, 298, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_soy2p"]
+atlas = ExtResource("6_51e74")
+region = Rect2(0, 0, 298, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7il42"]
+atlas = ExtResource("6_51e74")
+region = Rect2(298, 0, 298, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ea68y"]
+atlas = ExtResource("7_trif6")
+region = Rect2(0, 0, 298, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_txsv1"]
+atlas = ExtResource("7_trif6")
+region = Rect2(298, 0, 298, 0)
+
+[node name="ReplayState" type="Node2D"]
+
+[node name="Container" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 480.0
+offset_bottom = 720.0
+script = ExtResource("1_gjarw")
+
+[node name="background" type="TextureRect" parent="Container"]
+layout_mode = 0
+offset_right = 480.0
+offset_bottom = 720.0
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("2_w1um8")
+
+[node name="Board" parent="Container" instance=ExtResource("3_3t3dp")]
+offset_left = 40.0
+offset_top = 40.0
+offset_right = 390.0
+offset_bottom = 390.0
+
+[node name="foreground" type="TextureRect" parent="Container"]
+layout_mode = 0
+offset_right = 1600.0
+offset_bottom = 2400.0
+scale = Vector2(0.3, 0.3)
+mouse_filter = 2
+texture = ExtResource("4_3ebe3")
+
+[node name="ReturnButton" type="TextureButton" parent="Container"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -80.0
+offset_top = 625.0
+offset_right = 218.0
+offset_bottom = 775.0
+grow_horizontal = 2
+scale = Vector2(0.5, 0.5)
+texture_normal = SubResource("AtlasTexture_t6qk5")
+texture_hover = SubResource("AtlasTexture_dhwgr")
+stretch_mode = 3
+
+[node name="RetryButton" type="TextureButton" parent="Container"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -171.0
+offset_top = -119.0
+offset_right = 127.0
+offset_bottom = 31.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.333, 0.333)
+texture_normal = SubResource("AtlasTexture_soy2p")
+texture_hover = SubResource("AtlasTexture_7il42")
+
+[node name="NextButton" type="TextureButton" parent="Container"]
+layout_mode = 0
+offset_left = 230.0
+offset_top = 240.0
+offset_right = 528.0
+offset_bottom = 390.0
+scale = Vector2(0.333, 0.333)
+texture_normal = SubResource("AtlasTexture_ea68y")
+texture_hover = SubResource("AtlasTexture_txsv1")
+stretch_mode = 0
+
+[node name="CurrentLevel" type="Label" parent="Container"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 515.0
+offset_right = 160.0
+offset_bottom = 605.0
+theme = ExtResource("8_l5b6s")
+text = "Level
+1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RunScore" type="Label" parent="Container"]
+visible = false
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -180.0
+offset_top = 418.0
+offset_right = -10.0
+offset_bottom = 508.0
+grow_horizontal = 0
+theme = ExtResource("8_l5b6s")
+text = "Run Score
+0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CurrentScore" type="Label" parent="Container"]
+layout_mode = 0
+offset_left = 160.0
+offset_top = 515.0
+offset_right = 300.0
+offset_bottom = 605.0
+theme = ExtResource("8_l5b6s")
+text = "Score
+0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HiScore" type="Label" parent="Container"]
+visible = false
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -180.0
+offset_top = 515.0
+offset_right = -40.0
+offset_bottom = 605.0
+grow_horizontal = 0
+theme = ExtResource("8_l5b6s")
+text = "Hi Score
+0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DoneBanner" type="Label" parent="Container"]
+visible = false
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -367.0
+offset_top = 309.0
+offset_right = -175.0
+offset_bottom = 396.0
+grow_horizontal = 0
+theme = ExtResource("8_l5b6s")
+text = "Winner"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CheckButton" type="CheckButton" parent="Container"]
+layout_mode = 0
+offset_left = 42.0
+offset_top = 417.0
+offset_right = 137.0
+offset_bottom = 448.0
+button_pressed = true
+text = "Start"
+
+[connection signal="pressed" from="Container/ReturnButton" to="Container" method="_on_menu_button_pressed"]
+[connection signal="pressed" from="Container/RetryButton" to="Container" method="_on_retry_button_pressed"]
+[connection signal="pressed" from="Container/NextButton" to="Container" method="_on_next_button_pressed"]
+[connection signal="toggled" from="Container/CheckButton" to="Container" method="_on_check_button_toggled"]

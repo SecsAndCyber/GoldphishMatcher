@@ -115,6 +115,13 @@ static var NetworkMute:bool:
 		instance._network_disable = val
 static var hideMouse:bool = false;
 
+var _replaying:bool = false
+static var Replay:bool:
+	get():
+		return instance._replaying
+	set(val):
+		instance._replaying = val
+
 static var fish_speed:float = 50.0 * UI_Scale;
 static var fish_location:Vector2 = Vector2.ZERO;
 

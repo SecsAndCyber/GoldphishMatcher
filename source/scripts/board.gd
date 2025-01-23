@@ -2,10 +2,11 @@ extends Control
 class_name Board
 
 const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-var xs: int;
-var ys: int;
+var xs: int
+var ys: int
 
-var level_block_count: int;
+var level_block_count: int
+var ready_for_input: bool = false
 
 var map : Array
 var blocks : Array
@@ -14,26 +15,26 @@ var moves = []
 @onready var crackers: Control = $Crackers
 @onready var selector: Selector = $Selector.get_node("Selector")
 
-var rebuilding:bool = false;
-var rebuild_speed:float = .25;
-var moving:bool = false;
-var moved:bool = false;
-var rng:FlxRandom;
+var rebuilding:bool = false
+var rebuild_speed:float = .25
+var moving:bool = false
+var moved:bool = false
+var rng:FlxRandom
 
 var new_blocks # :Array<Array<Cracker>>;
-var new_xs:int;
-var new_ys:int;
+var new_xs:int
+var new_ys:int
 
-var combo_score:int;
-var combo_count:int;
+var combo_score:int
+var combo_count:int
 
-var points_per_fish:int = 5;
-var cost_per_move:int = -1;
-var end_only:bool = false;
+var points_per_fish:int = 5
+var cost_per_move:int = -1
+var end_only:bool = false
 
-var closing:bool = false;
-var matching:bool = false;
-var dragged:bool = false;
+var closing:bool = false
+var matching:bool = false
+var dragged:bool = false
 
 var has_match:bool:
 	get:
@@ -90,6 +91,7 @@ func create(x_size, y_size):
 			crackers.add_child(blocks[r][c])
 			blocks[r][c].position.x = r * blocks[r][c].size.x * blocks[r][c].scale.x
 			blocks[r][c].position.y = c * blocks[r][c].size.y * blocks[r][c].scale.x
+	ready_for_input = true
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -101,6 +103,7 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if(closing): return
 	if (Reg.Loss):
+		ready_for_input = false
 		crackers.visible = false
 		closing = true;
 		Reg.HiScoreSet = false;
@@ -116,14 +119,18 @@ func _process(_delta: float) -> void:
 	if(matching): return;
 	moving = false;
 	if(!has_match && !moved):
+		ready_for_input = true
 		combo_score = 0;
 		combo_count = 0;
 	if has_match:
 		handle_match_state()
+		return
+	ready_for_input = not (rebuilding or matching or moving)
 	
 func swap_spots(source:Vector2, target:Vector2):
-	moving = true;
-	rebuild_speed = .25;
+	ready_for_input = false
+	moving = true
+	rebuild_speed = .25
 	var tmpBlockTarget:PuzzleItem = blocks[target.x][target.y]
 	var tmpBlockSource:PuzzleItem = blocks[source.x][source.y]
 	var delta = Vector2(
@@ -219,16 +226,24 @@ func blocks_correct(speed:float) -> bool:
 				r * blocks[r][c].size.x * blocks[r][c].scale.x,
 				c * blocks[r][c].size.y * blocks[r][c].scale.x
 			)
-			if abs(block.position.x - destination.x) > 1:
-				block.position.x = lerp(block.position.x, destination.x, speed)
-				blocks_moved = true
+			if Reg.Replay:
+				if not block.position.x == destination.x:
+					block.position.x = destination.x
+					blocks_moved = true
+				if not block.position.y == destination.y:
+					block.position.y = destination.y
+					blocks_moved = true
 			else:
-				block.position.x = destination.x
-			if abs(block.position.y - destination.y) > 1:
-				block.position.y = lerp(block.position.y, destination.y, speed)
-				blocks_moved = true
-			else:
-				block.position.y = destination.y
+				if abs(block.position.x - destination.x) > 1:
+					block.position.x = lerp(block.position.x, destination.x, speed)
+					blocks_moved = true
+				else:
+					block.position.x = destination.x
+				if abs(block.position.y - destination.y) > 1:
+					block.position.y = lerp(block.position.y, destination.y, speed)
+					blocks_moved = true
+				else:
+					block.position.y = destination.y
 				
 	return !blocks_moved
 
@@ -292,29 +307,32 @@ func handle_match_state():
 			end_delay = 3;
 			
 		get_tree().create_timer(end_delay).timeout.connect(func():
-			Reg.telemetryNode.finish_level(moves)
-			# Moving to next level
-			if !Reg.Done && Reg.HiScore[0] < Reg.Score + Reg.RunningScore:
-				Reg.HiScore[0] = Reg.Score + Reg.RunningScore
-			if Reg.Levels in Reg.HiScore:
-				if Reg.HiScore[Reg.Levels] < Reg.Score:
+			if ! Reg.Replay:
+				Reg.telemetryNode.finish_level(moves)
+				# Moving to next level
+				if !Reg.Done && Reg.HiScore[0] < Reg.Score + Reg.RunningScore:
+					Reg.HiScore[0] = Reg.Score + Reg.RunningScore
+				if Reg.Levels in Reg.HiScore:
+					if Reg.HiScore[Reg.Levels] < Reg.Score:
+						Reg.HiScoreSet = true
+						Reg.HiScore[Reg.Levels] = Reg.Score
+						Reg.HiScoreMoves[Reg.Levels] = moves
+				else:
 					Reg.HiScoreSet = true
 					Reg.HiScore[Reg.Levels] = Reg.Score
 					Reg.HiScoreMoves[Reg.Levels] = moves
-			else:
-				Reg.HiScoreSet = true
-				Reg.HiScore[Reg.Levels] = Reg.Score
-				Reg.HiScoreMoves[Reg.Levels] = moves
-			print(moves)
-			Reg.saveScore()
+				print(moves)
+				Reg.saveScore()
 			Reg.PS.remove_child(self)
 			Reg.PS.popup()
 		)
 
 func on_puzzle_item_click(_puzzle_item:PuzzleItem, location:Vector2i):
-	if(rebuilding): return;
-	if(matching): return;
-	if(moving): return;
+	if(Reg.Replay): return
+	if(rebuilding): return
+	if(matching): return
+	if(moving): return
+	if !ready_for_input: return
 	if !selector.cleared and !selector.visible: return
 	var r = location.x
 	var c = location.y

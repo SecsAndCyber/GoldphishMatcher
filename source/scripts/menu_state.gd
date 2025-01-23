@@ -4,6 +4,7 @@ var reset_ready:bool;
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	super._ready()
+	Reg.Replay = false
 	reset_ready = false
 	
 	if OS.has_feature("web"):

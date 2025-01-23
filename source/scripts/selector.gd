@@ -11,14 +11,16 @@ var blocks = [[]];
 
 var SelectionX:int:
 	set(value):
-		cleared = false
-		selection.x = (value + len(blocks)) % len(blocks)
+		if blocks and blocks[0]:
+			cleared = false
+			selection.x = (value + len(blocks)) % len(blocks)
 	get: return selection.x
 
 var SelectionY:int:
 	set(value):
-		cleared = false
-		selection.y = (value + len(blocks[0])) % len(blocks[0])
+		if blocks and blocks[0]:
+			cleared = false
+			selection.y = (value + len(blocks[0])) % len(blocks[0])
 	get: return selection.y
 
 func clear():
