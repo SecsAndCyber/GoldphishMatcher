@@ -226,24 +226,16 @@ func blocks_correct(speed:float) -> bool:
 				r * blocks[r][c].size.x * blocks[r][c].scale.x,
 				c * blocks[r][c].size.y * blocks[r][c].scale.x
 			)
-			if Reg.Replay:
-				if not block.position.x == destination.x:
-					block.position.x = destination.x
-					blocks_moved = true
-				if not block.position.y == destination.y:
-					block.position.y = destination.y
-					blocks_moved = true
+			if abs(block.position.x - destination.x) > 1:
+				block.position.x = lerp(block.position.x, destination.x, speed)
+				blocks_moved = true
 			else:
-				if abs(block.position.x - destination.x) > 1:
-					block.position.x = lerp(block.position.x, destination.x, speed)
-					blocks_moved = true
-				else:
-					block.position.x = destination.x
-				if abs(block.position.y - destination.y) > 1:
-					block.position.y = lerp(block.position.y, destination.y, speed)
-					blocks_moved = true
-				else:
-					block.position.y = destination.y
+				block.position.x = destination.x
+			if abs(block.position.y - destination.y) > 1:
+				block.position.y = lerp(block.position.y, destination.y, speed)
+				blocks_moved = true
+			else:
+				block.position.y = destination.y
 				
 	return !blocks_moved
 

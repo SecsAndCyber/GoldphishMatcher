@@ -31,6 +31,10 @@ window/size/resizable=false
 window/stretch/mode="viewport"
 window/handheld/orientation=1
 
+[editor]
+
+movie_writer/movie_file="X:\\Godot Movies\\goldphish_match.avi"
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/uuid/plugin.cfg")

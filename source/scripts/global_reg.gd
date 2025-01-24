@@ -115,8 +115,8 @@ static var NetworkMute:bool:
 		instance._network_disable = val
 static var hideMouse:bool = false;
 
-var _replaying:bool = false
-static var Replay:bool:
+var _replaying:int = 0
+static var Replay:int:
 	get():
 		return instance._replaying
 	set(val):
