@@ -9,14 +9,23 @@ var step_active: bool = false
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	super._ready()
+	call_deferred("do_replay_setup")
+	if not 'root' == get_parent().name:
+		retry_button.queue_free()
+		next_button.queue_free()
+		current_level.visible = false
+		current_score.visible = false
+		run_score.visible = false
+	
+func do_replay_setup():
+	if Reg.LastMoves:
+		moves_to_replay =  Reg.LastMoves
+		replay_level = Reg.LastLevel
 	Reg.Replay = ceilf(replay_level * 0.08)
 	Reg.Levels = replay_level
 	replay_array = moves_to_replay.duplicate(true)
-	call_deferred("do_replay_setup")
-	
-func do_replay_setup():
-	# Do initialization here
-	pass
+	Reg.Loss = false
+	Reg.PS = self
 	
 func _process(delta: float) -> void:
 	super._process(delta)
@@ -30,6 +39,7 @@ func _process(delta: float) -> void:
 	if(!board.ready_for_input): return
 	if !board.selector.cleared and !board.selector.visible: return
 	if board.selector.toast_text.visible: return
+	if ! board.selector.blocks or ! board.selector.blocks[0]: return
 	if step_active: return
 	
 	if replay_array:
@@ -80,10 +90,10 @@ func do_next_step(step_instruction):
 func popup():
 	check_button.button_pressed = false
 	check_button.disabled = false
-	replay_array = moves_to_replay.duplicate(true)
 	call_deferred("do_setup")
-	check_button.button_pressed = true
+	_on_check_button_toggled(true)
 
 
 func _on_check_button_toggled(toggled_on: bool) -> void:
-	pass # Replace with function body.
+	do_replay_setup()
+	check_button.button_pressed = toggled_on

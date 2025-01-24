@@ -149,18 +149,23 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if(closing): return
 	if (Reg.Loss):
+		closing = true;
 		ready_for_input = false
 		crackers.visible = false
-		closing = true;
 		Reg.HiScoreSet = false;
 		selector.toast("Failed");
 		Reg.Sounds.level_lost();
-		Reg.telemetryNode.failed_level(moves)
-		get_tree().create_timer(3).timeout.connect(func():
-			Reg.saveScore();
-			Reg.PS.change_scene_to_file("res://source/failed_state.tscn")
-		)
-		return
+		if !Reg.Replay:
+			Reg.LastLevel = Reg.Levels
+			Reg.LastMoves = moves
+			Reg.telemetryNode.failed_level(moves)
+			get_tree().create_timer(3).timeout.connect(func():
+				Reg.saveScore();
+				Reg.PS.change_scene_to_file("res://source/failed_state.tscn")
+			)
+		else:
+			Reg.PS.popup()
+			return
 	if(!blocks_correct(rebuild_speed)): return;
 	if(matching): return;
 	moving = false;
@@ -355,6 +360,8 @@ func handle_match_state():
 			
 			get_tree().create_timer(end_delay).timeout.connect(func():
 				if ! Reg.Replay:
+					Reg.LastLevel = Reg.Levels
+					Reg.LastMoves = moves
 					Reg.telemetryNode.finish_level(moves)
 					# Moving to next level
 					if !Reg.Done && Reg.HiScore[0] < Reg.Score + Reg.RunningScore:

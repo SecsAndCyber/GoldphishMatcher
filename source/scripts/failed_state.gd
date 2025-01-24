@@ -1,4 +1,4 @@
-extends GameState
+extends Control # GameState
 class_name FailState
 
 @onready var return_button: TextureButton = $ReturnButton
@@ -12,16 +12,18 @@ class_name FailState
 @onready var done_banner: Label = $DoneBanner
 @onready var best_run_score: Label = $BestRunScore
 
+var display_score:int = Reg.Score
+	
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	super._ready()
-	call_deferred("do_setup")
+	# super._ready()
+	call_deferred("do_failed_setup")
 	
-func do_setup():
+func do_failed_setup():
 	# Do initialization here
 	Reg.HiScoreSet = false
 	$CurrentLevel.text = "Level\n" + str(Reg.Levels);
-	$CurrentScore.text = "Score\n" + str(Reg.Score);
+	$CurrentScore.text = "Score\n" + str(display_score);
 	if Reg.Done && Reg.Levels > 30:
 		run_score.text = "Free Score\n"
 	else:
@@ -31,17 +33,19 @@ func do_setup():
 		
 	if Reg.Levels in Reg.HiScore:
 		$HiScore.text = "Hi Score\n" + str(Reg.HiScore[Reg.Levels]);
-	Reg.PS = self
 	
+	var rs = Reg.RunningScore
+	Reg.Levels = 1
+	Reg.RunningScore = 0
+	Reg.Score = 0
+	Reg.saveScore()
+	Reg.RunningScore = rs
+	Reg.PS = null
+	replay_state._on_check_button_toggled(true)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	if Reg.PS == self:
-		Reg.Levels = 1
-		Reg.RunningScore = 0
-		Reg.Score = 0
-		Reg.saveScore()
-		Reg.PS = null
+	pass
 
 
 func _on_menu_button_pressed() -> void:
@@ -49,12 +53,15 @@ func _on_menu_button_pressed() -> void:
 	Reg.RunningScore = 0
 	Reg.Score = 0
 	Reg.saveScore()
-	change_scene_to_file("res://source/menu_state.tscn")
+	Reg.Replay = false
+	replay_state.change_scene_to_file("res://source/menu_state.tscn")
 
+@onready var replay_state: ReplayState = $"../ReplayState/Container"
 
 func _on_play_button_pressed() -> void:
 	Reg.Levels = 1
 	Reg.RunningScore = 0
 	Reg.Score = 0
 	Reg.saveScore()
-	change_scene_to_file("res://source/play_state.tscn")
+	Reg.Replay = false
+	replay_state.change_scene_to_file("res://source/play_state.tscn")

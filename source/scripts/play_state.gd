@@ -41,11 +41,12 @@ func do_setup():
 		$NextButton.texture_hover.atlas = load("res://assets/UI/FreePlay_Button_Frames.png")
 
 func popup():
-	return_button.visible = false
-	retry_button.visible = false
-	next_button.visible = false
-	if Reg.Levels >= 30:
-		Reg.Done = true
+	if !Reg.Replay:
+		return_button.visible = false
+		retry_button.visible = false
+		next_button.visible = false
+		if Reg.Levels >= 30:
+			Reg.Done = true
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
@@ -56,9 +57,10 @@ func _process(_delta: float) -> void:
 	else:
 		run_score.text = "Run Score\n"
 	run_score.text += str(Reg.RunningScore + Reg.Score)
-		
+	if Reg.Replay: return
 	if Reg.Levels in Reg.HiScore:
 		$HiScore.text = "Hi Score\n" + str(Reg.HiScore[Reg.Levels])
+	
 	if Reg.Loss:
 		if return_button.visible:
 			# Code here will run just once after the Loss flag is set

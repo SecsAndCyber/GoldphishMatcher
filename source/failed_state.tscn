@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://dhh3gjlk1sdf8"]
+[gd_scene load_steps=12 format=3 uid="uid://dhh3gjlk1sdf8"]
 
 [ext_resource type="Script" path="res://source/scripts/failed_state.gd" id="1_aynwv"]
 [ext_resource type="Texture2D" uid="uid://cujg3js88g11v" path="res://assets/backgrounds/background-4.png" id="2_26f1s"]
 [ext_resource type="Texture2D" uid="uid://d3xayflyb0lxx" path="res://assets/backgrounds/foreground-4.png" id="4_e3lga"]
 [ext_resource type="Texture2D" uid="uid://oimu8os7fkqs" path="res://assets/UI/Play_Button_Frames.png" id="5_pr7gn"]
 [ext_resource type="Texture2D" uid="uid://bxvbt63obr7j1" path="res://assets/UI/Return_Button_Frames.png" id="5_ry7gx"]
+[ext_resource type="PackedScene" uid="uid://b2a53t6xtelye" path="res://source/replay_state.tscn" id="7_oxosu"]
 [ext_resource type="Theme" uid="uid://docpmippif7jn" path="res://source/resources/PlayStateText.tres" id="8_55qik"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_t6qk5"]
@@ -25,6 +26,8 @@ region = Rect2(298, 0, 298, 0)
 
 [node name="FailedState" type="Node2D"]
 
+[node name="ReplayState" parent="." instance=ExtResource("7_oxosu")]
+
 [node name="Container" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
@@ -33,6 +36,7 @@ offset_bottom = 720.0
 script = ExtResource("1_aynwv")
 
 [node name="background" type="TextureRect" parent="Container"]
+z_index = -1
 layout_mode = 0
 offset_right = 480.0
 offset_bottom = 720.0
@@ -40,6 +44,7 @@ scale = Vector2(0.3, 0.3)
 texture = ExtResource("2_26f1s")
 
 [node name="foreground" type="TextureRect" parent="Container"]
+z_index = 9
 layout_mode = 0
 offset_right = 1600.0
 offset_bottom = 2400.0
@@ -48,6 +53,7 @@ mouse_filter = 2
 texture = ExtResource("4_e3lga")
 
 [node name="ReturnButton" type="TextureButton" parent="Container"]
+z_index = 10
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -63,6 +69,7 @@ texture_hover = SubResource("AtlasTexture_dhwgr")
 stretch_mode = 3
 
 [node name="PlayButton" type="TextureButton" parent="Container"]
+z_index = 10
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -92,6 +99,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="RunScore" type="Label" parent="Container"]
+z_index = 10
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -108,6 +116,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="BestRunScore" type="Label" parent="Container"]
+z_index = 10
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0

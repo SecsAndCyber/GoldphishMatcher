@@ -24,7 +24,7 @@ script = ExtResource("1_bvbp5")
 
 [node name="toastText" type="RichTextLabel" parent="."]
 visible = false
-z_index = 10
+z_index = 8
 layout_mode = 0
 offset_left = 7.0
 offset_top = 6.0

@@ -43,6 +43,7 @@ offset_bottom = 720.0
 script = ExtResource("1_gjarw")
 
 [node name="background" type="TextureRect" parent="Container"]
+z_index = -5
 layout_mode = 0
 offset_right = 480.0
 offset_bottom = 720.0
@@ -64,6 +65,7 @@ mouse_filter = 2
 texture = ExtResource("4_3ebe3")
 
 [node name="ReturnButton" type="TextureButton" parent="Container"]
+visible = false
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -97,6 +99,7 @@ texture_normal = SubResource("AtlasTexture_soy2p")
 texture_hover = SubResource("AtlasTexture_7il42")
 
 [node name="NextButton" type="TextureButton" parent="Container"]
+visible = false
 layout_mode = 0
 offset_left = 230.0
 offset_top = 240.0

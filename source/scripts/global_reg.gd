@@ -122,6 +122,20 @@ static var Replay:int:
 	set(val):
 		instance._replaying = val
 
+var _last_level:int = 0
+static var LastLevel:int:
+	get():
+		return instance._last_level
+	set(val):
+		instance._last_level = val
+
+var _last_moves:Array = []
+static var LastMoves:Array:
+	get():
+		return instance._last_moves
+	set(val):
+		instance._last_moves = val
+
 static var fish_speed:float = 50.0 * UI_Scale;
 static var fish_location:Vector2 = Vector2.ZERO;
 
