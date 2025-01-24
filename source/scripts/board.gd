@@ -10,10 +10,13 @@ var ready_for_input: bool = false
 
 var map : Array
 var blocks : Array
+var highlight_lines : Array
 var moves = []
+var offset : Vector2 = Vector2.ZERO
 
 @onready var crackers: Control = $Crackers
 @onready var selector: Selector = $Selector.get_node("Selector")
+@onready var highlights: Control = $Highlights
 
 var rebuilding:bool = false
 var rebuild_speed:float = .25
@@ -43,6 +46,7 @@ var has_match:bool:
 			matching = true
 			get_tree().create_timer(.05).timeout.connect(func():
 				if is_match():
+					draw_highlights()
 					get_tree().create_timer(.05).timeout.connect(func():
 						matching = false
 					)
@@ -72,11 +76,6 @@ func create(x_size, y_size):
 	xs = x_size
 	ys = y_size
 	level_block_count = x_size * y_size
-	map = [[],[]]
-	for r in range(xs):
-		map[0].append(false)
-	for c in range(ys):
-		map[1].append(false)
 	rng = FlxRandom.new()
 	rng.init(Reg.Levels)
 	
@@ -91,7 +90,29 @@ func create(x_size, y_size):
 			crackers.add_child(blocks[r][c])
 			blocks[r][c].position.x = r * blocks[r][c].size.x * blocks[r][c].scale.x
 			blocks[r][c].position.y = c * blocks[r][c].size.y * blocks[r][c].scale.x
+	map = [[],[]]
+	highlight_lines = [[],[]]
+	for r in range(xs):
+		map[0].append(false)
+		var line_obj = new_line(r,len(highlight_lines[0]),'x')
+		highlight_lines[0].append(line_obj)
+		highlights.add_child(line_obj)
+	for c in range(ys):
+		map[1].append(false)
+		var line_obj = new_line(len(highlight_lines[1]),c,'y')
+		highlight_lines[1].append(line_obj)
+		highlights.add_child(line_obj)
 	ready_for_input = true
+
+func new_line(r,c,angle) -> Line2D:
+	var _nl = Line2D.new()
+	if angle == 'x':
+		_nl.add_point(Vector2(blocks[r][0].position.x,blocks[r][0].position.y)+offset)
+		_nl.add_point(Vector2(blocks[r][ys-1].position.x,blocks[r][ys-1].position.y)+offset)
+	if angle == 'y':
+		_nl.add_point(Vector2(blocks[0][c].position.x,blocks[0][c].position.y)+offset)
+		_nl.add_point(Vector2(blocks[xs-1][c].position.x,blocks[xs-1][c].position.y)+offset)
+	return _nl
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -171,9 +192,9 @@ func get_game_state():
 			columns[c] *= item_value
 			items_count[item_value] = items_count.get(item_value,0) + 1
 	# Test for softlock
-	var _loss = len(items_count) == 4;
+	var _loss = true;
 	for count in items_count:
-		if items_count[count] != 1:
+		if items_count[count] >= min(xs, ys):
 			_loss = false
 	Reg.Loss = _loss
 	return [rows, columns]
@@ -183,7 +204,6 @@ func is_match() -> bool:
 	var game_state = get_game_state()
 	var rows = game_state[0]
 	var columns = game_state[1]
-	var scored:bool = false
 	end_only = true
 	var mini_combo:int = 1
 	var points_gained:int = 0
@@ -194,7 +214,6 @@ func is_match() -> bool:
 		if(xs > 1 && map[1][i]):
 			if(i+1 != ys): end_only = false
 			points_gained += Reg.Levels * points_per_fish * mini_combo
-			scored = true
 			mini_combo += 1
 			
 	for i in range(xs):
@@ -203,7 +222,6 @@ func is_match() -> bool:
 		if(ys > 1 && map[0][i]):
 			if(i+1 != xs): end_only = false
 			points_gained += Reg.Levels * points_per_fish * mini_combo
-			scored = true
 			mini_combo += 1
 	if(points_gained > 0):
 		combo_count += 1;
@@ -212,11 +230,14 @@ func is_match() -> bool:
 		Reg.Sounds.score(combo_count);
 		selector.toast(str(combo_score));
 	moved = false
-	return scored
+	return bool(points_gained)
 
 func blocks_correct(speed:float) -> bool:
 	if(rebuilding): return false
 	var blocks_moved = false
+	
+	if Reg.Replay:
+		speed = float(Reg.Replay) * speed
 	
 	for r in range(xs):
 		for c in range(ys):
@@ -255,8 +276,9 @@ func handle_match_state():
 	if new_ys > 0 and new_xs > 0:
 		var rebuild_delay:float = .2;
 		if end_only:
-			rebuild_delay = .5;
+			rebuild_delay = .75;
 		get_tree().create_timer(rebuild_delay).timeout.connect(func():
+			hide_highlights()
 			var selected_point:Vector2i = Vector2i(selector.selection.x,selector.selection.y)
 				
 			new_blocks = []
@@ -281,10 +303,13 @@ func handle_match_state():
 			xs = new_xs
 			ys = new_ys
 			map = [[],[]]
+			highlight_lines = [[],[]]
 			for r in range(xs):
 				map[0].append(false)
+				highlight_lines[0].append(null)
 			for c in range(ys):
 				map[1].append(false)
+				highlight_lines[1].append(null)
 			
 			selector.clear()
 			rebuilding = false
@@ -293,31 +318,45 @@ func handle_match_state():
 	else:
 		# End of level
 		var end_delay:float = .5;
-		if new_ys == 0 and new_xs == 0:
-			selector.toast("[center]Cleared!\n"+str(level_block_count));
-			score += level_block_count;
-			end_delay = 3;
-			
 		get_tree().create_timer(end_delay).timeout.connect(func():
-			if ! Reg.Replay:
-				Reg.telemetryNode.finish_level(moves)
-				# Moving to next level
-				if !Reg.Done && Reg.HiScore[0] < Reg.Score + Reg.RunningScore:
-					Reg.HiScore[0] = Reg.Score + Reg.RunningScore
-				if Reg.Levels in Reg.HiScore:
-					if Reg.HiScore[Reg.Levels] < Reg.Score:
+			if new_ys > 1 or new_xs > 1:
+				crackers.visible = false
+				selector.toast("[center]Cleared!\n+"+str(level_block_count));
+				score += level_block_count;
+				end_delay = 2.5;
+			hide_highlights()
+			
+			get_tree().create_timer(end_delay).timeout.connect(func():
+				if ! Reg.Replay:
+					Reg.telemetryNode.finish_level(moves)
+					# Moving to next level
+					if !Reg.Done && Reg.HiScore[0] < Reg.Score + Reg.RunningScore:
+						Reg.HiScore[0] = Reg.Score + Reg.RunningScore
+					if Reg.Levels in Reg.HiScore:
+						if Reg.HiScore[Reg.Levels] < Reg.Score:
+							Reg.HiScoreSet = true
+							Reg.HiScore[Reg.Levels] = Reg.Score
+							Reg.HiScoreMoves[Reg.Levels] = moves
+					else:
 						Reg.HiScoreSet = true
 						Reg.HiScore[Reg.Levels] = Reg.Score
 						Reg.HiScoreMoves[Reg.Levels] = moves
-				else:
-					Reg.HiScoreSet = true
-					Reg.HiScore[Reg.Levels] = Reg.Score
-					Reg.HiScoreMoves[Reg.Levels] = moves
-				print(moves)
-				Reg.saveScore()
-			Reg.PS.remove_child(self)
-			Reg.PS.popup()
+					print(moves)
+					Reg.saveScore()
+					Reg.PS.remove_child(self)
+				Reg.PS.popup()
+			)
 		)
+
+func draw_highlights():
+	for c in range(xs):
+		if map[0][c]:
+			highlight_lines[0][c].visible = true
+	for r in range(ys):
+		if map[1][r]:
+			highlight_lines[1][r].visible = true
+func hide_highlights():
+	pass
 
 func on_puzzle_item_click(_puzzle_item:PuzzleItem, location:Vector2i):
 	if(Reg.Replay): return

@@ -1,14 +1,14 @@
 extends PlayState
 class_name ReplayState
 
-var replay_array = ["2-1", "2-1", "D-1", "21", "B-1", "2-1", "21", "21", "A1", "A1", "A1", "2-1", "B-1", "2-1", "2-1", "2-1", "E1", "E1", "21", "D-1", "21", "C-1", "21", "B1", "B1", "2-1", "C1", "C-1", "21", "C1", "B-1", "2-1", "B1", "B1", "2-1", "B-1", "C1", "2-1", "2-1", "C-1"]
-var replay_level = 9 #	2880	
+var replay_array = ["A-1", "A-1", "31", "B-1", "0-1", "A1"]
+var replay_level = 8 #	275	
 
 var step_active: bool = false
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	super._ready()
-	Reg.Replay = 35
+	Reg.Replay = ceilf(replay_level * 0.08)
 	Reg.Levels = replay_level
 	call_deferred("do_replay_setup")
 	
@@ -19,7 +19,8 @@ func do_replay_setup():
 func _process(delta: float) -> void:
 	super._process(delta)
 	
-	if check_button.button_pressed: return
+	if !check_button.button_pressed: return
+	check_button.disabled = true
 	
 	if(board.rebuilding): return
 	if(board.matching): return
@@ -75,7 +76,7 @@ func do_next_step(step_instruction):
 		)
 	
 func popup():
-	pass
+	check_button.disabled = false
 
 
 func _on_check_button_toggled(toggled_on: bool) -> void:
