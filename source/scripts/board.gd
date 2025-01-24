@@ -69,7 +69,21 @@ var score:int:
 		return clampi(_score,0,0x999999)
 	
 func create(x_size, y_size):
-	Reg.HiScoreSet = false;
+	crackers.visible = true
+	for hl in highlights.get_children():
+		highlights.remove_child(hl)
+		hl.queue_free()
+	for cr in crackers.get_children():
+		crackers.remove_child(cr)
+		cr.queue_free()
+	Reg.HiScoreSet = false
+	rebuilding = false
+	rebuild_speed = .25
+	moving = false
+	moved = false
+	closing = false
+	matching = false
+	dragged = false
 	score = 0
 	combo_score = 0
 	combo_count = 0
@@ -90,6 +104,7 @@ func create(x_size, y_size):
 			crackers.add_child(blocks[r][c])
 			blocks[r][c].position.x = r * blocks[r][c].size.x * blocks[r][c].scale.x
 			blocks[r][c].position.y = c * blocks[r][c].size.y * blocks[r][c].scale.x
+	offset = blocks[0][0].size * blocks[0][0].scale * .5
 	map = [[],[]]
 	highlight_lines = [[],[]]
 	for r in range(xs):
@@ -112,7 +127,17 @@ func new_line(r,c,angle) -> Line2D:
 	if angle == 'y':
 		_nl.add_point(Vector2(blocks[0][c].position.x,blocks[0][c].position.y)+offset)
 		_nl.add_point(Vector2(blocks[xs-1][c].position.x,blocks[xs-1][c].position.y)+offset)
+	_nl.visible = false
 	return _nl
+
+func fix_line(line2d, r,c,angle) -> Line2D:
+	if angle == 'x':
+		line2d.points[0] = Vector2(blocks[r][0].position.x,blocks[r][0].position.y)+offset
+		line2d.points[1] = Vector2(blocks[r][ys-1].position.x,blocks[r][ys-1].position.y)+offset
+	if angle == 'y':
+		line2d.points[0] = Vector2(blocks[0][c].position.x,blocks[0][c].position.y)+offset
+		line2d.points[1] = Vector2(blocks[xs-1][c].position.x,blocks[xs-1][c].position.y)+offset
+	return line2d
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -257,7 +282,11 @@ func blocks_correct(speed:float) -> bool:
 				blocks_moved = true
 			else:
 				block.position.y = destination.y
-				
+	if !blocks_moved and !matching:
+		for r in range(xs):
+			for c in range(ys):
+				highlight_lines[0][r] = fix_line(highlight_lines[0][r],r,c,'x')
+				highlight_lines[1][c] = fix_line(highlight_lines[1][c],r,c,'y')
 	return !blocks_moved
 
 func handle_match_state():
@@ -274,9 +303,9 @@ func handle_match_state():
 		if map[1][r]:
 			new_ys -= 1
 	if new_ys > 0 and new_xs > 0:
-		var rebuild_delay:float = .2;
+		var rebuild_delay:float = .25;
 		if end_only:
-			rebuild_delay = .75;
+			rebuild_delay += .25;
 		get_tree().create_timer(rebuild_delay).timeout.connect(func():
 			hide_highlights()
 			var selected_point:Vector2i = Vector2i(selector.selection.x,selector.selection.y)
@@ -303,13 +332,11 @@ func handle_match_state():
 			xs = new_xs
 			ys = new_ys
 			map = [[],[]]
-			highlight_lines = [[],[]]
+			
 			for r in range(xs):
 				map[0].append(false)
-				highlight_lines[0].append(null)
 			for c in range(ys):
 				map[1].append(false)
-				highlight_lines[1].append(null)
 			
 			selector.clear()
 			rebuilding = false
@@ -356,7 +383,18 @@ func draw_highlights():
 		if map[1][r]:
 			highlight_lines[1][r].visible = true
 func hide_highlights():
-	pass
+	get_tree().create_timer(.0025).timeout.connect(func():
+		for c in range(xs):
+			highlight_lines[0][c].visible = false
+		for r in range(ys):
+			highlight_lines[1][r].visible = false
+		for orphan in highlight_lines[0].slice(xs):
+			if orphan.get_parent() == highlights:
+				highlights.remove_child(orphan)
+		for orphan in highlight_lines[1].slice(ys):
+			if orphan.get_parent() == highlights:
+				highlights.remove_child(orphan)
+	)
 
 func on_puzzle_item_click(_puzzle_item:PuzzleItem, location:Vector2i):
 	if(Reg.Replay): return

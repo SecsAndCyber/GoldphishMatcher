@@ -20,10 +20,11 @@ func _ready() -> void:
 	
 func do_setup():
 	# Do initialization here
-	Reg.RunningScore += Reg.Score
+	if !Reg.Replay:
+		Reg.RunningScore += Reg.Score
+		Reg.saveScore()
 	Reg.PS = self
 	Reg.Score = 0;
-	Reg.saveScore()
 	Reg.HiScoreSet = false;
 	Reg.Loss = false;
 	

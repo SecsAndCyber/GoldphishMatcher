@@ -1,8 +1,9 @@
 extends PlayState
 class_name ReplayState
 
-var replay_array = ["A-1", "A-1", "31", "B-1", "0-1", "A1"]
-var replay_level = 8 #	275	
+@export var moves_to_replay = ["21", "01", "A1"]
+var replay_array : Array
+var replay_level = 1
 
 var step_active: bool = false
 # Called when the node enters the scene tree for the first time.
@@ -10,6 +11,7 @@ func _ready() -> void:
 	super._ready()
 	Reg.Replay = ceilf(replay_level * 0.08)
 	Reg.Levels = replay_level
+	replay_array = moves_to_replay.duplicate(true)
 	call_deferred("do_replay_setup")
 	
 func do_replay_setup():
@@ -76,7 +78,11 @@ func do_next_step(step_instruction):
 		)
 	
 func popup():
+	check_button.button_pressed = false
 	check_button.disabled = false
+	replay_array = moves_to_replay.duplicate(true)
+	call_deferred("do_setup")
+	check_button.button_pressed = true
 
 
 func _on_check_button_toggled(toggled_on: bool) -> void:
