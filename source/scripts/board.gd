@@ -355,6 +355,8 @@ func handle_match_state():
 				crackers.visible = false
 				selector.toast("[center]Cleared!\n+"+str(level_block_count));
 				score += level_block_count;
+				# Reassigning lambda capture does not modify the outer local variable "end_delay"
+				@warning_ignore("CONFUSABLE_CAPTURE_REASSIGNMENT")
 				end_delay = 2.5;
 			hide_highlights()
 			

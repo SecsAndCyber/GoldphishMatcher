@@ -28,7 +28,9 @@ func do_setup():
 	Reg.HiScoreSet = false;
 	Reg.Loss = false;
 	
+	@warning_ignore("integer_division")
 	var rows:int = 4 + int(Reg.Levels / 5)
+	@warning_ignore("integer_division")
 	var columns:int = 4 + int(Reg.Levels / 5)
 	board.size = Vector2(rows, columns)
 	board.create(rows, columns)
@@ -68,15 +70,15 @@ func _process(_delta: float) -> void:
 		return_button.visible = false
 		retry_button.visible = false
 		next_button.visible = false
-		background.texture = load("res://assets/backgrounds/background-4.png")
-		foreground.texture = load("res://assets/backgrounds/foreground-4.png")
+		background.texture = BG_TEXTURE_LOSS
+		foreground.texture = FG_TEXTURE_LOSS
 		return
 	if !return_button.visible and !retry_button.visible:
 		if (.5 > animate_popup()):
 			if (Reg.HiScoreSet):
 				Reg.Sounds.level_won();
-				background.texture = load("res://assets/backgrounds/background-3.png")
-				foreground.texture = load("res://assets/backgrounds/foreground-3.png")
+				background.texture = BG_TEXTURE_HISCORE
+				foreground.texture = FG_TEXTURE_HISCORE
 			else:
 				background.texture = load("res://assets/backgrounds/background-2.png")
 				foreground.texture = load("res://assets/backgrounds/foreground-2.png")

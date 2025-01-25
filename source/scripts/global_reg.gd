@@ -71,7 +71,12 @@ static var HiScoreSet:bool:
 	get:
 		return instance._highscoreset
 
-static var Loss:bool = false;
+@export var _loss:bool
+static var Loss:bool:
+	set(val):
+		instance._loss = val
+	get:
+		return instance._loss
 static var Done:bool = false;
 
 static var UI_Scale:float = .33333
@@ -89,6 +94,7 @@ static var Level_Scale:float:
 		return UI_Scale
 static var LevelStep:int:
 	get():
+		@warning_ignore("integer_division")
 		return int(instance._levels / 5)
 static var MusicVolume:float = .0125
 var _music_mute:bool = false

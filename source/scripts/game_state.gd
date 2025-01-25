@@ -3,6 +3,13 @@ class_name GameState
 
 @onready var reg:Reg = Reg.instance
 
+var BG_TEXTURE_NORMAL = preload("res://assets/backgrounds/background-1.png")
+var FG_TEXTURE_NORMAL = preload("res://assets/backgrounds/foreground-1.png")
+var BG_TEXTURE_LOSS = preload("res://assets/backgrounds/background-4.png")
+var FG_TEXTURE_LOSS = preload("res://assets/backgrounds/foreground-4.png")
+var BG_TEXTURE_HISCORE = preload("res://assets/backgrounds/background-3.png")
+var FG_TEXTURE_HISCORE = preload("res://assets/backgrounds/foreground-3.png")
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	Reg.loadScore()
