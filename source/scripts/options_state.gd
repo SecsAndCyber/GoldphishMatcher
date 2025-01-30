@@ -49,9 +49,9 @@ func _on_music_mute_toggled(toggled_on: bool) -> void:
 
 func _on_sfx_mute_toggled(toggled_on: bool) -> void:
 	if toggled_on:
-		$SfxContainer/SfxSettingsLabel.text = "SFX🔇"
+		$SfxContainer/SfxSettingsLabel.text = "SFX"
 	else:
-		$SfxContainer/SfxSettingsLabel.text = "SFX🔊"
+		$SfxContainer/SfxSettingsLabel.text = "SFX"
 	Reg.SfxMute = toggled_on
 	Reg.saveScore()
 
