@@ -9,6 +9,8 @@ func _ready() -> void:
 	
 	if OS.has_feature("web"):
 		$ExitButton.visible = false
+	if OS.has_feature("ios"):
+		$ExitButton.visible = false
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
