@@ -6,13 +6,6 @@ extends Control
 	$StarA, $StarB, $StarC
 ]
 
-var AnimationFrames = []
-
-func _init():
-	for i in range(25):
-		AnimationFrames.append(
-			load("res://assets/GoldStar_Spinning-" + str(i + 11) + ".png")
-		)
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	call_deferred("set_up")
@@ -23,37 +16,40 @@ func set_up() -> void:
 		call_deferred("begin")
 	for s in Stars:
 		s.get_node('Star').modulate = Color(0,0,0)
-		var star_tr:TextureRect = s.get_node('Animate')
-		for i in range(25):
-			star_tr.texture.set_frame_texture(i,
-				AnimationFrames[i]
-			)
-			star_tr.texture.set_frame_duration(i,.1)
 
 func begin() -> void:
+	var rows:int = 4 + int(Reg.Levels / 5)
+	var star_1_delay : float = .75
+	var star_2_delay : float = 1.5
+	var star_3_delay : float = 1.75
 	visible = true
 	if Reg.Score:
-		print(Reg.Score)
+		if Reg.Score <= rows * 5 * 3:
+			star_3_delay = 0
+		if Reg.Score <= rows * 5 * 2:
+			star_2_delay = 0
+		if Reg.Score <= rows * 5:
+			star_1_delay = 0
 	
-	get_tree().create_timer(.75).timeout.connect(func():
-		Stars[0].get_node('Animate').visible = true
-		Stars[0].get_node('Animate').texture.pause = false
-		get_tree().create_timer(1.5).timeout.connect(func():
-			Stars[1].get_node('Animate').visible = true
-			Stars[1].get_node('Animate').texture.pause = false
-			get_tree().create_timer(1.75).timeout.connect(func():
-				Stars[2].get_node('Animate').visible = true
-				Stars[2].get_node('Animate').texture.pause = false
+	get_tree().create_timer(star_1_delay).timeout.connect(func():
+		if star_1_delay:
+			Stars[0].get_node('Animate').play()
+		get_tree().create_timer(star_2_delay).timeout.connect(func():
+			if star_2_delay:
+				Stars[1].get_node('Animate').play()
+			get_tree().create_timer(star_3_delay).timeout.connect(func():
+				if star_3_delay:
+					Stars[2].get_node('Animate').play()
 				complete = true
 			)
 		)
 	)
-	
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta: float) -> void:
+
+
+func _on_animate_animation_ended(atr: AnimatedTextureRect) -> void:
+	var i : int = 0
 	for s in Stars:
-		var star_tr : TextureRect = s.get_node('Animate')
-		if !star_tr.texture.pause:
-			if star_tr.texture.current_frame >= 20:
-				s.get_node('Star').modulate = Color.WHITE
-				star_tr.visible = false
+		if atr == s.get_node('Animate'):
+			s.get_node('Star').modulate = Color.WHITE
+			atr.visible = false
+		i += 1

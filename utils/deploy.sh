@@ -1,6 +1,6 @@
 HOST=${HOST:="molyett.com"}
 DEST=${DEST:='~/www/haxe/GoldphishMatcher'}
-VERSION=${VERSION:="XXX"}
+VERSION=${VERSION:="1.2.0"}
 PROJECT="GoldphishMatcher"
 
 FULL_PATH_TO_SCRIPT="$(realpath "${BASH_SOURCE[0]}")"

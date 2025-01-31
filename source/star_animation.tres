@@ -1,0 +1,234 @@
+[gd_resource type="SpriteFrames" load_steps=57 format=3 uid="uid://cq5rwd6oudppg"]
+
+[ext_resource type="Texture2D" uid="uid://b1kg2t3i8xgb6" path="res://assets/Animations/GoldStar/0041.png" id="1_lr82n"]
+[ext_resource type="Texture2D" uid="uid://bk1e8rycg5asg" path="res://assets/Animations/GoldStar/0042.png" id="2_02e3f"]
+[ext_resource type="Texture2D" uid="uid://c4jxpg1u24xyt" path="res://assets/Animations/GoldStar/0043.png" id="3_jc28d"]
+[ext_resource type="Texture2D" uid="uid://brei3rc88d57s" path="res://assets/Animations/GoldStar/0044.png" id="4_uvl4k"]
+[ext_resource type="Texture2D" uid="uid://nh5lvw8dleya" path="res://assets/Animations/GoldStar/0045.png" id="5_bhim5"]
+[ext_resource type="Texture2D" uid="uid://bk265pb3cuuwd" path="res://assets/Animations/GoldStar/0046.png" id="6_po84b"]
+[ext_resource type="Texture2D" uid="uid://bskovykrulymq" path="res://assets/Animations/GoldStar/0047.png" id="7_on72u"]
+[ext_resource type="Texture2D" uid="uid://ot5sis4hvbxe" path="res://assets/Animations/GoldStar/0048.png" id="8_3lv7d"]
+[ext_resource type="Texture2D" uid="uid://c5hqpppne1mvs" path="res://assets/Animations/GoldStar/0049.png" id="9_cdvma"]
+[ext_resource type="Texture2D" uid="uid://dc1aoh047t7as" path="res://assets/Animations/GoldStar/0050.png" id="10_mo8nr"]
+[ext_resource type="Texture2D" uid="uid://b52t3qes2eiue" path="res://assets/Animations/GoldStar/0051.png" id="11_kfshp"]
+[ext_resource type="Texture2D" uid="uid://enu5cy81nj5q" path="res://assets/Animations/GoldStar/0052.png" id="12_yrdxg"]
+[ext_resource type="Texture2D" uid="uid://bgqn0d8nqvpnk" path="res://assets/Animations/GoldStar/0053.png" id="13_cr5nb"]
+[ext_resource type="Texture2D" uid="uid://dbtckwuoparjk" path="res://assets/Animations/GoldStar/0054.png" id="14_o000d"]
+[ext_resource type="Texture2D" uid="uid://dsj1k1pncv1x0" path="res://assets/Animations/GoldStar/0055.png" id="15_8p41g"]
+[ext_resource type="Texture2D" uid="uid://bln7ec1qlwkxn" path="res://assets/Animations/GoldStar/0056.png" id="16_ykl58"]
+[ext_resource type="Texture2D" uid="uid://c4l6ulv264pwg" path="res://assets/Animations/GoldStar/0057.png" id="17_xesak"]
+[ext_resource type="Texture2D" uid="uid://di1hx25hbp8wu" path="res://assets/Animations/GoldStar/0058.png" id="18_ksvic"]
+[ext_resource type="Texture2D" uid="uid://bcsggmfi336x5" path="res://assets/Animations/GoldStar/0059.png" id="19_0t8x8"]
+[ext_resource type="Texture2D" uid="uid://d0x1vx67j13te" path="res://assets/Animations/GoldStar/0060.png" id="20_c02k8"]
+[ext_resource type="Texture2D" uid="uid://cqwf5cmihc8ur" path="res://assets/Animations/GoldStar/0061.png" id="21_u8m32"]
+[ext_resource type="Texture2D" uid="uid://c0bljs8hl4emn" path="res://assets/Animations/GoldStar/GoldStar_Spinning-0.png" id="22_o31gu"]
+[ext_resource type="Texture2D" uid="uid://gg0uxko2n8ii" path="res://assets/Animations/GoldStar/GoldStar_Spinning-1.png" id="23_nbo46"]
+[ext_resource type="Texture2D" uid="uid://c2dtmubhngw5b" path="res://assets/Animations/GoldStar/GoldStar_Spinning-2.png" id="24_yc60o"]
+[ext_resource type="Texture2D" uid="uid://bfkjxt0ivqmxb" path="res://assets/Animations/GoldStar/GoldStar_Spinning-3.png" id="25_8eob1"]
+[ext_resource type="Texture2D" uid="uid://sdiafq1aciy4" path="res://assets/Animations/GoldStar/GoldStar_Spinning-4.png" id="26_mblr6"]
+[ext_resource type="Texture2D" uid="uid://c8umc47mt6nqa" path="res://assets/Animations/GoldStar/GoldStar_Spinning-5.png" id="27_6p6m0"]
+[ext_resource type="Texture2D" uid="uid://tgf86ayjuguj" path="res://assets/Animations/GoldStar/GoldStar_Spinning-6.png" id="28_epa4w"]
+[ext_resource type="Texture2D" uid="uid://dgdm8bwgmbb3" path="res://assets/Animations/GoldStar/GoldStar_Spinning-7.png" id="29_iiwix"]
+[ext_resource type="Texture2D" uid="uid://cwfcpvfy0dain" path="res://assets/Animations/GoldStar/GoldStar_Spinning-8.png" id="30_ekv1w"]
+[ext_resource type="Texture2D" uid="uid://cjsql23cpffuk" path="res://assets/Animations/GoldStar/GoldStar_Spinning-9.png" id="31_ffcrj"]
+[ext_resource type="Texture2D" uid="uid://djxej2hp2itcm" path="res://assets/Animations/GoldStar/GoldStar_Spinning-10.png" id="32_iwnb7"]
+[ext_resource type="Texture2D" uid="uid://cnb86fk8undt1" path="res://assets/Animations/GoldStar/GoldStar_Spinning-11.png" id="33_1252d"]
+[ext_resource type="Texture2D" uid="uid://duqp4la42hgb0" path="res://assets/Animations/GoldStar/GoldStar_Spinning-12.png" id="34_repym"]
+[ext_resource type="Texture2D" uid="uid://dc4wddsf61v57" path="res://assets/Animations/GoldStar/GoldStar_Spinning-13.png" id="35_auo8e"]
+[ext_resource type="Texture2D" uid="uid://c06c48ykyhcb4" path="res://assets/Animations/GoldStar/GoldStar_Spinning-14.png" id="36_7y4xa"]
+[ext_resource type="Texture2D" uid="uid://bnrg3bqqqhwa2" path="res://assets/Animations/GoldStar/GoldStar_Spinning-15.png" id="37_qb88v"]
+[ext_resource type="Texture2D" uid="uid://4aon2tgsg1pf" path="res://assets/Animations/GoldStar/GoldStar_Spinning-16.png" id="38_6h1ac"]
+[ext_resource type="Texture2D" uid="uid://drarpq6lmmfnj" path="res://assets/Animations/GoldStar/GoldStar_Spinning-17.png" id="39_8newo"]
+[ext_resource type="Texture2D" uid="uid://b5oumlfpd34bp" path="res://assets/Animations/GoldStar/GoldStar_Spinning-18.png" id="40_h1psf"]
+[ext_resource type="Texture2D" uid="uid://qgp0ct5vihat" path="res://assets/Animations/GoldStar/GoldStar_Spinning-19.png" id="41_2sjnh"]
+[ext_resource type="Texture2D" uid="uid://1eqox5k812j4" path="res://assets/Animations/GoldStar/GoldStar_Spinning-20.png" id="42_8rwwj"]
+[ext_resource type="Texture2D" uid="uid://7bsb1hh0phd" path="res://assets/Animations/GoldStar/GoldStar_Spinning-21.png" id="43_1k3rf"]
+[ext_resource type="Texture2D" uid="uid://efxevbfyx0rr" path="res://assets/Animations/GoldStar/GoldStar_Spinning-22.png" id="44_dii76"]
+[ext_resource type="Texture2D" uid="uid://dq84655rdfoo" path="res://assets/Animations/GoldStar/GoldStar_Spinning-23.png" id="45_lh03f"]
+[ext_resource type="Texture2D" uid="uid://8niailobq7fs" path="res://assets/Animations/GoldStar/GoldStar_Spinning-24.png" id="46_jk0pk"]
+[ext_resource type="Texture2D" uid="uid://dkydgs8ws438p" path="res://assets/Animations/GoldStar/GoldStar_Spinning-25.png" id="47_nube2"]
+[ext_resource type="Texture2D" uid="uid://cvsu0qbgny1ql" path="res://assets/Animations/GoldStar/GoldStar_Spinning-26.png" id="48_5d6s3"]
+[ext_resource type="Texture2D" uid="uid://dwpl7ikme78hw" path="res://assets/Animations/GoldStar/GoldStar_Spinning-27.png" id="49_nn12j"]
+[ext_resource type="Texture2D" uid="uid://ccjre64xi27ar" path="res://assets/Animations/GoldStar/GoldStar_Spinning-28.png" id="50_pvlih"]
+[ext_resource type="Texture2D" uid="uid://dm6j5u3qr5fe5" path="res://assets/Animations/GoldStar/GoldStar_Spinning-29.png" id="51_rpd6b"]
+[ext_resource type="Texture2D" uid="uid://bk151pkv5kawe" path="res://assets/Animations/GoldStar/GoldStar_Spinning-30.png" id="52_d2kbh"]
+[ext_resource type="Texture2D" uid="uid://cxbp7f1fu1al4" path="res://assets/Animations/GoldStar/GoldStar_Spinning-31.png" id="53_svcft"]
+[ext_resource type="Texture2D" uid="uid://b50gkwrmqxd8h" path="res://assets/Animations/GoldStar/GoldStar_Spinning-32.png" id="54_jxlmr"]
+[ext_resource type="Texture2D" uid="uid://7saeuwjsk037" path="res://assets/Animations/GoldStar/GoldStar_Spinning-33.png" id="55_gtfrs"]
+[ext_resource type="Texture2D" uid="uid://wlfaifbauj2s" path="res://assets/Animations/GoldStar/GoldStar_Spinning-34.png" id="56_sr3xh"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_lr82n")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_02e3f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_jc28d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_uvl4k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_bhim5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_po84b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_on72u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_3lv7d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_cdvma")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_mo8nr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_kfshp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_yrdxg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_cr5nb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_o000d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_8p41g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_ykl58")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_xesak")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_ksvic")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_0t8x8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_c02k8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_u8m32")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_o31gu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_nbo46")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_yc60o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_8eob1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_mblr6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_6p6m0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_epa4w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_iiwix")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_ekv1w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("31_ffcrj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("32_iwnb7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("33_1252d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("34_repym")
+}, {
+"duration": 1.0,
+"texture": ExtResource("35_auo8e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("36_7y4xa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("37_qb88v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("38_6h1ac")
+}, {
+"duration": 1.0,
+"texture": ExtResource("39_8newo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("40_h1psf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("41_2sjnh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("42_8rwwj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("43_1k3rf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("44_dii76")
+}, {
+"duration": 1.0,
+"texture": ExtResource("45_lh03f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("46_jk0pk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("47_nube2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("48_5d6s3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("49_nn12j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("50_pvlih")
+}, {
+"duration": 1.0,
+"texture": ExtResource("51_rpd6b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("52_d2kbh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("53_svcft")
+}, {
+"duration": 1.0,
+"texture": ExtResource("54_jxlmr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("55_gtfrs")
+}, {
+"duration": 1.0,
+"texture": ExtResource("56_sr3xh")
+}],
+"loop": false,
+"name": &"default",
+"speed": 5.0
+}]

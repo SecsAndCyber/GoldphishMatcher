@@ -1,82 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://d1dm0gb8pvhv7"]
+[gd_scene load_steps=6 format=3 uid="uid://d1dm0gb8pvhv7"]
 
 [ext_resource type="Script" path="res://source/scripts/star_feed_back.gd" id="1_fnrup"]
+[ext_resource type="Texture2D" uid="uid://bjco2rnqecwas" path="res://assets/Animations/GoldStar/GoldStar_Spinning-37.png" id="2_gv562"]
 [ext_resource type="Texture2D" uid="uid://vr1xythqjch0" path="res://assets/GoldStar.png" id="2_x220b"]
-[ext_resource type="Texture2D" uid="uid://ddjjc5d8cjan3" path="res://assets/GoldStar_Spinning-1.png" id="3_r8bhe"]
-[ext_resource type="Texture2D" uid="uid://ts6th20l4oug" path="res://assets/GoldStar_Spinning-2.png" id="4_mbqgy"]
-
-[sub_resource type="AnimatedTexture" id="AnimatedTexture_t07ux"]
-frames = 20
-one_shot = true
-frame_1/texture = ExtResource("3_r8bhe")
-frame_1/duration = 1.0
-frame_2/texture = ExtResource("4_mbqgy")
-frame_2/duration = 1.0
-frame_3/duration = 1.0
-frame_4/duration = 1.0
-frame_5/duration = 1.0
-frame_6/duration = 1.0
-frame_7/duration = 1.0
-frame_8/duration = 1.0
-frame_9/duration = 1.0
-frame_10/duration = 1.0
-frame_11/duration = 1.0
-frame_12/duration = 1.0
-frame_13/duration = 1.0
-frame_14/duration = 1.0
-frame_15/duration = 1.0
-frame_16/duration = 1.0
-frame_17/duration = 1.0
-frame_18/duration = 1.0
-frame_19/duration = 1.0
-
-[sub_resource type="AnimatedTexture" id="AnimatedTexture_4g3he"]
-frames = 20
-pause = true
-one_shot = true
-frame_1/duration = 1.0
-frame_2/duration = 1.0
-frame_3/duration = 1.0
-frame_4/duration = 1.0
-frame_5/duration = 1.0
-frame_6/duration = 1.0
-frame_7/duration = 1.0
-frame_8/duration = 1.0
-frame_9/duration = 1.0
-frame_10/duration = 1.0
-frame_11/duration = 1.0
-frame_12/duration = 1.0
-frame_13/duration = 1.0
-frame_14/duration = 1.0
-frame_15/duration = 1.0
-frame_16/duration = 1.0
-frame_17/duration = 1.0
-frame_18/duration = 1.0
-frame_19/duration = 1.0
-
-[sub_resource type="AnimatedTexture" id="AnimatedTexture_r5n1v"]
-frames = 20
-pause = true
-one_shot = true
-frame_1/duration = 1.0
-frame_2/duration = 1.0
-frame_3/duration = 1.0
-frame_4/duration = 1.0
-frame_5/duration = 1.0
-frame_6/duration = 1.0
-frame_7/duration = 1.0
-frame_8/duration = 1.0
-frame_9/duration = 1.0
-frame_10/duration = 1.0
-frame_11/duration = 1.0
-frame_12/duration = 1.0
-frame_13/duration = 1.0
-frame_14/duration = 1.0
-frame_15/duration = 1.0
-frame_16/duration = 1.0
-frame_17/duration = 1.0
-frame_18/duration = 1.0
-frame_19/duration = 1.0
+[ext_resource type="Script" path="res://source/scripts/AnimatedTextureRect.gd" id="3_dnxp3"]
+[ext_resource type="SpriteFrames" uid="uid://cq5rwd6oudppg" path="res://source/star_animation.tres" id="4_mmq15"]
 
 [node name="StarFeedBack" type="Control"]
 layout_mode = 3
@@ -96,15 +24,15 @@ offset_bottom = 40.0
 layout_mode = 0
 offset_right = 256.0
 offset_bottom = 256.0
-texture = ExtResource("2_x220b")
+texture = ExtResource("2_gv562")
 
 [node name="Animate" type="TextureRect" parent="StarA"]
-visible = false
 z_index = 1
 layout_mode = 0
 offset_right = 256.0
 offset_bottom = 256.0
-texture = SubResource("AnimatedTexture_t07ux")
+script = ExtResource("3_dnxp3")
+sprites = ExtResource("4_mmq15")
 
 [node name="StarB" type="Control" parent="."]
 layout_mode = 3
@@ -120,12 +48,12 @@ offset_bottom = 256.0
 texture = ExtResource("2_x220b")
 
 [node name="Animate" type="TextureRect" parent="StarB"]
-visible = false
 z_index = 1
 layout_mode = 0
 offset_right = 256.0
 offset_bottom = 256.0
-texture = SubResource("AnimatedTexture_4g3he")
+script = ExtResource("3_dnxp3")
+sprites = ExtResource("4_mmq15")
 
 [node name="StarC" type="Control" parent="."]
 layout_mode = 3
@@ -141,9 +69,13 @@ offset_bottom = 256.0
 texture = ExtResource("2_x220b")
 
 [node name="Animate" type="TextureRect" parent="StarC"]
-visible = false
 z_index = 1
 layout_mode = 0
 offset_right = 256.0
 offset_bottom = 256.0
-texture = SubResource("AnimatedTexture_r5n1v")
+script = ExtResource("3_dnxp3")
+sprites = ExtResource("4_mmq15")
+
+[connection signal="animation_ended" from="StarA/Animate" to="." method="_on_animate_animation_ended"]
+[connection signal="animation_ended" from="StarB/Animate" to="." method="_on_animate_animation_ended"]
+[connection signal="animation_ended" from="StarC/Animate" to="." method="_on_animate_animation_ended"]
