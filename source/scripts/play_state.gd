@@ -12,6 +12,7 @@ class_name PlayState
 @onready var current_score: Label = $CurrentScore
 @onready var hi_score: Label = $HiScore
 @onready var done_banner: Label = $DoneBanner
+@onready var star_feed_back: Control = $StarFeedBack
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -73,7 +74,7 @@ func _process(_delta: float) -> void:
 		background.texture = BG_TEXTURE_LOSS
 		foreground.texture = FG_TEXTURE_LOSS
 		return
-	if !return_button.visible and !retry_button.visible:
+	if !star_feed_back.visible and !return_button.visible:
 		if (.5 > animate_popup()):
 			if (Reg.HiScoreSet):
 				Reg.Sounds.level_won();
@@ -82,9 +83,11 @@ func _process(_delta: float) -> void:
 			else:
 				background.texture = load("res://assets/backgrounds/background-2.png")
 				foreground.texture = load("res://assets/backgrounds/foreground-2.png")
-			retry_button.visible = true
-			next_button.visible = true
-			return_button.visible = true
+			star_feed_back.begin()
+	if star_feed_back.visible and star_feed_back.complete:
+		retry_button.visible = true
+		next_button.visible = true
+		return_button.visible = true
 
 func animate_popup() -> float:
 	var delta = current_level.global_position.y
