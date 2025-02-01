@@ -1,6 +1,6 @@
 HOST=${HOST:="molyett.com"}
 DEST=${DEST:='~/www/haxe/GoldphishMatcher'}
-VERSION=${VERSION:="1.3.1"}
+VERSION=${VERSION:="1.3.2"}
 PROJECT="GoldphishMatcher"
 
 FULL_PATH_TO_SCRIPT="$(realpath "${BASH_SOURCE[0]}")"
@@ -18,7 +18,7 @@ rsync -av ./* "$HOST:$DEST"
 popd
 
 pushd $WINDOWS_DIRECTORY
-mv $PROJECT.exe $EXPORT_DIRECTORY/releases/${PROJECT}.windows.${VERSION}.exe
+zip -r $EXPORT_DIRECTORY/releases/${PROJECT}.windows.${VERSION}.zip ./*
 popd
 
 pushd $ANDROID_DIRECTORY
