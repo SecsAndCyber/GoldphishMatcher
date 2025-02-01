@@ -1,11 +1,12 @@
 HOST=${HOST:="molyett.com"}
 DEST=${DEST:='~/www/haxe/GoldphishMatcher'}
-VERSION=${VERSION:="1.3.0"}
+VERSION=${VERSION:="1.3.1"}
 PROJECT="GoldphishMatcher"
 
 FULL_PATH_TO_SCRIPT="$(realpath "${BASH_SOURCE[0]}")"
 SCRIPT_DIRECTORY="$(dirname "$FULL_PATH_TO_SCRIPT")"
 EXPORT_DIRECTORY="$(realpath "${SCRIPT_DIRECTORY}/../exports")"
+ROOT_DIRECTORY="$(realpath "${SCRIPT_DIRECTORY}/../")"
 
 HTML5_DIRECTORY="$(realpath "${EXPORT_DIRECTORY}/HTML5")"
 WINDOWS_DIRECTORY="$(realpath "${EXPORT_DIRECTORY}/Windows")"

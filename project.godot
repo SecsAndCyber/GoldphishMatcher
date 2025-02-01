@@ -11,12 +11,14 @@ config_version=5
 [application]
 
 config/name="GoldphishMatcher"
-config/version="1.3.0"
+config/description="Game Desc"
+config/version="1.3.0.1"
 run/main_scene="res://source/menu_state.tscn"
 config/features=PackedStringArray("4.3", "Mobile")
 boot_splash/show_image=false
 boot_splash/image="res://assets/Icon_512.png"
 config/icon="res://assets/Icon_512.png"
+config/windows_native_icon="res://assets/icons/icon.ico"
 
 [autoload]
 
