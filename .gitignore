@@ -4,3 +4,4 @@
 /exports/
 /screenshots/
 *.tmp
+.DS_Store

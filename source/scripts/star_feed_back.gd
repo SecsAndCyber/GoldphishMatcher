@@ -46,10 +46,8 @@ func begin() -> void:
 	)
 
 
-func _on_animate_animation_ended(atr: AnimatedTextureRect) -> void:
-	var i : int = 0
+func _on_animate_animation_ended(animated_texture_rect: AnimatedTextureRect) -> void:
 	for s in Stars:
-		if atr == s.get_node('Animate'):
+		if animated_texture_rect == s.get_node('Animate'):
 			s.get_node('Star').modulate = Color.WHITE
-			atr.visible = false
-		i += 1
+			animated_texture_rect.visible = false
