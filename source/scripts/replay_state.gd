@@ -1,9 +1,9 @@
 extends PlayState
 class_name ReplayState
 
-@export var moves_to_replay = ["2-1", "B-1", "21", "1-1", "1-1", "31", "31", "B1", "3-1", "3-1", "31", "31", "31", "0-1", "A1", "0-1"]
+@export var moves_to_replay = ["D1", "31", "C1", "C1", "31", "D1", "3-1", "D1"]
 var replay_array : Array
-var replay_level = 3
+var replay_level = 1
 
 var step_active: bool = false
 # Called when the node enters the scene tree for the first time.
@@ -94,7 +94,7 @@ func do_next_step(step_instruction):
 				)
 		)
 	
-func popup():
+func popup(_level_stats:Dictionary = {}):
 	if Reg.Loss:
 		background.texture = BG_TEXTURE_LOSS
 		foreground.texture = FG_TEXTURE_LOSS

@@ -13,6 +13,7 @@ class_name PlayState
 @onready var hi_score: Label = $HiScore
 @onready var done_banner: Label = $DoneBanner
 @onready var star_feed_back: Control = $StarFeedBack
+var final_state: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -25,9 +26,10 @@ func do_setup():
 		Reg.RunningScore += Reg.Score
 		Reg.saveScore()
 	Reg.PS = self
-	Reg.Score = 0;
-	Reg.HiScoreSet = false;
-	Reg.Loss = false;
+	Reg.Score = 0
+	Reg.HiScoreSet = false
+	Reg.Loss = false
+	final_state = false
 	
 	@warning_ignore("integer_division")
 	var rows:int = 4 + int(Reg.Levels / 5)
@@ -43,7 +45,8 @@ func do_setup():
 		$NextButton.texture_normal.atlas = load("res://assets/UI/FreePlay_Button_Frames.png")
 		$NextButton.texture_hover.atlas = load("res://assets/UI/FreePlay_Button_Frames.png")
 
-func popup():
+func popup(level_stats:Dictionary = {}):
+	star_feed_back.begin(level_stats)
 	if !Reg.Replay:
 		return_button.visible = false
 		retry_button.visible = false
@@ -74,8 +77,9 @@ func _process(_delta: float) -> void:
 		background.texture = BG_TEXTURE_LOSS
 		foreground.texture = FG_TEXTURE_LOSS
 		return
-	if !star_feed_back.visible and !return_button.visible:
+	if !return_button.visible and !final_state:
 		if (.5 > animate_popup()):
+			final_state = true
 			if (Reg.HiScoreSet):
 				Reg.Sounds.level_won();
 				background.texture = BG_TEXTURE_HISCORE
@@ -83,8 +87,7 @@ func _process(_delta: float) -> void:
 			else:
 				background.texture = load("res://assets/backgrounds/background-2.png")
 				foreground.texture = load("res://assets/backgrounds/foreground-2.png")
-			star_feed_back.begin()
-	if star_feed_back.visible and star_feed_back.complete:
+	if final_state and star_feed_back.complete:
 		retry_button.visible = true
 		next_button.visible = true
 		return_button.visible = true

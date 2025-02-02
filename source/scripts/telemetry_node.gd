@@ -13,7 +13,6 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	pass
 
-
 func buildUrl(endpoint:String, parameters:Dictionary = {}):
 	var _r = baseUrl + "?endpoint=" + endpoint
 	var enc_parameters:Dictionary = {}
@@ -55,7 +54,9 @@ func reset_scores():
 		'HiScores' : Reg.HiScore,
 	}))
 
-func finish_level(moves:Array):
+func finish_level(moves:Array, on_request_completed:Callable = Callable()):
+	if not on_request_completed.is_null():
+		request_completed.connect(on_request_completed, CONNECT_ONE_SHOT)
 	request(buildUrl('level_cleared',{
 		'GameClient' : Reg.GameId,
 		'Level' : Reg.Levels,

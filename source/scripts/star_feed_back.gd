@@ -13,22 +13,38 @@ func _ready() -> void:
 func set_up() -> void:
 	if get_parent().name == 'root':
 		self.scale = Vector2(Reg.UI_Scale, Reg.UI_Scale)
-		call_deferred("begin")
+		Reg.LastLevel = 1
+		Reg.Score = 75
+		call_deferred("begin", {"map_level":1,"least":9,"average":"79.5000","two_star":124.7217376441414,"maximum":225})
 	for s in Stars:
 		s.get_node('Star').modulate = Color(0,0,0)
 
-func begin() -> void:
-	var rows:int = 4 + int(Reg.Levels / 5)
+func begin(level_stats:Dictionary = {}) -> void:
+	@warning_ignore("integer_division")
+	var rows:int = 4 + int(Reg.LastLevel / 5)
 	var star_1_delay : float = .75
 	var star_2_delay : float = 1.5
 	var star_3_delay : float = 1.75
+	
+	var star_1_threshold : float = Reg.LastLevel * rows * 5
+	var star_2_threshold : float = star_1_threshold * 3
+	var star_3_threshold : float = star_2_threshold * 2
+	
+	if level_stats:
+		if Reg.LastLevel == level_stats.get('map_level'):
+			if star_2_threshold >= float(level_stats.get('average', 0)):
+				star_2_threshold = float(level_stats.get('average'))
+			if level_stats.get('two_star'):
+				star_3_threshold = float(level_stats.get('two_star'))
+			
 	visible = true
 	if Reg.Score:
-		if Reg.Score <= rows * 5 * 3:
+		print("%d : (%d,%d,%d)" % [Reg.Score, star_1_threshold, star_2_threshold, star_3_threshold])
+		if Reg.Score <= star_3_threshold:
 			star_3_delay = 0
-		if Reg.Score <= rows * 5 * 2:
+		if Reg.Score <= star_2_threshold:
 			star_2_delay = 0
-		if Reg.Score <= rows * 5:
+		if Reg.Score <= star_1_threshold:
 			star_1_delay = 0
 	
 	get_tree().create_timer(star_1_delay).timeout.connect(func():

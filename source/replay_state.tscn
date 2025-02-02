@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://b2a53t6xtelye"]
+[gd_scene load_steps=16 format=3 uid="uid://b2a53t6xtelye"]
 
 [ext_resource type="Script" path="res://source/scripts/replay_state.gd" id="1_gjarw"]
 [ext_resource type="Texture2D" uid="uid://dve8vqj2hvbn0" path="res://assets/backgrounds/background-1.png" id="2_w1um8"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://bqxd4alrxfhtv" path="res://assets/UI/Retry_Button_Frames.png" id="6_51e74"]
 [ext_resource type="Texture2D" uid="uid://bwlaom8gjjk4f" path="res://assets/UI/Next_Button_Frames.png" id="7_trif6"]
 [ext_resource type="Theme" uid="uid://docpmippif7jn" path="res://source/resources/PlayStateText.tres" id="8_l5b6s"]
+[ext_resource type="PackedScene" uid="uid://d1dm0gb8pvhv7" path="res://source/star_feed_back.tscn" id="9_iugh4"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_t6qk5"]
 atlas = ExtResource("5_h01aw")
@@ -191,6 +192,9 @@ offset_top = 417.0
 offset_right = 137.0
 offset_bottom = 448.0
 text = "Start Replay"
+
+[node name="StarFeedBack" parent="Container" instance=ExtResource("9_iugh4")]
+visible = false
 
 [connection signal="pressed" from="Container/ReturnButton" to="Container" method="_on_menu_button_pressed"]
 [connection signal="pressed" from="Container/RetryButton" to="Container" method="_on_retry_button_pressed"]

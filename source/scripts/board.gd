@@ -364,7 +364,14 @@ func handle_match_state():
 				if ! Reg.Replay:
 					Reg.LastLevel = Reg.Levels
 					Reg.LastMoves = moves
-					Reg.telemetryNode.finish_level(moves)
+					Reg.telemetryNode.finish_level(moves, func(result, _response_code, _headers, body):
+						if result == HTTPRequest.RESULT_SUCCESS:
+							var json = JSON.parse_string(body.get_string_from_utf8())
+							Reg.PS.popup(json)
+						else:
+							print("Request Error:", result)
+							Reg.PS.popup()
+					)
 					# Moving to next level
 					if !Reg.Done && Reg.HiScore[0] < Reg.Score + Reg.RunningScore:
 						Reg.HiScore[0] = Reg.Score + Reg.RunningScore
@@ -380,7 +387,8 @@ func handle_match_state():
 					print(moves)
 					Reg.saveScore()
 					Reg.PS.remove_child(self)
-				Reg.PS.popup()
+				else:
+					Reg.PS.popup()
 			)
 		)
 
