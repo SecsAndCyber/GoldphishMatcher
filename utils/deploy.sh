@@ -1,6 +1,6 @@
 HOST=${HOST:="molyett.com"}
 DEST=${DEST:='~/www/haxe/GoldphishMatcher'}
-VERSION=${VERSION:="1.4.0.0"}
+VERSION=${VERSION:="1.4.0.1"}
 PROJECT="GoldphishMatcher"
 
 FULL_PATH_TO_SCRIPT="$(realpath "${BASH_SOURCE[0]}")"
@@ -15,10 +15,12 @@ ANDROID_DIRECTORY="$(realpath "${EXPORT_DIRECTORY}/Android")"
 pushd $HTML5_DIRECTORY
 zip -r $EXPORT_DIRECTORY/releases/${PROJECT}.html5.${VERSION}.zip ./*
 rsync -av ./* "$HOST:$DEST"
+rm ./*
 popd
 
 pushd $WINDOWS_DIRECTORY
 zip -r $EXPORT_DIRECTORY/releases/${PROJECT}.windows.${VERSION}.zip ./*
+rm ./*
 popd
 
 pushd $ANDROID_DIRECTORY
