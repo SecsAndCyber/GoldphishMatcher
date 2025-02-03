@@ -35,6 +35,7 @@ var points_per_fish:int = 5
 var cost_per_move:int = -1
 var end_only:bool = false
 
+var board_finished:bool = false
 var closing:bool = false
 var matching:bool = false
 var dragged:bool = false
@@ -84,6 +85,7 @@ func create(x_size, y_size):
 	closing = false
 	matching = false
 	dragged = false
+	board_finished = false
 	score = 0
 	combo_score = 0
 	combo_count = 0
@@ -348,6 +350,7 @@ func handle_match_state():
 			moved = true
 		)
 	else:
+		board_finished = true
 		# End of level
 		var end_delay:float = .5;
 		get_tree().create_timer(end_delay).timeout.connect(func():
@@ -377,7 +380,7 @@ func handle_match_state():
 					if !Reg.Done && Reg.HiScore[0] < Reg.Score + Reg.RunningScore:
 						Reg.HiScore[0] = Reg.Score + Reg.RunningScore
 					if Reg.Levels in Reg.HiScore:
-						if Reg.HiScore[Reg.Levels] < Reg.Score:
+						if Reg.HiScore[Reg.Levels] <= Reg.Score:
 							Reg.HiScoreSet = true
 							Reg.HiScore[Reg.Levels] = Reg.Score
 							Reg.HiScoreMoves[Reg.Levels] = moves

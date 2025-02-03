@@ -6,5 +6,8 @@
 script = ExtResource("1_o6gry")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+max_polyphony = 10
 
 [node name="BackgroundMusicStreamPlayer" type="AudioStreamPlayer" parent="."]
+
+[node name="StarsAudioPlayer" type="AudioStreamPlayer" parent="."]

@@ -1,5 +1,6 @@
 extends Control
 
+@export var started:bool = false
 @export var complete:bool = false
 
 @onready var Stars: Array = [
@@ -15,10 +16,10 @@ func set_up() -> void:
 		add_child(Reg.Sounds)
 		self.scale = Vector2(Reg.UI_Scale, Reg.UI_Scale)
 		Reg.LastLevel = 1
-		Reg.Score = 241
+		Reg.Score = 120
 		call_deferred("begin", {"map_level":1,"least":9,"average":"79.5000","two_star":124.7217376441414,"maximum":225})
 	for s in Stars:
-		s.get_node('Star').visible = false
+		# s.get_node('Star').visible = false
 		s.get_node('Star').modulate = Color(0,0,0)
 
 func begin(level_stats:Dictionary = {}) -> void:
@@ -31,6 +32,7 @@ func begin(level_stats:Dictionary = {}) -> void:
 	var star_1_threshold : float = Reg.LastLevel * rows * 5
 	var star_2_threshold : float = star_1_threshold * 3
 	var star_3_threshold : float = star_2_threshold * 2
+	started = true
 	
 	if level_stats:
 		if Reg.LastLevel == level_stats.get('map_level'):
@@ -48,20 +50,34 @@ func begin(level_stats:Dictionary = {}) -> void:
 			star_2_delay = 0
 		if Reg.Score <= star_1_threshold:
 			star_1_delay = 0
+	Stars[0].get_node('ThresholdLabel').visible = true
+	Stars[0].get_node('ThresholdLabel').text = str(int(star_1_threshold))
+	Stars[1].get_node('ThresholdLabel').visible = true
+	Stars[1].get_node('ThresholdLabel').text = str(int(star_2_threshold))
+	Stars[2].get_node('ThresholdLabel').visible = true
+	Stars[2].get_node('ThresholdLabel').text = str(int(star_3_threshold))
 	
 	get_tree().create_timer(star_1_delay).timeout.connect(func():
 		if star_1_delay:
 			Reg.Sounds.star_chime(1.15)
+			Stars[0].get_node('ThresholdLabel').visible = false
 			Stars[0].get_node('Animate').play()
+		else:
+			Stars[0].get_node('Star').visible = true
 		get_tree().create_timer(star_2_delay).timeout.connect(func():
 			if star_2_delay:
 				Reg.Sounds.star_chime(1.5)
+				Stars[1].get_node('ThresholdLabel').visible = false
 				Stars[1].get_node('Animate').play()
+			else:
+				Stars[1].get_node('Star').visible = true
 			get_tree().create_timer(star_3_delay).timeout.connect(func():
 				if star_3_delay:
 					Reg.Sounds.star_chime(2)
+					Stars[2].get_node('ThresholdLabel').visible = false
 					Stars[2].get_node('Animate').play()
 				else:
+					Stars[2].get_node('Star').visible = true
 					complete = true
 			)
 		)

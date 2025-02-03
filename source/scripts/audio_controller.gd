@@ -3,6 +3,7 @@ class_name AudioController
 
 @onready var audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
 @onready var background_music_stream_player: AudioStreamPlayer = $BackgroundMusicStreamPlayer
+@onready var stars_audio_player: AudioStreamPlayer = $StarsAudioPlayer
 
 var cursor_click:AudioStream
 var actions
@@ -20,6 +21,7 @@ var combo_5:AudioStream
 var combo_6:AudioStream
 var cleared:AudioStream
 
+var level_end_menu:AudioStream
 var menu_open:AudioStream
 var menu_close:AudioStream
 var reset:AudioStream
@@ -41,11 +43,13 @@ func _ready():
 	combo_5 = load("res://assets/Audio/combo_score_5.mp3")
 	combo_6 = load("res://assets/Audio/combo_score_6.mp3")
 	cleared = load("res://assets/Audio/combo_score_7.mp3")
+	level_end_menu = load("res://assets/Audio/next_menu.mp3")
 	menu_open = load("res://assets/Audio/menu_open.wav")
 	menu_close = load("res://assets/Audio/menu_close.wav")
 	reset = load("res://assets/Audio/reset.wav")
 	star = load("res://assets/Audio/star.mp3")
-	actions = [row, col, points, combo_1, combo_2, combo_3, combo_4, menu_open, menu_close]
+	actions = [row, col, points, combo_1, combo_2, combo_3, combo_4,
+				combo_5, combo_6, cleared, menu_open, menu_close, level_end_menu]
 
 func click():
 	if Reg.SfxMute:
@@ -84,6 +88,13 @@ func level_won():
 	audio_stream_player.volume_db = Reg.SFXVolume
 	audio_stream_player.play()
 
+func level_done():
+	if Reg.SfxMute:
+		return
+	audio_stream_player.stream = level_end_menu
+	audio_stream_player.volume_db = Reg.SFXVolume
+	audio_stream_player.play()
+
 func level_cleared():
 	if Reg.SfxMute:
 		return
@@ -101,10 +112,10 @@ func level_lost():
 func star_chime(pitch_shift:float = 1.0):
 	if Reg.SfxMute:
 		return
-	audio_stream_player.pitch_scale = pitch_shift
-	audio_stream_player.stream = star
-	audio_stream_player.volume_db = Reg.SFXVolume
-	audio_stream_player.play()
+	stars_audio_player.pitch_scale = pitch_shift
+	stars_audio_player.stream = star
+	stars_audio_player.volume_db = Reg.SFXVolume
+	stars_audio_player.play()
 
 func menu(open:bool):
 	if Reg.SfxMute:

@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://d1dm0gb8pvhv7"]
+[gd_scene load_steps=7 format=3 uid="uid://d1dm0gb8pvhv7"]
 
 [ext_resource type="Script" path="res://source/scripts/star_feed_back.gd" id="1_fnrup"]
 [ext_resource type="Texture2D" uid="uid://ci8c8itlyxnrv" path="res://assets/Animations/GoldStar/GoldStar_Spinning-37.png" id="2_gv562"]
 [ext_resource type="Texture2D" uid="uid://vr1xythqjch0" path="res://assets/GoldStar.png" id="2_x220b"]
 [ext_resource type="Script" path="res://source/scripts/AnimatedTextureRect.gd" id="3_dnxp3"]
 [ext_resource type="SpriteFrames" uid="uid://cq5rwd6oudppg" path="res://source/star_animation.tres" id="4_mmq15"]
+[ext_resource type="Theme" uid="uid://docpmippif7jn" path="res://source/resources/PlayStateText.tres" id="5_shejs"]
 
 [node name="StarFeedBack" type="Control"]
 layout_mode = 3
@@ -34,6 +35,15 @@ offset_bottom = 256.0
 script = ExtResource("3_dnxp3")
 sprites = ExtResource("4_mmq15")
 
+[node name="ThresholdLabel" type="RichTextLabel" parent="StarA"]
+visible = false
+offset_left = 101.0
+offset_top = 102.0
+offset_right = 179.0
+offset_bottom = 152.0
+theme = ExtResource("5_shejs")
+text = "999"
+
 [node name="StarB" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
@@ -55,6 +65,15 @@ offset_bottom = 256.0
 script = ExtResource("3_dnxp3")
 sprites = ExtResource("4_mmq15")
 
+[node name="ThresholdLabel" type="RichTextLabel" parent="StarB"]
+visible = false
+offset_left = 101.0
+offset_top = 102.0
+offset_right = 179.0
+offset_bottom = 152.0
+theme = ExtResource("5_shejs")
+text = "999"
+
 [node name="StarC" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
@@ -75,6 +94,16 @@ offset_right = 256.0
 offset_bottom = 256.0
 script = ExtResource("3_dnxp3")
 sprites = ExtResource("4_mmq15")
+
+[node name="ThresholdLabel" type="RichTextLabel" parent="StarC"]
+visible = false
+layout_mode = 0
+offset_left = 101.0
+offset_top = 102.0
+offset_right = 179.0
+offset_bottom = 152.0
+theme = ExtResource("5_shejs")
+text = "999"
 
 [connection signal="animation_ended" from="StarA/Animate" to="." method="_on_animate_animation_ended"]
 [connection signal="animation_ended" from="StarB/Animate" to="." method="_on_animate_animation_ended"]

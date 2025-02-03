@@ -65,19 +65,21 @@ func _process(_delta: float) -> void:
 	run_score.text += str(Reg.RunningScore + Reg.Score)
 	if Reg.Replay: return
 	if Reg.Levels in Reg.HiScore:
-		$HiScore.text = "Hi Score\n" + str(Reg.HiScore[Reg.Levels])
+		$HiScore.text = "My HiScore\n" + str(Reg.HiScore[Reg.Levels])
+	else:
+		$HiScore.text = "My HiScore\n" + str(0)
 	
 	if Reg.Loss:
 		if return_button.visible:
 			# Code here will run just once after the Loss flag is set
-			pass
+			return
 		return_button.visible = false
 		retry_button.visible = false
 		next_button.visible = false
 		background.texture = BG_TEXTURE_LOSS
 		foreground.texture = FG_TEXTURE_LOSS
 		return
-	if !return_button.visible and !final_state:
+	if star_feed_back.started and !final_state:
 		if (.5 > animate_popup()):
 			final_state = true
 			if (Reg.HiScoreSet):
@@ -87,10 +89,13 @@ func _process(_delta: float) -> void:
 			else:
 				background.texture = load("res://assets/backgrounds/background-2.png")
 				foreground.texture = load("res://assets/backgrounds/foreground-2.png")
-	if final_state and star_feed_back.complete:
+	if star_feed_back.complete and final_state and !return_button.visible:
+		Reg.Sounds.level_done();
 		retry_button.visible = true
 		next_button.visible = true
 		return_button.visible = true
+	if board.board_finished and !retry_button.visible:
+		return_button.visible = false
 
 func animate_popup() -> float:
 	var delta = current_level.global_position.y
@@ -129,7 +134,6 @@ func _on_menu_button_pressed() -> void:
 
 
 func _on_retry_button_pressed() -> void:
-	Reg.RunningScore = 0;
 	Reg.Score = 0;
 	Reg.saveScore();
 	reload_current_scene()

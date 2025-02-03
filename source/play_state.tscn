@@ -125,20 +125,20 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -180.0
-offset_top = 418.0
-offset_right = -10.0
-offset_bottom = 508.0
+offset_left = -202.0
+offset_top = 430.0
+offset_right = -32.0
+offset_bottom = 520.0
 grow_horizontal = 0
 theme = ExtResource("8_56ptb")
 text = "Run Score
-0"
+99999"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="CurrentScore" type="Label" parent="Container"]
 layout_mode = 0
-offset_left = 160.0
+offset_left = 126.0
 offset_top = 515.0
 offset_right = 300.0
 offset_bottom = 605.0
@@ -159,8 +159,8 @@ offset_right = -40.0
 offset_bottom = 605.0
 grow_horizontal = 0
 theme = ExtResource("8_56ptb")
-text = "Hi Score
-0"
+text = "My HiScore
+99999"
 horizontal_alignment = 1
 vertical_alignment = 1
 
