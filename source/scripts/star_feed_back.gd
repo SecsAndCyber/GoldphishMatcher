@@ -51,7 +51,7 @@ func begin(level_stats:Dictionary = {}) -> void:
 	
 	get_tree().create_timer(star_1_delay).timeout.connect(func():
 		if star_1_delay:
-			Reg.Sounds.star_chime(1.25)
+			Reg.Sounds.star_chime(1.15)
 			Stars[0].get_node('Animate').play()
 		get_tree().create_timer(star_2_delay).timeout.connect(func():
 			if star_2_delay:
@@ -59,7 +59,7 @@ func begin(level_stats:Dictionary = {}) -> void:
 				Stars[1].get_node('Animate').play()
 			get_tree().create_timer(star_3_delay).timeout.connect(func():
 				if star_3_delay:
-					Reg.Sounds.star_chime(1)
+					Reg.Sounds.star_chime(2)
 					Stars[2].get_node('Animate').play()
 				else:
 					complete = true

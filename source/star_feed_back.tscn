@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://d1dm0gb8pvhv7"]
 
 [ext_resource type="Script" path="res://source/scripts/star_feed_back.gd" id="1_fnrup"]
-[ext_resource type="Texture2D" uid="uid://bjco2rnqecwas" path="res://assets/Animations/GoldStar/GoldStar_Spinning-37.png" id="2_gv562"]
+[ext_resource type="Texture2D" uid="uid://ci8c8itlyxnrv" path="res://assets/Animations/GoldStar/GoldStar_Spinning-37.png" id="2_gv562"]
 [ext_resource type="Texture2D" uid="uid://vr1xythqjch0" path="res://assets/GoldStar.png" id="2_x220b"]
 [ext_resource type="Script" path="res://source/scripts/AnimatedTextureRect.gd" id="3_dnxp3"]
 [ext_resource type="SpriteFrames" uid="uid://cq5rwd6oudppg" path="res://source/star_animation.tres" id="4_mmq15"]
