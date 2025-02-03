@@ -12,11 +12,13 @@ func _ready() -> void:
 	
 func set_up() -> void:
 	if get_parent().name == 'root':
+		add_child(Reg.Sounds)
 		self.scale = Vector2(Reg.UI_Scale, Reg.UI_Scale)
 		Reg.LastLevel = 1
-		Reg.Score = 75
+		Reg.Score = 241
 		call_deferred("begin", {"map_level":1,"least":9,"average":"79.5000","two_star":124.7217376441414,"maximum":225})
 	for s in Stars:
+		s.get_node('Star').visible = false
 		s.get_node('Star').modulate = Color(0,0,0)
 
 func begin(level_stats:Dictionary = {}) -> void:
@@ -49,14 +51,18 @@ func begin(level_stats:Dictionary = {}) -> void:
 	
 	get_tree().create_timer(star_1_delay).timeout.connect(func():
 		if star_1_delay:
+			Reg.Sounds.star_chime(1.25)
 			Stars[0].get_node('Animate').play()
 		get_tree().create_timer(star_2_delay).timeout.connect(func():
 			if star_2_delay:
+				Reg.Sounds.star_chime(1.5)
 				Stars[1].get_node('Animate').play()
 			get_tree().create_timer(star_3_delay).timeout.connect(func():
 				if star_3_delay:
+					Reg.Sounds.star_chime(1)
 					Stars[2].get_node('Animate').play()
-				complete = true
+				else:
+					complete = true
 			)
 		)
 	)
@@ -65,5 +71,8 @@ func begin(level_stats:Dictionary = {}) -> void:
 func _on_animate_animation_ended(animated_texture_rect: AnimatedTextureRect) -> void:
 	for s in Stars:
 		if animated_texture_rect == s.get_node('Animate'):
+			s.get_node('Star').visible = true
 			s.get_node('Star').modulate = Color.WHITE
 			animated_texture_rect.visible = false
+			if s == Stars[-1]:
+				complete = true

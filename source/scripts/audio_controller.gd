@@ -11,10 +11,14 @@ var col:AudioStream
 var points:AudioStream
 var lost:AudioStream
 var won:AudioStream
+var star:AudioStream
 var combo_1:AudioStream
 var combo_2:AudioStream
 var combo_3:AudioStream
 var combo_4:AudioStream
+var combo_5:AudioStream
+var combo_6:AudioStream
+var cleared:AudioStream
 
 var menu_open:AudioStream
 var menu_close:AudioStream
@@ -34,9 +38,13 @@ func _ready():
 	combo_2 = load("res://assets/Audio/combo_score_2.wav")
 	combo_3 = load("res://assets/Audio/combo_score_3.wav")
 	combo_4 = load("res://assets/Audio/combo_score_4.wav")
+	combo_5 = load("res://assets/Audio/combo_score_5.mp3")
+	combo_6 = load("res://assets/Audio/combo_score_6.mp3")
+	cleared = load("res://assets/Audio/combo_score_7.mp3")
 	menu_open = load("res://assets/Audio/menu_open.wav")
 	menu_close = load("res://assets/Audio/menu_close.wav")
 	reset = load("res://assets/Audio/reset.wav")
+	star = load("res://assets/Audio/star.mp3")
 	actions = [row, col, points, combo_1, combo_2, combo_3, combo_4, menu_open, menu_close]
 
 func click():
@@ -57,7 +65,7 @@ func row_shift():
 	if Reg.SfxMute:
 		return
 	audio_stream_player.stream = row
-	audio_stream_player.pitch_scale = randf_range(.997,1.003)
+	audio_stream_player.pitch_scale = randf_range(.992,1.008)
 	audio_stream_player.volume_db = Reg.SFXVolume
 	audio_stream_player.play()
 
@@ -65,7 +73,7 @@ func col_shift():
 	if Reg.SfxMute:
 		return
 	audio_stream_player.stream = col
-	audio_stream_player.pitch_scale = randf_range(.997,1.003)
+	audio_stream_player.pitch_scale = randf_range(.992,1.008)
 	audio_stream_player.volume_db = Reg.SFXVolume
 	audio_stream_player.play()
 
@@ -76,10 +84,25 @@ func level_won():
 	audio_stream_player.volume_db = Reg.SFXVolume
 	audio_stream_player.play()
 
+func level_cleared():
+	if Reg.SfxMute:
+		return
+	audio_stream_player.stream = cleared
+	audio_stream_player.volume_db = Reg.SFXVolume
+	audio_stream_player.play()
+
 func level_lost():
 	if Reg.SfxMute:
 		return
 	audio_stream_player.stream = lost
+	audio_stream_player.volume_db = Reg.SFXVolume
+	audio_stream_player.play()
+
+func star_chime(pitch_shift:float = 1.0):
+	if Reg.SfxMute:
+		return
+	audio_stream_player.pitch_scale = pitch_shift
+	audio_stream_player.stream = star
 	audio_stream_player.volume_db = Reg.SFXVolume
 	audio_stream_player.play()
 
@@ -106,8 +129,10 @@ func score(combo_count):
 		audio_stream_player.stream = combo_3
 	if combo_count == 5:
 		audio_stream_player.stream = combo_4
-	if combo_count >= 6:
-		audio_stream_player.stream = combo_4
+	if combo_count == 6:
+		audio_stream_player.stream = combo_5
+	if combo_count >= 7:
+		audio_stream_player.stream = combo_6
 	audio_stream_player.volume_db = Reg.SFXVolume
 	audio_stream_player.play()
 	

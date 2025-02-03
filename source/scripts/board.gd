@@ -353,6 +353,7 @@ func handle_match_state():
 		get_tree().create_timer(end_delay).timeout.connect(func():
 			if new_ys > 1 or new_xs > 1:
 				crackers.visible = false
+				Reg.Sounds.level_cleared()
 				selector.toast("[center]Cleared!\n+"+str(level_block_count));
 				score += level_block_count;
 				# Reassigning lambda capture does not modify the outer local variable "end_delay"
