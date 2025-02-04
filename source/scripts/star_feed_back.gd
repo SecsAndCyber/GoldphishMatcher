@@ -60,11 +60,11 @@ func begin(level_stats:Dictionary = {}) -> void:
 		if Reg.Score <= star_1_threshold:
 			star_1_delay = 0
 	Stars[0].get_node('ThresholdLabel').visible = true
-	Stars[0].get_node('ThresholdLabel').text = str(int(star_1_threshold))
+	Stars[0].get_node('ThresholdLabel').text = '[center]' + str(int(star_1_threshold))
 	Stars[1].get_node('ThresholdLabel').visible = true
-	Stars[1].get_node('ThresholdLabel').text = str(int(star_2_threshold))
+	Stars[1].get_node('ThresholdLabel').text = '[center]' + str(int(star_2_threshold))
 	Stars[2].get_node('ThresholdLabel').visible = true
-	Stars[2].get_node('ThresholdLabel').text = str(int(star_3_threshold))
+	Stars[2].get_node('ThresholdLabel').text = '[center]' + str(int(star_3_threshold))
 	
 	get_tree().create_timer(star_1_delay).timeout.connect(func():
 		if star_1_delay:

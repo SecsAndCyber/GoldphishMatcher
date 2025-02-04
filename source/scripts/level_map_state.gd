@@ -14,6 +14,9 @@ func _ready() -> void:
 	call_deferred("do_lms_setup")
 
 func do_lms_setup() -> void:
+	for li in level_islands.get_children():
+		level_islands.remove_child(li)
+		li.queue_free()
 	camera_2d.limit_top = 0
 	camera_2d.limit_bottom = 720*3
 	
@@ -31,6 +34,7 @@ func do_lms_setup() -> void:
 
 func _on_LevelIsland(level_button):
 	Reg.Levels = level_button.level_id
+	Reg.RunningScore = 0
 	Reg.saveScore();
 	change_scene_to_file("res://source/play_state.tscn")
 
@@ -44,3 +48,5 @@ func _process(_delta: float) -> void:
 		pass
 	else:
 		pass
+	if Input.is_action_just_pressed("ui_cancel"):
+		change_scene_to_file("res://source/menu_state.tscn")

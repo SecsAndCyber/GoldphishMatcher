@@ -68,6 +68,9 @@ func _process(_delta: float) -> void:
 		$HiScore.text = "My HiScore\n" + str(Reg.HiScore[Reg.Levels])
 	else:
 		$HiScore.text = "My HiScore\n" + str(0)
+	if Input.is_action_just_pressed("ui_cancel"):
+		if return_button.visible:
+			_on_menu_button_pressed()
 	
 	if Reg.Loss:
 		if return_button.visible:

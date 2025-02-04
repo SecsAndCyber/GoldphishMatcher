@@ -111,6 +111,21 @@ texture_normal = SubResource("AtlasTexture_mblkl")
 texture_hover = SubResource("AtlasTexture_q0jbl")
 stretch_mode = 3
 
+[node name="MapButton" type="TextureButton" parent="Container"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -57.0
+offset_top = 442.0
+offset_right = 241.0
+offset_bottom = 592.0
+grow_horizontal = 2
+scale = Vector2(0.45, 0.45)
+texture_normal = SubResource("AtlasTexture_mblkl")
+texture_hover = SubResource("AtlasTexture_q0jbl")
+stretch_mode = 3
+
 [node name="ExitButton" type="TextureButton" parent="Container"]
 layout_mode = 1
 anchors_preset = 8
@@ -119,9 +134,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -37.0
-offset_top = 129.0
+offset_top = 214.0
 offset_right = 261.0
-offset_bottom = 279.0
+offset_bottom = 364.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.333, 0.333)
@@ -130,10 +145,10 @@ texture_hover = SubResource("AtlasTexture_vjndw")
 
 [node name="ResetButton" type="TextureButton" parent="Container"]
 layout_mode = 0
-offset_left = 203.0
-offset_top = 427.0
-offset_right = 501.0
-offset_bottom = 577.0
+offset_left = 84.0
+offset_top = 574.0
+offset_right = 382.0
+offset_bottom = 724.0
 scale = Vector2(0.333, 0.333)
 texture_normal = SubResource("AtlasTexture_g86k6")
 texture_hover = SubResource("AtlasTexture_yvtt7")
@@ -146,10 +161,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -37.0
-offset_top = 189.0
-offset_right = 261.0
-offset_bottom = 339.0
+offset_left = 82.0
+offset_top = 214.0
+offset_right = 380.0
+offset_bottom = 364.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.333, 0.333)
@@ -186,6 +201,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [connection signal="pressed" from="Container/PlayButton" to="Container" method="_on_play_button_pressed"]
+[connection signal="pressed" from="Container/MapButton" to="Container" method="_on_map_button_pressed"]
 [connection signal="pressed" from="Container/ExitButton" to="Container" method="_on_exit_button_pressed"]
 [connection signal="pressed" from="Container/ResetButton" to="Container" method="_on_reset_button_pressed"]
 [connection signal="pressed" from="Container/AboutButton" to="Container" method="_on_about_button_pressed"]
