@@ -30,7 +30,6 @@ uuid="*res://addons/uuid/uuid.gd"
 
 window/size/viewport_width=480
 window/size/viewport_height=720
-window/size/resizable=false
 window/stretch/mode="viewport"
 window/handheld/orientation=1
 

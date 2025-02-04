@@ -142,22 +142,30 @@ static var LastMoves:Array:
 	set(val):
 		instance._last_moves = val
 
+var _level_stars:Dictionary = Dictionary()
+static var LevelStars:Dictionary:
+	get():
+		return instance._level_stars
+	set(val):
+		instance._level_stars = val
+
 static var fish_speed:float = 50.0 * UI_Scale;
 static var fish_location:Vector2 = Vector2.ZERO;
 
 var _save_path = "user://puzzler.state"
 static func saveScore():
 	var file = FileAccess.open(instance._save_path, FileAccess.WRITE)
-	# print("Save to ", str(file.get_path_absolute()))
+	print("Save to ", str(file.get_path_absolute()))
 	file.store_line(JSON.stringify({
 		'levels':instance._levels,
 		'runningscore':instance._runningscore,
 		'GameId':instance._gameId,
 		'HiScore':instance._hiscore,
 		'HiScoreMoves':instance._hiscore_moves,
+		'LevelStars':instance._level_stars,
 		'MusicMute':instance._music_mute,
 		'SfxMute':instance._sfx_mute,
-		'NetworkMute':instance._network_disable
+		'NetworkMute':instance._network_disable,
 	}))
 
 static func loadScore():
@@ -177,10 +185,12 @@ static func loadScore():
 			instance._runningscore=node_data['runningscore']
 			if node_data.get('GameId'):
 				instance._gameId=node_data['GameId']
-			for k in node_data['HiScore']:
+			for k in node_data.get('HiScore',{}):
 				instance._hiscore[int(k)]=node_data['HiScore'][k]
-			for k in node_data['HiScoreMoves']:
+			for k in node_data.get('HiScoreMoves',{}):
 				instance._hiscore_moves[int(k)]=node_data['HiScoreMoves'][k]
+			for k in node_data.get('LevelStars',{}):
+				instance._level_stars[int(k)]=node_data['LevelStars'][k]
 			if node_data.get('MusicMute'):
 				instance._music_mute=node_data['MusicMute']
 			if node_data.get('SfxMute'):
