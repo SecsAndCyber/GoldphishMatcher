@@ -14,6 +14,7 @@ config/name="Goldphish Match"
 config/description="A puzzle game where your goal is to clear each board by matching the rows and columns. Combo points are awarded for cascading successes. Try to beat your high school! Brought to you by fans of games like Yoshi Cookie and Dr Mario!"
 config/version="1.4.1"
 run/main_scene="res://source/menu_state.tscn"
+config/use_custom_user_dir=true
 config/features=PackedStringArray("4.3", "Mobile")
 boot_splash/show_image=false
 boot_splash/image="res://assets/Icon_512.png"

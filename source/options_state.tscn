@@ -147,7 +147,7 @@ offset_top = 91.0
 offset_right = 123.0
 offset_bottom = 133.0
 theme = ExtResource("2_ku5hh")
-text = "SFX🔊"
+text = "SFX"
 
 [node name="Copyright" type="Label" parent="Container"]
 layout_mode = 1

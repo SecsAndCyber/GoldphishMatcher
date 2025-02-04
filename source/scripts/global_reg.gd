@@ -148,6 +148,7 @@ static var fish_location:Vector2 = Vector2.ZERO;
 var _save_path = "user://puzzler.state"
 static func saveScore():
 	var file = FileAccess.open(instance._save_path, FileAccess.WRITE)
+	# print("Save to ", str(file.get_path_absolute()))
 	file.store_line(JSON.stringify({
 		'levels':instance._levels,
 		'runningscore':instance._runningscore,

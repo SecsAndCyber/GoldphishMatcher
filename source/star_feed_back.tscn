@@ -37,6 +37,7 @@ sprites = ExtResource("4_mmq15")
 
 [node name="ThresholdLabel" type="RichTextLabel" parent="StarA"]
 visible = false
+layout_mode = 0
 offset_left = 101.0
 offset_top = 102.0
 offset_right = 179.0
@@ -67,6 +68,7 @@ sprites = ExtResource("4_mmq15")
 
 [node name="ThresholdLabel" type="RichTextLabel" parent="StarB"]
 visible = false
+layout_mode = 0
 offset_left = 101.0
 offset_top = 102.0
 offset_right = 179.0
