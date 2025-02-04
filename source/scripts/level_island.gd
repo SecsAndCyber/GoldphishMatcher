@@ -3,14 +3,17 @@ class_name LevelIsland extends Button
 @onready var star_feed_back: Control = $StarFeedBack
 
 @export var level_id:int
+@export var score:int
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	text = str(level_id)
 	if not (Reg.HiScore.get(level_id, 0) or Reg.HiScore.get(level_id-1, 0)):
 		disabled = true
 		hi_score.text = ''
+		score = 0
 	else:
-		hi_score.text = str(Reg.HiScore.get(level_id, 0))
+		score = Reg.HiScore.get(level_id, 0)
+		hi_score.text = str(score)
 		
 
 

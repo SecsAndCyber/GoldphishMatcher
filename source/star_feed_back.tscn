@@ -14,17 +14,20 @@ offset_left = 23.0
 offset_top = 407.0
 offset_right = 450.0
 offset_bottom = 620.0
+mouse_filter = 2
 script = ExtResource("1_fnrup")
 
 [node name="StarA" type="Control" parent="."]
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+mouse_filter = 2
 
 [node name="Star" type="TextureRect" parent="StarA"]
 layout_mode = 0
 offset_right = 256.0
 offset_bottom = 256.0
+mouse_filter = 2
 texture = ExtResource("2_gv562")
 
 [node name="Animate" type="TextureRect" parent="StarA"]
@@ -32,6 +35,7 @@ z_index = 1
 layout_mode = 0
 offset_right = 256.0
 offset_bottom = 256.0
+mouse_filter = 2
 script = ExtResource("3_dnxp3")
 sprites = ExtResource("4_mmq15")
 
@@ -55,11 +59,13 @@ anchors_preset = 0
 offset_left = 256.0
 offset_right = 296.0
 offset_bottom = 40.0
+mouse_filter = 2
 
 [node name="Star" type="TextureRect" parent="StarB"]
 layout_mode = 0
 offset_right = 256.0
 offset_bottom = 256.0
+mouse_filter = 2
 texture = ExtResource("2_x220b")
 
 [node name="Animate" type="TextureRect" parent="StarB"]
@@ -67,6 +73,7 @@ z_index = 1
 layout_mode = 0
 offset_right = 256.0
 offset_bottom = 256.0
+mouse_filter = 2
 script = ExtResource("3_dnxp3")
 sprites = ExtResource("4_mmq15")
 
@@ -90,11 +97,13 @@ anchors_preset = 0
 offset_left = 512.0
 offset_right = 552.0
 offset_bottom = 40.0
+mouse_filter = 2
 
 [node name="Star" type="TextureRect" parent="StarC"]
 layout_mode = 0
 offset_right = 256.0
 offset_bottom = 256.0
+mouse_filter = 2
 texture = ExtResource("2_x220b")
 
 [node name="Animate" type="TextureRect" parent="StarC"]
@@ -102,6 +111,7 @@ z_index = 1
 layout_mode = 0
 offset_right = 256.0
 offset_bottom = 256.0
+mouse_filter = 2
 script = ExtResource("3_dnxp3")
 sprites = ExtResource("4_mmq15")
 
