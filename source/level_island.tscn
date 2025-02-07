@@ -7,7 +7,7 @@
 [node name="LevelIsland" type="Button"]
 offset_top = -1.0
 offset_right = 157.0
-offset_bottom = 64.0
+offset_bottom = 69.0
 theme = ExtResource("1_vi3uh")
 text = "99"
 alignment = 0
@@ -30,4 +30,3 @@ offset_top = 27.0
 offset_right = 785.0
 offset_bottom = 240.0
 scale = Vector2(0.16, 0.16)
-mouse_filter = 2

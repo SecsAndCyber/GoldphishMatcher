@@ -1,8 +1,9 @@
-[gd_scene load_steps=16 format=3 uid="uid://dqor7kln5ts76"]
+[gd_scene load_steps=19 format=3 uid="uid://dqor7kln5ts76"]
 
 [ext_resource type="Script" path="res://source/scripts/menu_state.gd" id="1_kgwti"]
 [ext_resource type="Texture2D" uid="uid://oimu8os7fkqs" path="res://assets/UI/Play_Button_Frames.png" id="2_nl4mn"]
 [ext_resource type="Texture2D" uid="uid://evnc6abvigs0" path="res://assets/UI/Exit_Button_Frames.png" id="3_cq476"]
+[ext_resource type="Texture2D" uid="uid://k4by1f4e4242" path="res://assets/UI/Level_Map_Button_Frames.png" id="3_ropc2"]
 [ext_resource type="Texture2D" uid="uid://crdqvf1tfac1d" path="res://assets/UI/Reset_Button_Frames.png" id="4_5pedo"]
 [ext_resource type="Texture2D" uid="uid://dsfh3vins26hq" path="res://assets/UI/About_Button_Frames.png" id="5_elpri"]
 
@@ -18,6 +19,14 @@ region = Rect2(0, 0, 298, 0)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_q0jbl"]
 atlas = ExtResource("2_nl4mn")
+region = Rect2(298, 0, 298, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h1tiv"]
+atlas = ExtResource("3_ropc2")
+region = Rect2(0, 0, 298, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3hspu"]
+atlas = ExtResource("3_ropc2")
 region = Rect2(298, 0, 298, 0)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_h3tl6"]
@@ -122,8 +131,8 @@ offset_right = 241.0
 offset_bottom = 592.0
 grow_horizontal = 2
 scale = Vector2(0.45, 0.45)
-texture_normal = SubResource("AtlasTexture_mblkl")
-texture_hover = SubResource("AtlasTexture_q0jbl")
+texture_normal = SubResource("AtlasTexture_h1tiv")
+texture_hover = SubResource("AtlasTexture_3hspu")
 stretch_mode = 3
 
 [node name="ExitButton" type="TextureButton" parent="Container"]

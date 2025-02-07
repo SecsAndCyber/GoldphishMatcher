@@ -1,5 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://rvq8pipeijon"]
+[gd_scene load_steps=6 format=3 uid="uid://rvq8pipeijon"]
 
+[ext_resource type="Script" path="res://source/scripts/level_map_camera.gd" id="1_2uajo"]
 [ext_resource type="Script" path="res://source/scripts/level_map_state.gd" id="1_uoqqy"]
 [ext_resource type="PackedScene" uid="uid://uyvmwyfyqof7" path="res://source/level_island.tscn" id="2_0q4c6"]
 
@@ -11,8 +12,10 @@ default_font_size = 30
 
 [node name="LevelMapState" type="Node2D"]
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("target_control")]
 anchor_mode = 0
+script = ExtResource("1_2uajo")
+target_control = NodePath("../Control")
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
@@ -46,6 +49,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Copyright" type="Label" parent="Control"]
+visible = false
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5

@@ -17,8 +17,6 @@ func do_lms_setup() -> void:
 	for li in level_islands.get_children():
 		level_islands.remove_child(li)
 		li.queue_free()
-	camera_2d.limit_top = 0
-	camera_2d.limit_bottom = 720*3
 	
 	var x_steps = [480/6, 480/3, 480/2, 2*480/3, 480/2, 480/3]
 	for level_id in range(1,31):
@@ -41,13 +39,29 @@ func _on_LevelIsland(level_button):
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	if Input.is_action_just_pressed("ui_text_scroll_up"):
-		camera_2d.move_local_y(scroll_speed)
-	elif Input.is_action_just_pressed("ui_text_scroll_down"):
-		camera_2d.move_local_y(-1.0 * scroll_speed)
+	if Input.is_action_pressed("ScrollMapUp") or Input.is_action_just_pressed("ScrollMapUp"):
+		camera_2d.move_y(-1.0 * scroll_speed)
+	elif Input.is_action_pressed("ScrollMapDown") or Input.is_action_just_pressed("ScrollMapDown"):
+		camera_2d.move_y(scroll_speed)
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 		pass
 	else:
 		pass
 	if Input.is_action_just_pressed("ui_cancel"):
 		change_scene_to_file("res://source/menu_state.tscn")
+
+var dragging: bool = false
+var last_mouse_position: Vector2
+
+func _input(event):
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT:
+			if event.pressed:
+				dragging = true
+				last_mouse_position = event.position
+			else:
+				dragging = false
+	elif event is InputEventMouseMotion and dragging:
+		var delta = event.position - last_mouse_position
+		camera_2d.move_y(-1.0 * delta.y)
+		last_mouse_position = event.position
