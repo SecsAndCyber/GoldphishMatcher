@@ -7,7 +7,10 @@ class_name LevelIsland extends Button
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	text = str(level_id)
-	if not (Reg.HiScore.get(level_id, 0) or Reg.HiScore.get(level_id-1, 0)):
+	if not (
+		Reg.HiScore.get(level_id, 0) or 
+		Reg.HiScore.get(level_id-1, 0)
+		or level_id == 1):
 		disabled = true
 		hi_score.text = ''
 		score = 0

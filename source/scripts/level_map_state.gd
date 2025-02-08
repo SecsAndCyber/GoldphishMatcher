@@ -43,10 +43,6 @@ func _process(_delta: float) -> void:
 		camera_2d.move_y(-1.0 * scroll_speed)
 	elif Input.is_action_pressed("ScrollMapDown") or Input.is_action_just_pressed("ScrollMapDown"):
 		camera_2d.move_y(scroll_speed)
-	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
-		pass
-	else:
-		pass
 	if Input.is_action_just_pressed("ui_cancel"):
 		change_scene_to_file("res://source/menu_state.tscn")
 
@@ -63,5 +59,9 @@ func _input(event):
 				dragging = false
 	elif event is InputEventMouseMotion and dragging:
 		var delta = event.position - last_mouse_position
+		if delta.y > 0:
+			delta.y = clamp(delta.y,2,15)
+		if delta.y < 0:
+			delta.y = clamp(delta.y,-15,-2)
 		camera_2d.move_y(-1.0 * delta.y)
 		last_mouse_position = event.position
