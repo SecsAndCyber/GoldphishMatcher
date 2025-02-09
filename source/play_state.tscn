@@ -69,9 +69,9 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -80.0
+offset_left = -200.0
 offset_top = 625.0
-offset_right = 218.0
+offset_right = 98.0
 offset_bottom = 775.0
 grow_horizontal = 2
 scale = Vector2(0.5, 0.5)
@@ -181,10 +181,11 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="StarFeedBack" parent="Container" instance=ExtResource("9_olsdx")]
-visible = false
-offset_right = 790.0
-offset_bottom = 677.0
-scale = Vector2(0.566, 0.566)
+offset_left = 242.0
+offset_top = 625.0
+offset_right = 1009.0
+offset_bottom = 895.0
+scale = Vector2(0.286, 0.286)
 
 [connection signal="pressed" from="Container/ReturnButton" to="Container" method="_on_menu_button_pressed"]
 [connection signal="pressed" from="Container/RetryButton" to="Container" method="_on_retry_button_pressed"]

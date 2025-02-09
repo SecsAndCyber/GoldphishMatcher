@@ -1,9 +1,9 @@
 extends PlayState
 class_name ReplayState
 
-@export var moves_to_replay = ["61", "A-1", "A-1", "61", "61", "A-1", "A-1", "61", "61", "A-1", "6-1", "B1", "61", "A1", "A1", "6-1", "B1", "B1", "61", "A1", "61", "6-1", "A1", "6-1", "6-1", "C1", "61", "B1", "6-1", "C1", "C1", "61", "61", "A1", "6-1", "6-1", "C1", "61", "B1", "B1", "6-1", "C1", "61", "61", "A1", "6-1", "6-1", "6-1", "D1", "6-1", "E-1", "6-1", "F1", "F-1", "F-1", "61", "61", "61", "61", "B-1", "B-1", "B-1", "B-1", "61", "G-1", "61", "G-1", "6-1", "6-1", "B-1", "6-1", "6-1", "6-1", "6-1", "F-1", "61", "61", "C1", "6-1", "61", "61", "C1", "6-1", "D1", "61", "D-1", "D-1", "6-1", "D1", "6-1", "E-1", "E-1", "61", "E-1", "6-1", "F1", "61", "F-1", "6-1", "F-1", "61", "F1", "6-1", "G-1", "6-1", "D-1", "D-1", "D-1", "6-1", "D-1", "6-1", "D-1", "6-1", "D-1", "D-1", "6-1", "6-1", "6-1", "F1", "61", "61", "F-1", "6-1", "G1", "G1", "G1", "61", "G1", "61", "G-1", "G-1", "G-1", "G-1", "61", "61", "61", "61", "C-1", "C-1", "6-1", "C1", "61", "61"]
+@export var moves_to_replay = ["41", "B1", "A-1", "41", "A1", "A1", "41", "41", "C1", "01", "C-1", "B-1", "0-1", "01", "D-1", "D-1", "01", "D1", "D1", "0-1", "E1", "01", "C-1", "01", "01", "E1", "E1", "E1", "0-1", "E-1", "E-1", "E-1", "01", "0-1", "E-1", "01", "C-1", "C-1", "C-1", "C-1", "0-1", "D-1", "01", "01"]
 var replay_array : Array
-var replay_level = 19
+var replay_level = 6
 
 var step_active: bool = false
 # Called when the node enters the scene tree for the first time.
@@ -14,8 +14,8 @@ func _ready() -> void:
 		Reg.Levels = replay_level
 	call_deferred("do_replay_setup")
 	if not 'root' == get_parent().get_parent().name:
-		retry_button.queue_free()
-		next_button.queue_free()
+		retry_button.visible = false
+		next_button.visible = false
 		current_level.visible = false
 		current_score.visible = false
 		run_score.visible = false

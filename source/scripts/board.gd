@@ -69,7 +69,7 @@ var score:int:
 	get:
 		return clampi(_score,0,0x999999)
 	
-func create(x_size, y_size):
+func create():
 	crackers.visible = true
 	for hl in highlights.get_children():
 		highlights.remove_child(hl)
@@ -89,9 +89,9 @@ func create(x_size, y_size):
 	score = 0
 	combo_score = 0
 	combo_count = 0
-	xs = x_size
-	ys = y_size
-	level_block_count = x_size * y_size
+	xs = int(size.x)
+	ys = int(size.y)
+	level_block_count = int(size.x * size.y)
 	rng = FlxRandom.new()
 	rng.init(Reg.Levels)
 	

@@ -11,6 +11,7 @@ class_name FailState
 @onready var hi_score: Label = $HiScore
 @onready var done_banner: Label = $DoneBanner
 @onready var best_run_score: Label = $BestRunScore
+@onready var star_feed_back: Control = $StarFeedBack
 
 var display_score:int = Reg.Score
 	
@@ -33,6 +34,10 @@ func do_failed_setup():
 		
 	if Reg.Levels in Reg.HiScore:
 		$HiScore.text = "Hi Score\n" + str(Reg.HiScore[Reg.Levels]);
+
+	star_feed_back.global_position = Vector2(242, 625)
+	star_feed_back.scale  = Vector2(0.286, 0.286)
+	star_feed_back.display(Reg.LevelStars.get(Reg.Levels, 0))
 	
 	var rs = Reg.RunningScore
 	Reg.Levels = 1

@@ -88,14 +88,13 @@ static var Level_Scale:float:
 			return 0.54
 		if LevelStep == 2:
 			return 0.444
-		if LevelStep == 3:
+		if LevelStep >= 3:
 			return 0.383
-		#return UI_Scale * clampf(2 - ((instance._levels / 5)/5.0), 1, 2);
 		return UI_Scale
 static var LevelStep:int:
 	get():
 		@warning_ignore("integer_division")
-		return int(instance._levels / 5)
+		return int((instance._levels % 1000) / 5)
 static var MusicVolume:float = .0125
 var _music_mute:bool = false
 static var MusicMute:bool:

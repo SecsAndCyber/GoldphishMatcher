@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dhh3gjlk1sdf8"]
+[gd_scene load_steps=13 format=3 uid="uid://dhh3gjlk1sdf8"]
 
 [ext_resource type="Script" path="res://source/scripts/failed_state.gd" id="1_aynwv"]
 [ext_resource type="Texture2D" uid="uid://cujg3js88g11v" path="res://assets/backgrounds/background-4.png" id="2_26f1s"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://bxvbt63obr7j1" path="res://assets/UI/Return_Button_Frames.png" id="5_ry7gx"]
 [ext_resource type="PackedScene" uid="uid://b2a53t6xtelye" path="res://source/replay_state.tscn" id="7_oxosu"]
 [ext_resource type="Theme" uid="uid://docpmippif7jn" path="res://source/resources/PlayStateText.tres" id="8_55qik"]
+[ext_resource type="PackedScene" uid="uid://d1dm0gb8pvhv7" path="res://source/star_feed_back.tscn" id="8_m78wp"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_t6qk5"]
 atlas = ExtResource("5_ry7gx")
@@ -176,6 +177,14 @@ theme = ExtResource("8_55qik")
 text = "Winner"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="StarFeedBack" parent="Container" instance=ExtResource("8_m78wp")]
+z_index = 9
+offset_left = 34.0
+offset_top = 567.0
+offset_right = 794.0
+offset_bottom = 810.0
+scale = Vector2(0.555, 0.555)
 
 [connection signal="pressed" from="Container/ReturnButton" to="Container" method="_on_menu_button_pressed"]
 [connection signal="pressed" from="Container/PlayButton" to="Container" method="_on_play_button_pressed"]

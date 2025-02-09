@@ -30,13 +30,17 @@ func do_setup():
 	Reg.HiScoreSet = false
 	Reg.Loss = false
 	final_state = false
+		
+	star_feed_back.global_position = Vector2(242, 625)
+	star_feed_back.scale  = Vector2(0.286, 0.286)
+	star_feed_back.display(Reg.LevelStars.get(Reg.Levels, 0))
 	
 	@warning_ignore("integer_division")
-	var rows:int = 4 + int(Reg.Levels / 5)
+	var rows:int = 4 + Reg.LevelStep
 	@warning_ignore("integer_division")
-	var columns:int = 4 + int(Reg.Levels / 5)
+	var columns:int = 4 + Reg.LevelStep
 	board.size = Vector2(rows, columns)
-	board.create(rows, columns)
+	board.create()
 	
 	retry_button.visible = false
 	next_button.visible = false
@@ -46,6 +50,8 @@ func do_setup():
 		$NextButton.texture_hover.atlas = load("res://assets/UI/FreePlay_Button_Frames.png")
 
 func popup(level_stats:Dictionary = {}):
+	star_feed_back.global_position = Vector2(23, 407)
+	star_feed_back.scale = Vector2(0.566,0.566)
 	star_feed_back.begin(level_stats)
 	if !Reg.Replay:
 		return_button.visible = false
@@ -73,7 +79,7 @@ func _process(_delta: float) -> void:
 			_on_menu_button_pressed()
 	
 	if Reg.Loss:
-		if return_button.visible:
+		if ! return_button.visible:
 			# Code here will run just once after the Loss flag is set
 			return
 		return_button.visible = false

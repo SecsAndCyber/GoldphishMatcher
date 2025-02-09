@@ -32,15 +32,18 @@ func display(star_count:int = 0) -> void:
 
 
 func begin(level_stats:Dictionary = {}) -> void:
+	for s in Stars:
+		s.get_node('Star').visible = true
+		s.get_node('Star').modulate = Color(0,0,0)
 	@warning_ignore("integer_division")
-	var rows:int = 4 + int(Reg.LastLevel / 5)
+	var rows:int = 4 + int((Reg.LastLevel % 1000) / 5)
 	var star_1_delay : float = .75
 	var star_2_delay : float = 1.5
 	var star_3_delay : float = 1.75
 	
 	var star_1_threshold : float = Reg.LastLevel * rows * 5
 	var star_2_threshold : float = star_1_threshold * 3
-	var star_3_threshold : float = star_2_threshold * 2
+	var star_3_threshold : float = star_2_threshold * 3
 	started = true
 	
 	if level_stats:
@@ -68,7 +71,7 @@ func begin(level_stats:Dictionary = {}) -> void:
 	
 	get_tree().create_timer(star_1_delay).timeout.connect(func():
 		if star_1_delay:
-			Reg.LevelStars[Reg.Levels]=1
+			Reg.LevelStars[Reg.Levels]=max(1, Reg.LevelStars.get(Reg.Levels, 0))
 			Reg.Sounds.star_chime(1.15)
 			Stars[0].get_node('ThresholdLabel').visible = false
 			Stars[0].get_node('Animate').play()
@@ -76,7 +79,7 @@ func begin(level_stats:Dictionary = {}) -> void:
 			Stars[0].get_node('Star').visible = true
 		get_tree().create_timer(star_2_delay).timeout.connect(func():
 			if star_2_delay:
-				Reg.LevelStars[Reg.Levels]=2
+				Reg.LevelStars[Reg.Levels]=max(2, Reg.LevelStars.get(Reg.Levels, 0))
 				Reg.Sounds.star_chime(1.5)
 				Stars[1].get_node('ThresholdLabel').visible = false
 				Stars[1].get_node('Animate').play()
@@ -84,7 +87,7 @@ func begin(level_stats:Dictionary = {}) -> void:
 				Stars[1].get_node('Star').visible = true
 			get_tree().create_timer(star_3_delay).timeout.connect(func():
 				if star_3_delay:
-					Reg.LevelStars[Reg.Levels]=3
+					Reg.LevelStars[Reg.Levels]=max(3, Reg.LevelStars.get(Reg.Levels, 0))
 					Reg.Sounds.star_chime(2)
 					Stars[2].get_node('ThresholdLabel').visible = false
 					Stars[2].get_node('Animate').play()
