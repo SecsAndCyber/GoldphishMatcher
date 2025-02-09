@@ -14,10 +14,6 @@ func do_setup():
 	game_id.text = Reg.GameId
 	music_mute.button_pressed = Reg.MusicMute
 	sfx_mute.button_pressed = Reg.SfxMute
-	if Reg.SfxMute:
-		$SfxContainer/SfxSettingsLabel.text = "SFX🔇"
-	else:
-		$SfxContainer/SfxSettingsLabel.text = "SFX🔊"
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -48,10 +44,6 @@ func _on_music_mute_toggled(toggled_on: bool) -> void:
 
 
 func _on_sfx_mute_toggled(toggled_on: bool) -> void:
-	if toggled_on:
-		$SfxContainer/SfxSettingsLabel.text = "SFX"
-	else:
-		$SfxContainer/SfxSettingsLabel.text = "SFX"
 	Reg.SfxMute = toggled_on
 	Reg.saveScore()
 
