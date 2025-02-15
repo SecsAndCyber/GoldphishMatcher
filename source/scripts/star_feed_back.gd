@@ -56,11 +56,11 @@ func begin(level_stats:Dictionary = {}) -> void:
 	visible = true
 	if Reg.Score:
 		print("%d : (%d,%d,%d)" % [Reg.Score, star_1_threshold, star_2_threshold, star_3_threshold])
-		if Reg.Score <= star_3_threshold:
+		if Reg.Score < star_3_threshold:
 			star_3_delay = 0
-		if Reg.Score <= star_2_threshold:
+		if Reg.Score < star_2_threshold:
 			star_2_delay = 0
-		if Reg.Score <= star_1_threshold:
+		if Reg.Score < star_1_threshold:
 			star_1_delay = 0
 	Stars[0].get_node('ThresholdLabel').visible = true
 	Stars[0].get_node('ThresholdLabel').text = '[center]' + str(int(star_1_threshold))

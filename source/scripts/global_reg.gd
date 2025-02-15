@@ -99,7 +99,6 @@ static var MusicVolume:float = .0125
 var _music_mute:bool = false
 static var MusicMute:bool:
 	get():
-		print("Music Muted:", str(instance._music_mute))
 		return instance._music_mute
 	set(val):
 		instance._music_mute = val
