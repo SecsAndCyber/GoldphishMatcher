@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://rvq8pipeijon"]
+[gd_scene load_steps=7 format=3 uid="uid://rvq8pipeijon"]
 
 [ext_resource type="Script" path="res://source/scripts/level_map_camera.gd" id="1_2uajo"]
 [ext_resource type="Script" path="res://source/scripts/level_map_state.gd" id="1_uoqqy"]
 [ext_resource type="PackedScene" uid="uid://uyvmwyfyqof7" path="res://source/level_island.tscn" id="2_0q4c6"]
+[ext_resource type="Texture2D" uid="uid://ci8c8itlyxnrv" path="res://assets/Animations/GoldStar/GoldStar_Spinning-37.png" id="3_u7dpb"]
 
 [sub_resource type="Theme" id="Theme_2wald"]
 default_font_size = 40
@@ -47,6 +48,22 @@ theme = SubResource("Theme_2wald")
 text = "Levels Map"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Stars" type="TextureRect" parent="Control/Title"]
+visible = false
+offset_left = 18.0
+offset_right = 274.0
+offset_bottom = 256.0
+scale = Vector2(0.333, 0.333)
+mouse_filter = 2
+texture = ExtResource("3_u7dpb")
+
+[node name="Star" type="TextureRect" parent="Control/Title/Stars"]
+offset_left = 1045.05
+offset_right = 1301.05
+offset_bottom = 256.0
+mouse_filter = 2
+texture = ExtResource("3_u7dpb")
 
 [node name="Copyright" type="Label" parent="Control"]
 visible = false

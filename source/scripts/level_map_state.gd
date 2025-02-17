@@ -3,6 +3,7 @@ class_name LevelMapState extends GameState
 @onready var camera_2d: Camera2D = $"../Camera2D"
 @onready var level_islands: Control = $LevelIslands
 @onready var LevelIslandFactory = preload("res://source/level_island.tscn")
+@onready var stars: TextureRect = $Title/Stars
 
 
 @export_range(.001, 1000, .01) var scroll_speed: float = 20.0
@@ -14,6 +15,7 @@ func _ready() -> void:
 	call_deferred("do_lms_setup")
 
 func do_lms_setup() -> void:
+	stars.visible = true
 	for li in level_islands.get_children():
 		level_islands.remove_child(li)
 		li.queue_free()
@@ -21,6 +23,7 @@ func do_lms_setup() -> void:
 	@warning_ignore("integer_division")
 	var x_steps = [480/6, 480/3, 480/2, 2*480/3, 480/2, 480/3]
 	for level_id in range(1,31):
+		stars.visible = stars.visible and Reg.LevelStars.get(level_id,0) == 3
 		var level_button = LevelIslandFactory.instantiate()
 		level_button.level_id = level_id
 		level_button.name = "LevelIsland_%d" % level_id
