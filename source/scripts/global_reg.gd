@@ -203,6 +203,10 @@ static func loadScore():
 static func clearSave():
 	Reg.Levels = 1
 	Reg.RunningScore = 0
-	Reg.HiScore = {0:0}
+	
+	for k in range(0,31):
+		Reg.HiScore[k] = 0
+		Reg.HiScoreMoves[k] = []
+		Reg.LevelStars[k] = 0
 	Reg.Score = 0
 	saveScore()

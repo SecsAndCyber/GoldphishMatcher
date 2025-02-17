@@ -1,6 +1,7 @@
 class_name LevelIsland extends Button
 @onready var hi_score: RichTextLabel = $HiScore
 @onready var star_feed_back: Control = $StarFeedBack
+@onready var rewatch_button: TextureButton = $RewatchButton
 
 @export var level_id:int
 @export var score:int
@@ -17,6 +18,8 @@ func _ready() -> void:
 	else:
 		score = Reg.HiScore.get(level_id, 0)
 		hi_score.text = str(score)
+	if !disabled and score:
+		rewatch_button.visible = true
 		
 
 
