@@ -18,7 +18,6 @@ func _ready() -> void:
 		next_button.visible = false
 		current_level.visible = false
 		current_score.visible = false
-		run_score.visible = false
 	
 func do_replay_setup():
 	if Reg.LastMoves:

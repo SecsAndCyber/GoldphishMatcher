@@ -44,7 +44,7 @@ func reset_game():
 	request(buildUrl('reset_game',{
 		'GameClient' : Reg.GameId,
 		'Level' : Reg.Levels,
-		'RunningScore' : Reg.RunningScore,
+		'RunningScore' : 0,
 	}))
 
 func reset_scores():

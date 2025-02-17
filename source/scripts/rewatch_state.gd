@@ -47,7 +47,6 @@ func _process(_delta: float) -> void:
 
 
 func _on_menu_button_pressed() -> void:
-	Reg.RunningScore = 0
 	Reg.Score = 0
 	Reg.saveScore()
 	Reg.Replay = false
@@ -56,7 +55,6 @@ func _on_menu_button_pressed() -> void:
 @onready var replay_state: ReplayState = $"../ReplayState/Container"
 
 func _on_play_button_pressed() -> void:
-	Reg.RunningScore = 0
 	Reg.Score = 0
 	Reg.saveScore()
 	Reg.Replay = false

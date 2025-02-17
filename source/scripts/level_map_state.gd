@@ -33,8 +33,6 @@ func do_lms_setup() -> void:
 
 func _on_LevelIsland(level_button):
 	Reg.Levels = level_button.level_id
-	if level_button.score:
-		Reg.RunningScore = 0
 	Reg.saveScore();
 	change_scene_to_file("res://source/play_state.tscn")
 

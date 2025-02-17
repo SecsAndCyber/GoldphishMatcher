@@ -377,8 +377,6 @@ func handle_match_state():
 							Reg.PS.popup()
 					)
 					# Moving to next level
-					if !Reg.Done && Reg.HiScore[0] < Reg.Score + Reg.RunningScore:
-						Reg.HiScore[0] = Reg.Score + Reg.RunningScore
 					if Reg.Levels in Reg.HiScore:
 						if Reg.HiScore[Reg.Levels] <= Reg.Score:
 							Reg.HiScoreSet = true

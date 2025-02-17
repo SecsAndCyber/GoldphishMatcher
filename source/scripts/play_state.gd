@@ -8,7 +8,6 @@ class_name PlayState
 @onready var background: TextureRect = $background
 @onready var foreground: TextureRect = $foreground
 @onready var current_level: Label = $CurrentLevel
-@onready var run_score: Label = $RunScore
 @onready var current_score: Label = $CurrentScore
 @onready var hi_score: Label = $HiScore
 @onready var done_banner: Label = $DoneBanner
@@ -23,7 +22,6 @@ func _ready() -> void:
 func do_setup():
 	# Do initialization here
 	if !Reg.Replay:
-		Reg.RunningScore += Reg.Score
 		Reg.saveScore()
 	Reg.PS = self
 	Reg.Score = 0
@@ -64,11 +62,6 @@ func popup(level_stats:Dictionary = {}):
 func _process(_delta: float) -> void:
 	$CurrentLevel.text = "Level\n" + str(Reg.Levels)
 	$CurrentScore.text = "Score\n" + str(Reg.Score)
-	if Reg.Done && Reg.Levels > 30:
-		run_score.text = "Free Score\n"
-	else:
-		run_score.text = "Run Score\n"
-	run_score.text += str(Reg.RunningScore + Reg.Score)
 	if Reg.Replay: return
 	if Reg.Levels in Reg.HiScore:
 		$HiScore.text = "My HiScore\n" + str(Reg.HiScore[Reg.Levels])
@@ -111,9 +104,6 @@ func animate_popup() -> float:
 	current_level.global_position.x = lerp(current_level.global_position.x, 40.0, .02);
 	current_level.global_position.y = lerp(current_level.global_position.y, 54.0, .02);
 
-	run_score.global_position.x = lerp(run_score.global_position.x, 185.0, .02);
-	run_score.global_position.y = lerp(run_score.global_position.y, 54.0, .02);
-
 	current_score.global_position.x = lerp(current_score.global_position.x, 40.0, .02);
 	current_score.global_position.y = lerp(current_score.global_position.y,150.0, .02);
 	
@@ -135,7 +125,6 @@ func animate_popup() -> float:
 
 func _on_menu_button_pressed() -> void:
 	if retry_button.visible:
-		Reg.RunningScore += Reg.Score
 		Reg.Levels += 1;
 	Reg.Score = 0;
 	Reg.saveScore();

@@ -35,13 +35,6 @@ static var Levels:int:
 		instance._levels = val
 	get:
 		return instance._levels
-		
-@export var _runningscore:int
-static var RunningScore:int:
-	set(val):
-		instance._runningscore = val
-	get:
-		return instance._runningscore
 
 @export var _score:int = 0;
 static var Score:int:
@@ -156,7 +149,6 @@ static func saveScore():
 	print("Save to ", str(file.get_path_absolute()))
 	file.store_line(JSON.stringify({
 		'levels':instance._levels,
-		'runningscore':instance._runningscore,
 		'GameId':instance._gameId,
 		'HiScore':instance._hiscore,
 		'HiScoreMoves':instance._hiscore_moves,
@@ -172,7 +164,6 @@ static func loadScore():
 	if fish_location == Vector2.ZERO:
 		fish_location = Vector2(20*Reg.UI_Scale, fish_speed*Reg.UI_Scale)
 	Reg.Levels = 1
-	Reg.RunningScore = 0
 	if file:
 		var json_string = file.get_line()
 		var json = JSON.new()
@@ -180,7 +171,6 @@ static func loadScore():
 		if parse_result == OK:
 			var node_data = json.data
 			instance._levels=node_data['levels']
-			instance._runningscore=node_data['runningscore']
 			if node_data.get('GameId'):
 				instance._gameId=node_data['GameId']
 			for k in node_data.get('HiScore',{}):
@@ -202,7 +192,6 @@ static func loadScore():
 
 static func clearSave():
 	Reg.Levels = 1
-	Reg.RunningScore = 0
 	
 	for k in range(0,31):
 		Reg.HiScore[k] = 0

@@ -193,22 +193,6 @@ text = "Level
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="RunScore" type="Label" parent="Container"]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -214.0
-offset_top = 246.0
-offset_right = -22.0
-offset_bottom = 333.0
-grow_horizontal = 0
-theme = SubResource("Theme_tl81p")
-text = "Run Score
-0"
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [connection signal="pressed" from="Container/PlayButton" to="Container" method="_on_play_button_pressed"]
 [connection signal="pressed" from="Container/MapButton" to="Container" method="_on_map_button_pressed"]
 [connection signal="pressed" from="Container/ExitButton" to="Container" method="_on_exit_button_pressed"]

@@ -17,10 +17,6 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	super._process(delta)
 	$CurrentLevel.text = "Level\n" + str(Reg.Levels)
-	if Reg.Done:
-		$RunScore.text = "Free Score\n" + str(Reg.RunningScore)
-	else:
-		$RunScore.text = "Run Score\n" + str(Reg.RunningScore)
 	if Input.is_action_just_pressed("ui_cancel"):
 		_on_exit_button_pressed()
 
@@ -36,7 +32,6 @@ func _on_exit_button_pressed() -> void:
 func _on_reset_button_pressed() -> void:
 	if reset_ready:
 		Reg.telemetryNode.reset_game()
-		Reg.RunningScore = 0;
 		Reg.Levels = 1;
 		Reg.saveScore();
 		Reg.Sounds.reset_stats();
