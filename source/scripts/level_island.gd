@@ -23,3 +23,8 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	star_feed_back.display(Reg.LevelStars.get(level_id, 0))
+
+
+func _on_texture_button_pressed() -> void:
+	Reg.LastLevel = level_id
+	Reg.Sounds.get_parent().change_scene_to_file("res://source/rewatch_state.tscn")

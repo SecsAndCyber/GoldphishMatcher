@@ -18,6 +18,7 @@ func do_lms_setup() -> void:
 		level_islands.remove_child(li)
 		li.queue_free()
 	
+	@warning_ignore("integer_division")
 	var x_steps = [480/6, 480/3, 480/2, 2*480/3, 480/2, 480/3]
 	for level_id in range(1,31):
 		var level_button = LevelIslandFactory.instantiate()
