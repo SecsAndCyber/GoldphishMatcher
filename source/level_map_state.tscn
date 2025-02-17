@@ -51,6 +51,7 @@ vertical_alignment = 1
 
 [node name="Stars" type="TextureRect" parent="Control/Title"]
 visible = false
+layout_mode = 0
 offset_left = 18.0
 offset_right = 274.0
 offset_bottom = 256.0
@@ -59,6 +60,7 @@ mouse_filter = 2
 texture = ExtResource("3_u7dpb")
 
 [node name="Star" type="TextureRect" parent="Control/Title/Stars"]
+layout_mode = 0
 offset_left = 1045.05
 offset_right = 1301.05
 offset_bottom = 256.0

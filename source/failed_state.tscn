@@ -59,10 +59,10 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -15.0
-offset_top = 215.0
-offset_right = 283.0
-offset_bottom = 365.0
+offset_left = -5.0
+offset_top = 496.0
+offset_right = 293.0
+offset_bottom = 646.0
 grow_horizontal = 2
 scale = Vector2(0.5, 0.5)
 texture_normal = SubResource("AtlasTexture_t6qk5")
@@ -77,10 +77,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -191.0
-offset_top = -145.0
-offset_right = 107.0
-offset_bottom = 5.0
+offset_left = -181.0
+offset_top = 136.0
+offset_right = 117.0
+offset_bottom = 286.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.5, 0.5)
@@ -88,57 +88,25 @@ texture_normal = SubResource("AtlasTexture_soy2p")
 texture_hover = SubResource("AtlasTexture_7il42")
 
 [node name="CurrentLevel" type="Label" parent="Container"]
+z_index = 10
 layout_mode = 0
-offset_left = 74.0
-offset_top = 37.0
-offset_right = 214.0
-offset_bottom = 127.0
+offset_left = 83.0
+offset_top = 399.0
+offset_right = 223.0
+offset_bottom = 489.0
 theme = ExtResource("8_55qik")
 text = "Level
 1"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="RunScore" type="Label" parent="Container"]
-z_index = 10
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -346.0
-offset_top = 538.0
-offset_right = -176.0
-offset_bottom = 628.0
-grow_horizontal = 0
-theme = ExtResource("8_55qik")
-text = "Run Score
-0"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="BestRunScore" type="Label" parent="Container"]
-z_index = 10
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -367.0
-offset_top = 412.0
-offset_right = -151.0
-offset_bottom = 502.0
-grow_horizontal = 0
-theme = ExtResource("8_55qik")
-text = "Best Run Score
-0"
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="CurrentScore" type="Label" parent="Container"]
+z_index = 10
 layout_mode = 0
-offset_left = 214.0
-offset_top = 37.0
-offset_right = 354.0
-offset_bottom = 127.0
+offset_left = 223.0
+offset_top = 399.0
+offset_right = 363.0
+offset_bottom = 489.0
 theme = ExtResource("8_55qik")
 text = "Score
 0"
