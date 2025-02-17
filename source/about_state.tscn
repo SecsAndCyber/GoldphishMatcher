@@ -68,8 +68,7 @@ offset_right = 235.0
 offset_bottom = 91.0
 grow_horizontal = 2
 theme = SubResource("Theme_wm1ng")
-text = "Best Run
-0"
+text = "Goldphish Match"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -148,21 +147,10 @@ offset_top = 113.0
 offset_right = 445.0
 offset_bottom = 545.0
 theme = SubResource("Theme_jtxkl")
-text = "1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15"
+text = "Built with Godot
+
+Written by 
+matthew@molyett.com"
 horizontal_alignment = 1
 vertical_alignment = 1
 

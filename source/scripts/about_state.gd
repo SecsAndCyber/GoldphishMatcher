@@ -16,24 +16,7 @@ func _process(delta: float) -> void:
 	super._process(delta)
 
 func draw_scores():
-	if !Reg.HiScore[0] and Reg.RunningScore:
-		title.text = "Best (Current) Run\n" + str(Reg.RunningScore)
-	else:
-		title.text = "Best Run\n" + str(Reg.HiScore[0])
-	hi_score.text = "";
-	for k in range(16):
-		if k > 0:
-			hi_score.text += "%2s :" % str(k);
-			print(Reg.HiScore)
-			if k in Reg.HiScore and Reg.HiScore[k] > 0:
-				hi_score.text += "%5s" % str(Reg.HiScore[k])
-			else:
-				hi_score.text += "%5s" % str("----")
-			if k+15 in Reg.HiScore:
-				hi_score.text += " |";
-				hi_score.text += "%3s :" % str(k+15)
-				hi_score.text += "%5s" % str(Reg.HiScore[k+15])
-			hi_score.text += "\n";
+	pass
 
 
 func _on_return_button_pressed() -> void:
