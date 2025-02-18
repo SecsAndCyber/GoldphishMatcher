@@ -36,6 +36,7 @@ func _process(delta: float) -> void:
 	
 	if !check_button.button_pressed: return
 	check_button.disabled = true
+	_process_clicker(delta)
 	
 	if(board.rebuilding): return
 	if(board.matching): return
@@ -63,12 +64,14 @@ func do_next_step(step_instruction):
 				board.selector.SelectionY = board.LETTERS.find(rc)
 				var source:Vector2i = Vector2i.ZERO
 				source = board.selector.selection
-				get_tree().create_timer(.05).timeout.connect(func():
+				move_clicker_to_selector(func():
+				# get_tree().create_timer(.05).timeout.connect(func():
 					board.selector.SelectionX = source.x - delta
 					board.selector.SelectionY = source.y
 					var target:Vector2i = Vector2i.ZERO
 					target = board.selector.selection
-					get_tree().create_timer(.05).timeout.connect(func():
+					move_clicker_to_selector(func():
+					# get_tree().create_timer(.05).timeout.connect(func():
 						board.swap_spots(source, target)
 						step_active = false
 					)
@@ -81,12 +84,14 @@ func do_next_step(step_instruction):
 				board.selector.SelectionY = 1
 				var source:Vector2i = Vector2i.ZERO
 				source= board.selector.selection
-				get_tree().create_timer(.025).timeout.connect(func():
+				move_clicker_to_selector(func():
+				#get_tree().create_timer(.025).timeout.connect(func():
 					board.selector.SelectionX = source.x
 					board.selector.SelectionY = source.y - delta
 					var target:Vector2i = Vector2i.ZERO
 					target = board.selector.selection
-					get_tree().create_timer(.025).timeout.connect(func():
+					move_clicker_to_selector(func():
+					# get_tree().create_timer(.025).timeout.connect(func():
 						board.swap_spots(source, target)
 						step_active = false
 					)
@@ -109,3 +114,42 @@ func popup(_level_stats:Dictionary = {}):
 func _on_check_button_toggled(toggled_on: bool) -> void:
 	do_replay_setup()
 	check_button.button_pressed = toggled_on
+	
+@onready var clicker: Control = $Clicker
+var clicker_dest: Vector2
+var clicker_callables = []
+var clicker_speed: float = 10
+var clicker_done: bool = true
+func _process_clicker(delta: float):
+	if clicker_done:
+		return
+	var clicker_delta = clicker_dest.distance_squared_to(clicker.global_position)
+	clicker.global_position.x = lerp(
+		clicker.global_position.x,
+		clicker_dest.x,
+		clicker_speed * delta
+	)
+	clicker.global_position.y = lerp(
+		clicker.global_position.y,
+		clicker_dest.y,
+		clicker_speed * delta
+	)
+	if clicker_delta < 1:
+		board.selector.visible = true
+		clicker_done = true
+		if clicker_callables:
+			var next = clicker_callables[0]
+			clicker_callables = clicker_callables.slice(1)
+			get_tree().create_timer(0).timeout.connect(next)
+func move_clicker_to_selector(callable:Callable):
+	clicker_dest = board.selector.target_position
+	board.selector.visible = false
+	clicker_callables.append(callable)
+	clicker_done = false
+	
+	
+	
+	
+	
+	
+	

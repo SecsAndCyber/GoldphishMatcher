@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://b2a53t6xtelye"]
+[gd_scene load_steps=17 format=3 uid="uid://b2a53t6xtelye"]
 
 [ext_resource type="Script" path="res://source/scripts/replay_state.gd" id="1_gjarw"]
 [ext_resource type="Texture2D" uid="uid://dve8vqj2hvbn0" path="res://assets/backgrounds/background-1.png" id="2_w1um8"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://bwlaom8gjjk4f" path="res://assets/UI/Next_Button_Frames.png" id="7_trif6"]
 [ext_resource type="Theme" uid="uid://docpmippif7jn" path="res://source/resources/PlayStateText.tres" id="8_l5b6s"]
 [ext_resource type="PackedScene" uid="uid://d1dm0gb8pvhv7" path="res://source/star_feed_back.tscn" id="9_iugh4"]
+[ext_resource type="Texture2D" uid="uid://dmdxre1kayvkv" path="res://assets/UI/clicker.png" id="10_8ie5r"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_t6qk5"]
 atlas = ExtResource("5_h01aw")
@@ -195,6 +196,25 @@ text = "Start Replay"
 
 [node name="StarFeedBack" parent="Container" instance=ExtResource("9_iugh4")]
 visible = false
+
+[node name="Clicker" type="Control" parent="Container"]
+anchors_preset = 0
+offset_left = 150.0
+offset_top = 436.0
+offset_right = 190.0
+offset_bottom = 476.0
+mouse_filter = 2
+
+[node name="ClickerImg" type="TextureRect" parent="Container/Clicker"]
+z_index = 10
+layout_mode = 0
+offset_left = -24.28
+offset_top = 7.7
+offset_right = 103.72
+offset_bottom = 135.7
+scale = Vector2(0.59, 0.59)
+mouse_filter = 2
+texture = ExtResource("10_8ie5r")
 
 [connection signal="pressed" from="Container/ReturnButton" to="Container" method="_on_menu_button_pressed"]
 [connection signal="pressed" from="Container/RetryButton" to="Container" method="_on_retry_button_pressed"]

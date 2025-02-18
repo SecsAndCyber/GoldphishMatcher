@@ -2,7 +2,8 @@ extends TextureRect
 class_name Selector
 
 @export var speed: float = 1.5
-var selection = Vector2i(0,0)
+var selection = Vector2i.ZERO
+var target_position = Vector2.ZERO
 
 @onready var toast_text: RichTextLabel = $"../toastText"
 var cleared: bool = true
@@ -14,6 +15,7 @@ var SelectionX:int:
 		if blocks and blocks[0]:
 			cleared = false
 			selection.x = (value + len(blocks)) % len(blocks)
+			target_position.x = blocks[selection.x][selection.y].global_position.x
 	get: return selection.x
 
 var SelectionY:int:
@@ -21,6 +23,7 @@ var SelectionY:int:
 		if blocks and blocks[0]:
 			cleared = false
 			selection.y = (value + len(blocks[0])) % len(blocks[0])
+			target_position.y = blocks[selection.x][selection.y].global_position.y
 	get: return selection.y
 
 func clear():
@@ -38,7 +41,7 @@ func toast(text:String):
 	toast_text.modulate = Color(256, 256, 256, 1)
 
 func _process(delta: float) -> void:
-	visible = !cleared and (!Reg.Loss and !toast_text.visible)
+	visible = !cleared and !Reg.Loss and !toast_text.visible
 	scale = Vector2(Reg.Level_Scale, Reg.Level_Scale)
 	if toast_text.visible:
 		toast_text.global_position.y = lerp(toast_text.global_position.y, toast_top, speed*delta)
