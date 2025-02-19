@@ -11,6 +11,9 @@ var FG_TEXTURE_HISCORE = preload("res://assets/backgrounds/foreground-3.png")
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	Reg.loadScore()
+	if !Reg.HiScore.get(0):
+		Reg.Levels = GameBoardLayout.LEVEL_CONST_TUTORIAL
+		Reg.saveScore()
 	call_deferred("do_gamestate_setup")
 	
 func change_scene_to_file(filename):

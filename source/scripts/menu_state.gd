@@ -3,11 +3,9 @@ extends UiState
 var reset_ready:bool;
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	if !Reg.HiScore.get(0):
-		Reg.Levels = GameBoardLayout.LEVEL_CONST_TUTORIAL
-		$MapButton.visible = false
-		Reg.saveScore()
 	super._ready()
+	if Reg.Levels == GameBoardLayout.LEVEL_CONST_TUTORIAL:
+		$MapButton.visible = false
 	Reg.Replay = false
 	reset_ready = false
 	
