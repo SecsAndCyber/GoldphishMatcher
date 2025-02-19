@@ -22,10 +22,15 @@ func _ready() -> void:
 	
 func do_ui_setup():
 	# Do initialization here
+	var fish_count
+	if GameBoardLayout.LEVEL_CONST_TUTORIAL == Reg.Levels:
+		fish_count = 25
+	else:
+		fish_count = Reg.Levels % 1000
 	fish = []
 	fish_rng = RandomNumberGenerator.new()
 	fish_rng.seed = Reg.Levels % 1000
-	for index in range(0, Reg.Levels % 1000):
+	for index in range(0, fish_count):
 		fish.append(TextureRect.new())
 		fish[index].texture = textures[index % len(textures)]
 		fish[index].scale = Vector2(Reg.UI_Scale, Reg.UI_Scale)
@@ -39,7 +44,7 @@ func do_ui_setup():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	for index in range(0, len(fish)):
-		fish[index].position.x += (Reg.fish_speed * Reg.Levels) * delta
+		fish[index].position.x += (Reg.fish_speed * len(fish)) * delta
 		fish[index].position.y = delta * (Reg.fish_speed + Reg.fish_speed * sin(deg_to_rad(Time.get_ticks_msec()))) * Reg.UI_Scale + index * Reg.fish_speed
 		
 		if fish[index].position.x > self.size.x:
