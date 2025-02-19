@@ -1,8 +1,6 @@
 extends Control
 class_name GameState
 
-@onready var reg:Reg = Reg.instance
-
 var BG_TEXTURE_NORMAL = preload("res://assets/backgrounds/background-1.png")
 var FG_TEXTURE_NORMAL = preload("res://assets/backgrounds/foreground-1.png")
 var BG_TEXTURE_LOSS = preload("res://assets/backgrounds/background-4.png")
@@ -41,4 +39,4 @@ func _input(event: InputEvent) -> void:
 		# Handle left mouse button click
 		print("Left mouse button clicked at:", event.position)
 		# Add your custom logic here
-		reg.Sounds.click()
+		Reg.Sounds.click()

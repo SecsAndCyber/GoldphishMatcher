@@ -36,6 +36,12 @@ static var Levels:int:
 	get:
 		return instance._levels
 
+static var PointsPerFish:int:
+	get:
+		if GameBoardLayout.LEVEL_CONST_TUTORIAL == instance._levels:
+			return 5
+		return 5 * instance._levels
+
 @export var _score:int = 0;
 static var Score:int:
 	set(val):
@@ -75,6 +81,9 @@ static var Done:bool = false;
 static var UI_Scale:float = .33333
 static var Level_Scale:float:
 	get():
+		if LevelStep == -1:
+			# Tutorial
+			return UI_Scale * 2
 		if LevelStep == 0:
 			return UI_Scale * 2
 		if LevelStep == 1:
@@ -86,6 +95,8 @@ static var Level_Scale:float:
 		return UI_Scale
 static var LevelStep:int:
 	get():
+		if instance._levels == GameBoardLayout.LEVEL_CONST_TUTORIAL:
+			return -1			
 		@warning_ignore("integer_division")
 		return int((instance._levels % 1000) / 5)
 static var MusicVolume:float = .0125

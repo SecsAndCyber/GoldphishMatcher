@@ -22,7 +22,7 @@ var rebuilding:bool = false
 var rebuild_speed:float = .25
 var moving:bool = false
 var moved:bool = false
-var rng:FlxRandom
+var rng:GameBoardLayout
 
 var new_blocks # :Array<Array<Cracker>>;
 var new_xs:int
@@ -31,7 +31,6 @@ var new_ys:int
 var combo_score:int
 var combo_count:int
 
-var points_per_fish:int = 5
 var cost_per_move:int = -1
 var end_only:bool = false
 
@@ -92,7 +91,7 @@ func create():
 	xs = int(size.x)
 	ys = int(size.y)
 	level_block_count = int(size.x * size.y)
-	rng = FlxRandom.new()
+	rng = GameBoardLayout.new()
 	rng.init(Reg.Levels)
 	
 	blocks = []
@@ -101,7 +100,7 @@ func create():
 		for c in range(ys):
 			blocks[r].append(null)
 			blocks[r][c] = PuzzleItem.new()
-			blocks[r][c].init(rng.Int(0, PuzzleItem.Max), r, c)
+			blocks[r][c].init(rng.next(), r, c)
 			blocks[r][c].clicked.connect(on_puzzle_item_click)
 			crackers.add_child(blocks[r][c])
 			blocks[r][c].position.x = r * blocks[r][c].size.x * blocks[r][c].scale.x
@@ -245,7 +244,7 @@ func is_match() -> bool:
 			map[1][i] = rows[i] == pow(blocks[0][i].Value, xs)
 		if(xs > 1 && map[1][i]):
 			if(i+1 != ys): end_only = false
-			points_gained += Reg.Levels * points_per_fish * mini_combo
+			points_gained += Reg.PointsPerFish * mini_combo
 			mini_combo += 1
 			
 	for i in range(xs):
@@ -253,7 +252,7 @@ func is_match() -> bool:
 			map[0][i] = columns[i] == pow(blocks[i][0].Value, ys);
 		if(ys > 1 && map[0][i]):
 			if(i+1 != xs): end_only = false
-			points_gained += Reg.Levels * points_per_fish * mini_combo
+			points_gained += Reg.PointsPerFish * mini_combo
 			mini_combo += 1
 	if(points_gained > 0):
 		combo_count += 1;
@@ -350,6 +349,7 @@ func handle_match_state():
 			moved = true
 		)
 	else:
+		selector.clear()
 		board_finished = true
 		# End of level
 		var end_delay:float = .5;

@@ -60,7 +60,6 @@ func popup(level_stats:Dictionary = {}):
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	$CurrentLevel.text = "Level\n" + str(Reg.Levels)
 	$CurrentScore.text = "Score\n" + str(Reg.Score)
 	if Reg.Replay: return
 	if Reg.Levels in Reg.HiScore:

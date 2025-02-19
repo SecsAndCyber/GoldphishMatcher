@@ -1,7 +1,6 @@
 extends Control # GameState
-class_name RewatchState
+class_name TutorialState
 
-@onready var replay_state: ReplayState = $"../ReplayState/Container"
 @onready var return_button: TextureButton = $ReturnButton
 @onready var play_button: TextureButton = $PlayButton
 @onready var background: TextureRect = $background
@@ -16,15 +15,13 @@ var display_score:int = Reg.Score
 	
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	# super._ready()
-	Reg.Levels = Reg.LastLevel
-	Reg.LastMoves = Reg.HiScoreMoves.get(Reg.LastLevel,[])
+	Reg.LastLevel = GameBoardLayout.LEVEL_CONST_TUTORIAL
+	Reg.LastMoves = ["B1","A-1"]
 	display_score = Reg.HiScore.get(Reg.LastLevel,0)
 	call_deferred("do_rewatch_setup")
 	
 func do_rewatch_setup():
 	# Do initialization here
-	replay_state.clicker.visible = true
 	Reg.HiScoreSet = false
 	$CurrentScore.text = "Score\n" + str(display_score);
 		
@@ -44,7 +41,7 @@ func do_rewatch_setup():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	pass
+	$CurrentScore.text = "Score\n" + str(Reg.Score);
 
 
 func _on_menu_button_pressed() -> void:
@@ -52,6 +49,8 @@ func _on_menu_button_pressed() -> void:
 	Reg.saveScore()
 	Reg.Replay = false
 	replay_state.change_scene_to_file("res://source/menu_state.tscn")
+
+@onready var replay_state: ReplayState = $"../ReplayState/Container"
 
 func _on_play_button_pressed() -> void:
 	Reg.Score = 0

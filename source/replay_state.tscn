@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://b2a53t6xtelye"]
+[gd_scene load_steps=18 format=3 uid="uid://b2a53t6xtelye"]
 
 [ext_resource type="Script" path="res://source/scripts/replay_state.gd" id="1_gjarw"]
 [ext_resource type="Texture2D" uid="uid://dve8vqj2hvbn0" path="res://assets/backgrounds/background-1.png" id="2_w1um8"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://bqxd4alrxfhtv" path="res://assets/UI/Retry_Button_Frames.png" id="6_51e74"]
 [ext_resource type="Texture2D" uid="uid://bwlaom8gjjk4f" path="res://assets/UI/Next_Button_Frames.png" id="7_trif6"]
 [ext_resource type="Theme" uid="uid://docpmippif7jn" path="res://source/resources/PlayStateText.tres" id="8_l5b6s"]
+[ext_resource type="PackedScene" uid="uid://bj7dqhr4hnyin" path="res://source/current_level.tscn" id="8_r2vlk"]
 [ext_resource type="PackedScene" uid="uid://d1dm0gb8pvhv7" path="res://source/star_feed_back.tscn" id="9_iugh4"]
 [ext_resource type="Texture2D" uid="uid://dmdxre1kayvkv" path="res://assets/UI/clicker.png" id="10_8ie5r"]
 
@@ -112,17 +113,12 @@ texture_normal = SubResource("AtlasTexture_ea68y")
 texture_hover = SubResource("AtlasTexture_txsv1")
 stretch_mode = 0
 
-[node name="CurrentLevel" type="Label" parent="Container"]
+[node name="CurrentLevel" parent="Container" instance=ExtResource("8_r2vlk")]
 layout_mode = 0
 offset_left = 20.0
 offset_top = 515.0
 offset_right = 160.0
 offset_bottom = 605.0
-theme = ExtResource("8_l5b6s")
-text = "Level
-1"
-horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="RunScore" type="Label" parent="Container"]
 visible = false
@@ -199,10 +195,10 @@ visible = false
 
 [node name="Clicker" type="Control" parent="Container"]
 anchors_preset = 0
-offset_left = 150.0
-offset_top = 436.0
-offset_right = 190.0
-offset_bottom = 476.0
+offset_left = 403.0
+offset_top = 345.0
+offset_right = 443.0
+offset_bottom = 385.0
 mouse_filter = 2
 
 [node name="ClickerImg" type="TextureRect" parent="Container/Clicker"]

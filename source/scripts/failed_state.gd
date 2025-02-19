@@ -21,7 +21,6 @@ func _ready() -> void:
 func do_failed_setup():
 	# Do initialization here
 	Reg.HiScoreSet = false
-	$CurrentLevel.text = "Level\n" + str(Reg.Levels);
 	$CurrentScore.text = "Score\n" + str(display_score);
 		
 	if Reg.Levels in Reg.HiScore:

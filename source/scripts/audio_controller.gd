@@ -148,7 +148,7 @@ func score(combo_count):
 	audio_stream_player.play()
 	
 func start_level():
-		if(Reg.LevelStep == 0):
+		if(Reg.LevelStep <= 0):
 			loading_level = load("res://assets/Audio/Background/UpbeatMelodic1.mp3");
 		elif(Reg.LevelStep == 1):
 			loading_level = load("res://assets/Audio/Background/UpbeatMelodic2.mp3");

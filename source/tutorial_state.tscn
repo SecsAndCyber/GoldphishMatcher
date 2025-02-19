@@ -1,41 +1,41 @@
-[gd_scene load_steps=14 format=3 uid="uid://0eod5ot6e5b8"]
+[gd_scene load_steps=14 format=3 uid="uid://culujvemfk34c"]
 
-[ext_resource type="PackedScene" uid="uid://b2a53t6xtelye" path="res://source/replay_state.tscn" id="1_mqri8"]
-[ext_resource type="Script" path="res://source/scripts/rewatch_state.gd" id="2_53kra"]
-[ext_resource type="Texture2D" uid="uid://dve8vqj2hvbn0" path="res://assets/backgrounds/background-1.png" id="3_6p24m"]
-[ext_resource type="Texture2D" uid="uid://drisw86hb5du7" path="res://assets/backgrounds/foreground-1.png" id="4_v7lwa"]
-[ext_resource type="Texture2D" uid="uid://bxvbt63obr7j1" path="res://assets/UI/Return_Button_Frames.png" id="5_v1dss"]
-[ext_resource type="Texture2D" uid="uid://oimu8os7fkqs" path="res://assets/UI/Play_Button_Frames.png" id="6_3bp42"]
-[ext_resource type="Theme" uid="uid://docpmippif7jn" path="res://source/resources/PlayStateText.tres" id="7_y5v6o"]
-[ext_resource type="Script" path="res://source/scripts/current_level.gd" id="8_0m1r1"]
-[ext_resource type="PackedScene" uid="uid://d1dm0gb8pvhv7" path="res://source/star_feed_back.tscn" id="8_oj00r"]
+[ext_resource type="PackedScene" uid="uid://b2a53t6xtelye" path="res://source/replay_state.tscn" id="1_c0xlc"]
+[ext_resource type="Script" path="res://source/scripts/tutorial_state.gd" id="2_gdflm"]
+[ext_resource type="Texture2D" uid="uid://dve8vqj2hvbn0" path="res://assets/backgrounds/background-1.png" id="3_uw468"]
+[ext_resource type="Texture2D" uid="uid://drisw86hb5du7" path="res://assets/backgrounds/foreground-1.png" id="4_mtxrk"]
+[ext_resource type="Texture2D" uid="uid://bxvbt63obr7j1" path="res://assets/UI/Return_Button_Frames.png" id="5_caxlh"]
+[ext_resource type="Texture2D" uid="uid://oimu8os7fkqs" path="res://assets/UI/Play_Button_Frames.png" id="6_55lwu"]
+[ext_resource type="Theme" uid="uid://docpmippif7jn" path="res://source/resources/PlayStateText.tres" id="7_f8drq"]
+[ext_resource type="Script" path="res://source/scripts/current_level.gd" id="8_08ing"]
+[ext_resource type="PackedScene" uid="uid://d1dm0gb8pvhv7" path="res://source/star_feed_back.tscn" id="8_cdjmi"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_t6qk5"]
-atlas = ExtResource("5_v1dss")
+atlas = ExtResource("5_caxlh")
 region = Rect2(0, 0, 298, 0)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dhwgr"]
-atlas = ExtResource("5_v1dss")
+atlas = ExtResource("5_caxlh")
 region = Rect2(298, 0, 298, 0)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_soy2p"]
-atlas = ExtResource("6_3bp42")
+atlas = ExtResource("6_55lwu")
 region = Rect2(0, 0, 298, 0)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7il42"]
-atlas = ExtResource("6_3bp42")
+atlas = ExtResource("6_55lwu")
 region = Rect2(298, 0, 298, 0)
 
-[node name="RewatchState" type="Node2D"]
+[node name="TutorialState" type="Node2D"]
 
-[node name="ReplayState" parent="." instance=ExtResource("1_mqri8")]
+[node name="ReplayState" parent="." instance=ExtResource("1_c0xlc")]
 
 [node name="Container" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 480.0
 offset_bottom = 720.0
-script = ExtResource("2_53kra")
+script = ExtResource("2_gdflm")
 
 [node name="background" type="TextureRect" parent="Container"]
 z_index = -1
@@ -43,7 +43,7 @@ layout_mode = 0
 offset_right = 480.0
 offset_bottom = 720.0
 scale = Vector2(0.3, 0.3)
-texture = ExtResource("3_6p24m")
+texture = ExtResource("3_uw468")
 
 [node name="foreground" type="TextureRect" parent="Container"]
 z_index = 7
@@ -52,9 +52,10 @@ offset_right = 1600.0
 offset_bottom = 2400.0
 scale = Vector2(0.3, 0.3)
 mouse_filter = 2
-texture = ExtResource("4_v7lwa")
+texture = ExtResource("4_mtxrk")
 
 [node name="ReturnButton" type="TextureButton" parent="Container"]
+visible = false
 z_index = 10
 layout_mode = 1
 anchors_preset = 5
@@ -71,6 +72,7 @@ texture_hover = SubResource("AtlasTexture_dhwgr")
 stretch_mode = 3
 
 [node name="PlayButton" type="TextureButton" parent="Container"]
+visible = false
 z_index = 10
 layout_mode = 1
 anchors_preset = 8
@@ -95,12 +97,12 @@ offset_left = 83.0
 offset_top = 399.0
 offset_right = 223.0
 offset_bottom = 489.0
-theme = ExtResource("7_y5v6o")
+theme = ExtResource("7_f8drq")
 text = "Level
 1"
 horizontal_alignment = 1
 vertical_alignment = 1
-script = ExtResource("8_0m1r1")
+script = ExtResource("8_08ing")
 
 [node name="CurrentScore" type="Label" parent="Container"]
 z_index = 10
@@ -109,7 +111,7 @@ offset_left = 223.0
 offset_top = 399.0
 offset_right = 363.0
 offset_bottom = 489.0
-theme = ExtResource("7_y5v6o")
+theme = ExtResource("7_f8drq")
 text = "Score
 0"
 horizontal_alignment = 1
@@ -126,7 +128,7 @@ offset_top = 37.0
 offset_right = -60.0
 offset_bottom = 127.0
 grow_horizontal = 0
-theme = ExtResource("7_y5v6o")
+theme = ExtResource("7_f8drq")
 text = "Hi Score
 0"
 horizontal_alignment = 1
@@ -143,12 +145,12 @@ offset_top = 309.0
 offset_right = -175.0
 offset_bottom = 396.0
 grow_horizontal = 0
-theme = ExtResource("7_y5v6o")
+theme = ExtResource("7_f8drq")
 text = "Winner"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="StarFeedBack" parent="Container" instance=ExtResource("8_oj00r")]
+[node name="StarFeedBack" parent="Container" instance=ExtResource("8_cdjmi")]
 z_index = 9
 offset_left = 34.0
 offset_top = 567.0

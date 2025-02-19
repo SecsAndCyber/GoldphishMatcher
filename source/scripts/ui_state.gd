@@ -24,8 +24,8 @@ func do_ui_setup():
 	# Do initialization here
 	fish = []
 	fish_rng = RandomNumberGenerator.new()
-	fish_rng.seed = Reg.Levels
-	for index in range(0, Reg.Levels):
+	fish_rng.seed = Reg.Levels % 1000
+	for index in range(0, Reg.Levels % 1000):
 		fish.append(TextureRect.new())
 		fish[index].texture = textures[index % len(textures)]
 		fish[index].scale = Vector2(Reg.UI_Scale, Reg.UI_Scale)
@@ -44,6 +44,7 @@ func _process(delta: float) -> void:
 		
 		if fish[index].position.x > self.size.x:
 			fish[index].position.x = -1 * fish[index].size.x - index * Reg.fish_speed;
-	Reg.fish_location.x = fish[0].position.x;
-	Reg.fish_location.y = fish[0].position.y;
+	if fish:
+		Reg.fish_location.x = fish[0].position.x;
+		Reg.fish_location.y = fish[0].position.y;
 	pass

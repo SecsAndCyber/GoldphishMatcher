@@ -28,9 +28,16 @@ var SelectionY:int:
 
 func clear():
 	cleared = true
-
+	visible = false
+	
+func reveal(location:Vector2i):
+	SelectionX=location.x
+	SelectionY=location.y
+	visible = true
 
 func toast(text:String):
+	if Reg.Levels == GameBoardLayout.LEVEL_CONST_TUTORIAL:
+		toast_text.scale = Vector2(.75,.75)
 	print("toast:", text, " ", Reg.PS.board)
 	toast_top = -1 * toast_text.get_content_height()
 	toast_text.text = text
@@ -41,7 +48,8 @@ func toast(text:String):
 	toast_text.modulate = Color(256, 256, 256, 1)
 
 func _process(delta: float) -> void:
-	visible = !cleared and !Reg.Loss and !toast_text.visible
+	if !Reg.Replay:
+		visible = !cleared and !Reg.Loss and !toast_text.visible
 	scale = Vector2(Reg.Level_Scale, Reg.Level_Scale)
 	if toast_text.visible:
 		toast_text.global_position.y = lerp(toast_text.global_position.y, toast_top, speed*delta)

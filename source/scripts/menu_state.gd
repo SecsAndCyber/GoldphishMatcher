@@ -6,6 +6,10 @@ func _ready() -> void:
 	super._ready()
 	Reg.Replay = false
 	reset_ready = false
+	if !Reg.HiScore.get(0):
+		Reg.Levels = GameBoardLayout.LEVEL_CONST_TUTORIAL
+		$MapButton.visible = false
+		Reg.saveScore()
 	
 	if OS.has_feature("web"):
 		$ExitButton.visible = false
@@ -16,13 +20,15 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	super._process(delta)
-	$CurrentLevel.text = "Level\n" + str(Reg.Levels)
 	if Input.is_action_just_pressed("ui_cancel"):
 		_on_exit_button_pressed()
 
 
 func _on_play_button_pressed() -> void:
-	change_scene_to_file("res://source/play_state.tscn")
+	if Reg.HiScore.get(0):
+		change_scene_to_file("res://source/play_state.tscn")
+	else:
+		change_scene_to_file("res://source/tutorial_state.tscn")
 
 
 func _on_exit_button_pressed() -> void:
