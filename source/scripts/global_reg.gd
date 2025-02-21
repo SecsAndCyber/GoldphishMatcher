@@ -90,15 +90,23 @@ static var Level_Scale:float:
 			return 0.54
 		if LevelStep == 2:
 			return 0.444
-		if LevelStep >= 3:
+		if LevelStep == 3:
 			return 0.383
+		if LevelStep == 4:
+			return 0.333
+		if LevelStep == 5:
+			return 0.300
+		if LevelStep == 6:
+			return 0.272
 		return UI_Scale
 static var LevelStep:int:
 	get():
 		if instance._levels == GameBoardLayout.LEVEL_CONST_TUTORIAL:
 			return -1			
 		@warning_ignore("integer_division")
-		return int((instance._levels % 1000) / 5)
+		return clampi(
+			int((instance._levels % 1000) / 5),
+			1,6)
 static var MusicVolume:float = .0125
 var _music_mute:bool = false
 static var MusicMute:bool:

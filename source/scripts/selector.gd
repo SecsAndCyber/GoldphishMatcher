@@ -15,6 +15,7 @@ var SelectionX:int:
 		if blocks and blocks[0]:
 			cleared = false
 			selection.x = (value + len(blocks)) % len(blocks)
+			selection.y = (selection.y + len(blocks[0])) % len(blocks[0])
 			target_position.x = blocks[selection.x][selection.y].global_position.x
 	get: return selection.x
 
@@ -22,6 +23,7 @@ var SelectionY:int:
 	set(value):
 		if blocks and blocks[0]:
 			cleared = false
+			selection.x = (selection.x + len(blocks)) % len(blocks)
 			selection.y = (value + len(blocks[0])) % len(blocks[0])
 			target_position.y = blocks[selection.x][selection.y].global_position.y
 	get: return selection.y
