@@ -11,5 +11,7 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if GameBoardLayout.LEVEL_CONST_TUTORIAL == Reg.Levels:
 		text = "First play\nTUTORIAL"
+	elif Reg.Levels / 1000:
+		text = "Challenge\n" + str(Reg.Levels % 1000)
 	else:
 		text = "Level\n" + str(Reg.Levels)

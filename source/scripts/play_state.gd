@@ -43,7 +43,7 @@ func do_setup():
 	retry_button.visible = false
 	next_button.visible = false
 	
-	if Reg.Levels >= 30:
+	if (Reg.Levels % 1000) >= 30:
 		$NextButton.texture_normal.atlas = load("res://assets/UI/FreePlay_Button_Frames.png")
 		$NextButton.texture_hover.atlas = load("res://assets/UI/FreePlay_Button_Frames.png")
 
@@ -55,7 +55,7 @@ func popup(level_stats:Dictionary = {}):
 		return_button.visible = false
 		retry_button.visible = false
 		next_button.visible = false
-		if Reg.Levels >= 30:
+		if (Reg.Levels % 1000) >= 30:
 			Reg.Done = true
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -100,7 +100,7 @@ func _process(_delta: float) -> void:
 
 func animate_popup() -> float:
 	var delta = current_level.global_position.y
-	current_level.global_position.x = lerp(current_level.global_position.x, 40.0, .02);
+	current_level.global_position.x = lerp(current_level.global_position.x, 75.0, .02);
 	current_level.global_position.y = lerp(current_level.global_position.y, 54.0, .02);
 
 	current_score.global_position.x = lerp(current_score.global_position.x, 40.0, .02);

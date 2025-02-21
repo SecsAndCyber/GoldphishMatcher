@@ -40,7 +40,7 @@ static var PointsPerFish:int:
 	get:
 		if GameBoardLayout.LEVEL_CONST_TUTORIAL == instance._levels:
 			return 5
-		return 5 * instance._levels
+		return 5 * (instance._levels % 1000)
 
 @export var _score:int = 0;
 static var Score:int:
@@ -199,7 +199,7 @@ static func loadScore():
 		
 			if not 0 in instance._hiscore:
 				instance._hiscore[0]=0
-	Reg.Done = Reg.Levels > 30
+	Reg.Done = (Reg.Levels % 1000) > 30
 
 static func clearSave():
 	Reg.Levels = 1

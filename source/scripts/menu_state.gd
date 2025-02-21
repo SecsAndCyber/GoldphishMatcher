@@ -52,3 +52,14 @@ func _on_about_button_pressed() -> void:
 
 func _on_map_button_pressed() -> void:
 	change_scene_to_file("res://source/level_map_state.tscn")
+
+
+func _on_texture_button_pressed() -> void:
+	var current_date_time = Time.get_datetime_dict_from_system()
+	var formatted_date = "%04d%02d%02d0001" % [
+		current_date_time["year"], current_date_time["month"], current_date_time["day"]
+		]
+
+	Reg.Levels = int(formatted_date)
+	Reg.saveScore()
+	change_scene_to_file("res://source/play_state.tscn")

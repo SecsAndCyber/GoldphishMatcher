@@ -17,6 +17,9 @@ func init(level : int):
 			board_list=[2,3,2,
 						3,2,1,
 						1,1,3]
+		else:
+			flx_rng = FlxRandom.new()
+			flx_rng.init(level / 1000 + level % 1000)
 	else:
 		flx_rng = FlxRandom.new()
 		flx_rng.init(level)

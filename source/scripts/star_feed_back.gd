@@ -41,17 +41,19 @@ func begin(level_stats:Dictionary = {}) -> void:
 	var star_2_delay : float = 1.5
 	var star_3_delay : float = 1.75
 	
-	var star_1_threshold : float = Reg.LastLevel * rows * 5
+	var star_1_threshold : float = (Reg.LastLevel % 1000) * rows * 5
 	var star_2_threshold : float = star_1_threshold * 3
-	var star_3_threshold : float = star_2_threshold * 3
+	var star_3_threshold : float = star_2_threshold * 2
 	started = true
 	
-	if level_stats:
+	if level_stats:		
 		if Reg.LastLevel == level_stats.get('map_level'):
 			if star_2_threshold >= float(level_stats.get('average', 0)):
 				star_2_threshold = float(level_stats.get('average'))
-			if level_stats.get('two_star'):
+			if float(level_stats.get('two_star',0)):
 				star_3_threshold = float(level_stats.get('two_star'))
+			if star_3_threshold >= float(level_stats.get('maximum',0)):
+				star_3_threshold = float(level_stats.get('maximum',0))
 			
 	visible = true
 	if Reg.Score:

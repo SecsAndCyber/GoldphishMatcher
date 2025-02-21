@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://dqor7kln5ts76"]
+[gd_scene load_steps=22 format=3 uid="uid://dqor7kln5ts76"]
 
 [ext_resource type="Script" path="res://source/scripts/menu_state.gd" id="1_kgwti"]
 [ext_resource type="Texture2D" uid="uid://oimu8os7fkqs" path="res://assets/UI/Play_Button_Frames.png" id="2_nl4mn"]
@@ -7,6 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://crdqvf1tfac1d" path="res://assets/UI/Reset_Button_Frames.png" id="4_5pedo"]
 [ext_resource type="Texture2D" uid="uid://dsfh3vins26hq" path="res://assets/UI/About_Button_Frames.png" id="5_elpri"]
 [ext_resource type="Script" path="res://source/scripts/current_level.gd" id="7_ip014"]
+[ext_resource type="Texture2D" uid="uid://khexxxnb6nl0" path="res://assets/UI/DailyChallenge_button.png" id="8_6fl30"]
+[ext_resource type="Texture2D" uid="uid://d1n6407bf7206" path="res://assets/UI/DailyChallenge_button_hover.png" id="9_h1x1t"]
 
 [sub_resource type="Theme" id="Theme_jtxkl"]
 default_font_size = 80
@@ -195,8 +197,18 @@ horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("7_ip014")
 
+[node name="TextureButton" type="TextureButton" parent="."]
+offset_left = 307.0
+offset_top = 206.0
+offset_right = 819.0
+offset_bottom = 718.0
+scale = Vector2(0.333, 0.333)
+texture_normal = ExtResource("8_6fl30")
+texture_hover = ExtResource("9_h1x1t")
+
 [connection signal="pressed" from="Container/PlayButton" to="Container" method="_on_play_button_pressed"]
 [connection signal="pressed" from="Container/MapButton" to="Container" method="_on_map_button_pressed"]
 [connection signal="pressed" from="Container/ExitButton" to="Container" method="_on_exit_button_pressed"]
 [connection signal="pressed" from="Container/ResetButton" to="Container" method="_on_reset_button_pressed"]
 [connection signal="pressed" from="Container/AboutButton" to="Container" method="_on_about_button_pressed"]
+[connection signal="pressed" from="TextureButton" to="Container" method="_on_texture_button_pressed"]
