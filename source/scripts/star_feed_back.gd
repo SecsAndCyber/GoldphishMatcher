@@ -46,7 +46,7 @@ func begin(level_stats:Dictionary = {}) -> void:
 	var star_3_threshold : float = star_2_threshold * 2
 	started = true
 	
-	if level_stats:		
+	if level_stats:
 		if Reg.LastLevel == level_stats.get('map_level'):
 			if star_2_threshold >= float(level_stats.get('average', 0)):
 				star_2_threshold = float(level_stats.get('average'))
@@ -54,7 +54,8 @@ func begin(level_stats:Dictionary = {}) -> void:
 				star_3_threshold = float(level_stats.get('two_star'))
 			if star_3_threshold >= float(level_stats.get('maximum',0)):
 				star_3_threshold = float(level_stats.get('maximum',0))
-			
+	if star_3_threshold == star_2_threshold:
+		star_2_threshold = (star_3_threshold + star_1_threshold) / 2
 	visible = true
 	if Reg.Score:
 		print("%d : (%d,%d,%d)" % [Reg.Score, star_1_threshold, star_2_threshold, star_3_threshold])

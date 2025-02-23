@@ -47,6 +47,7 @@ func do_setup():
 		$NextButton.texture_normal.atlas = load("res://assets/UI/FreePlay_Button_Frames.png")
 		$NextButton.texture_hover.atlas = load("res://assets/UI/FreePlay_Button_Frames.png")
 
+
 func popup(level_stats:Dictionary = {}):
 	star_feed_back.global_position = Vector2(23, 407)
 	star_feed_back.scale = Vector2(0.566,0.566)

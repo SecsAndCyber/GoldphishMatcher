@@ -102,11 +102,11 @@ static var Level_Scale:float:
 static var LevelStep:int:
 	get():
 		if instance._levels == GameBoardLayout.LEVEL_CONST_TUTORIAL:
-			return -1			
+			return -1
 		@warning_ignore("integer_division")
 		return clampi(
 			int((instance._levels % 1000) / 5),
-			1,6)
+			0,6)
 static var MusicVolume:float = .0125
 var _music_mute:bool = false
 static var MusicMute:bool:

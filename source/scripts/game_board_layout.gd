@@ -19,6 +19,7 @@ func init(level : int):
 						1,1,3]
 		else:
 			flx_rng = FlxRandom.new()
+			@warning_ignore("integer_division")
 			flx_rng.init(level / 1000 + level % 1000)
 	else:
 		flx_rng = FlxRandom.new()

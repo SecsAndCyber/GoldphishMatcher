@@ -68,7 +68,10 @@ var score:int:
 	get:
 		return clampi(_score,0,0x999999)
 	
+var setup_ready:bool = false
+
 func create():
+	setup_ready = false
 	crackers.visible = true
 	for hl in highlights.get_children():
 		highlights.remove_child(hl)
@@ -119,6 +122,7 @@ func create():
 		highlight_lines[1].append(line_obj)
 		highlights.add_child(line_obj)
 	ready_for_input = true
+	setup_ready = true
 
 func new_line(r,c,angle) -> Line2D:
 	var _nl = Line2D.new()
@@ -148,6 +152,7 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
+	if!setup_ready: return
 	if(closing): return
 	if (Reg.Loss):
 		closing = true;
