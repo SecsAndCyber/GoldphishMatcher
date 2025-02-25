@@ -159,6 +159,14 @@ static var LevelStars:Dictionary:
 	set(val):
 		instance._level_stars = val
 
+static var CurrentChallenge: int:
+	get():
+		var current_date_time = Time.get_datetime_dict_from_system()
+		var formatted_date = "%04d%02d%02d" % [
+			current_date_time["year"], current_date_time["month"], current_date_time["day"]
+			]
+		return int(formatted_date)
+
 static var fish_speed:float = 50.0 * UI_Scale;
 static var fish_location:Vector2 = Vector2.ZERO;
 

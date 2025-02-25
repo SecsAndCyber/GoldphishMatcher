@@ -14,6 +14,12 @@ func _ready() -> void:
 	if !Reg.HiScore.get(0):
 		Reg.Levels = GameBoardLayout.LEVEL_CONST_TUTORIAL
 		Reg.saveScore()
+	@warning_ignore("integer_division")
+	if Reg.Levels / 1000:
+		if not Reg.Levels == GameBoardLayout.LEVEL_CONST_TUTORIAL:
+			@warning_ignore("integer_division")
+			if not (Reg.Levels/1000) == Reg.CurrentChallenge:
+				Reg.Levels = 1 + Reg.CurrentChallenge*1000
 	call_deferred("do_gamestate_setup")
 	
 func change_scene_to_file(filename):
