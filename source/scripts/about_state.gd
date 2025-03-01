@@ -40,3 +40,7 @@ func _on_wipe_button_pressed() -> void:
 
 func _on_options_button_pressed() -> void:
 	change_scene_to_file("res://source/options_state.tscn")
+
+
+func _on_reddit_button_pressed() -> void:
+	OS.shell_open("https://www.reddit.com/r/goldphish_match/")

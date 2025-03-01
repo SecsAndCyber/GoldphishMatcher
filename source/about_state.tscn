@@ -1,9 +1,10 @@
-[gd_scene load_steps=14 format=3 uid="uid://cojapnf736xja"]
+[gd_scene load_steps=15 format=3 uid="uid://cojapnf736xja"]
 
 [ext_resource type="Script" path="res://source/scripts/about_state.gd" id="1_fjqwn"]
 [ext_resource type="Texture2D" uid="uid://bxvbt63obr7j1" path="res://assets/UI/Return_Button_Frames.png" id="2_f8byl"]
 [ext_resource type="Texture2D" uid="uid://daav7es8rx0iw" path="res://assets/UI/Options_Button_Frames.png" id="2_thorf"]
 [ext_resource type="Texture2D" uid="uid://bc78jplwr5vev" path="res://assets/UI/Wipe_Button_Frames.png" id="4_hvx2w"]
+[ext_resource type="Texture2D" uid="uid://dt4t0sg4tf8k1" path="res://assets/Social/Reddit_Icon_FullColor.svg" id="5_0y1jw"]
 
 [sub_resource type="Theme" id="Theme_wm1ng"]
 default_font_size = 40
@@ -150,10 +151,30 @@ theme = SubResource("Theme_jtxkl")
 text = "Built with Godot
 
 Written by 
-matthew@molyett.com"
+matthew@molyett.com
+
+Join the community at"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Reddit Icon" type="TextureRect" parent="Container"]
+layout_mode = 0
+offset_left = 66.0
+offset_top = 406.0
+offset_right = 134.0
+offset_bottom = 474.0
+texture = ExtResource("5_0y1jw")
+expand_mode = 1
+
+[node name="Reddit Button" type="Button" parent="Container/Reddit Icon"]
+layout_mode = 0
+offset_left = 97.0
+offset_top = 17.0
+offset_right = 256.0
+offset_bottom = 48.0
+text = "/r/goldphish_match"
 
 [connection signal="pressed" from="Container/ReturnButton" to="Container" method="_on_return_button_pressed"]
 [connection signal="pressed" from="Container/OptionsButton" to="Container" method="_on_options_button_pressed"]
 [connection signal="pressed" from="Container/WipeButton" to="Container" method="_on_wipe_button_pressed"]
+[connection signal="pressed" from="Container/Reddit Icon/Reddit Button" to="Container" method="_on_reddit_button_pressed"]
