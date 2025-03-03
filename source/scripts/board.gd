@@ -250,7 +250,7 @@ func is_match() -> bool:
 		if(xs > 1 && map[1][i]):
 			if(i+1 != ys): end_only = false
 			points_gained += Reg.PointsPerFish * mini_combo
-			mini_combo += 1
+			mini_combo += mini_combo
 			
 	for i in range(xs):
 		if(ys > 1 || sweep_up):
@@ -258,7 +258,7 @@ func is_match() -> bool:
 		if(ys > 1 && map[0][i]):
 			if(i+1 != xs): end_only = false
 			points_gained += Reg.PointsPerFish * mini_combo
-			mini_combo += 1
+			mini_combo += mini_combo
 	if(points_gained > 0):
 		combo_count += 1;
 		combo_score += points_gained * combo_count;
@@ -376,7 +376,10 @@ func handle_match_state():
 					Reg.telemetryNode.finish_level(moves, func(result, _response_code, _headers, body):
 						if result == HTTPRequest.RESULT_SUCCESS:
 							var json = JSON.parse_string(body.get_string_from_utf8())
-							Reg.PS.popup(json)
+							if json:
+								Reg.PS.popup(json)
+							else:
+								Reg.PS.popup()
 						else:
 							print("Request Error:", result)
 							Reg.PS.popup()
