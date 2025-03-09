@@ -18,9 +18,10 @@ func init(level : int):
 						3,2,1,
 						1,1,3]
 		else:
-			flx_rng = FlxRandom.new()
 			@warning_ignore("integer_division")
-			flx_rng.init(level / 1000 + level % 1000)
+			var level_code = str(level).md5_text().substr(0,16)
+			flx_rng = FlxRandom.new()			
+			flx_rng.init(level_code.hex_to_int())
 	else:
 		flx_rng = FlxRandom.new()
 		flx_rng.init(level)
