@@ -18,7 +18,6 @@ func init(level : int):
 						3,2,1,
 						1,1,3]
 		else:
-			@warning_ignore("integer_division")
 			var level_code = str(level).md5_text().substr(0,8)
 			flx_rng = FlxRandom.new()
 			flx_rng.init(level_code.hex_to_int())
