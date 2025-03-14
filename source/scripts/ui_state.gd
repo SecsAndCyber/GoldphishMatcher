@@ -3,7 +3,7 @@ class_name UiState
 
 static var textures:Array = [
 		load("res://assets/HappyGoldfishCookieSquare.png"),
-		load("res://assets/SadGoldfishCookieSquare.png"),
+		load("res://assets/SpringCookie.png"),
 		load("res://assets/HappyGoldfishCookieSquare.png"),
 		load("res://assets/EvilGoldfishCookieSquare.png"),
 		load("res://assets/HappyGoldfishCookieSquare.png"),
@@ -19,6 +19,8 @@ static var fish_rng:RandomNumberGenerator
 func _ready() -> void:
 	super._ready()
 	call_deferred("do_ui_setup")
+	if OS.has_feature("ios"):
+		textures[5] = load("res://assets/iGoldphishCookie.png")
 	
 func do_ui_setup():
 	# Do initialization here
