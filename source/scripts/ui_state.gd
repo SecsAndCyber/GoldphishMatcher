@@ -19,8 +19,6 @@ static var fish_rng:RandomNumberGenerator
 func _ready() -> void:
 	super._ready()
 	call_deferred("do_ui_setup")
-	if OS.has_feature("ios"):
-		textures[5] = load("res://assets/iGoldphishCookie.png")
 	
 func do_ui_setup():
 	# Do initialization here
