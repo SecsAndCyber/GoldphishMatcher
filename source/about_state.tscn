@@ -1,7 +1,8 @@
-[gd_scene load_steps=15 format=3 uid="uid://cojapnf736xja"]
+[gd_scene load_steps=16 format=3 uid="uid://cojapnf736xja"]
 
 [ext_resource type="Script" path="res://source/scripts/about_state.gd" id="1_fjqwn"]
 [ext_resource type="Texture2D" uid="uid://bxvbt63obr7j1" path="res://assets/UI/Return_Button_Frames.png" id="2_f8byl"]
+[ext_resource type="Texture2D" uid="uid://bk4uhwy37w0xb" path="res://assets/UI/seasonal/spring_flowers.png" id="2_rmh4t"]
 [ext_resource type="Texture2D" uid="uid://daav7es8rx0iw" path="res://assets/UI/Options_Button_Frames.png" id="2_thorf"]
 [ext_resource type="Texture2D" uid="uid://bc78jplwr5vev" path="res://assets/UI/Wipe_Button_Frames.png" id="4_hvx2w"]
 [ext_resource type="Texture2D" uid="uid://dt4t0sg4tf8k1" path="res://assets/Social/Reddit_Icon_FullColor.svg" id="5_0y1jw"]
@@ -53,6 +54,21 @@ layout_mode = 0
 offset_right = 480.0
 offset_bottom = 720.0
 color = Color(0, 0, 0, 1)
+
+[node name="Decorations" type="Control" parent="Container"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="SpringFlowers" type="TextureRect" parent="Container/Decorations"]
+z_as_relative = false
+layout_mode = 0
+offset_left = 228.0
+offset_top = 416.0
+offset_right = 484.0
+offset_bottom = 686.0
+texture = ExtResource("2_rmh4t")
 
 [node name="Fishes" type="Control" parent="Container"]
 anchors_preset = 0
