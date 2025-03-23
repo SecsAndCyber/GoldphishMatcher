@@ -152,6 +152,13 @@ static var LastMoves:Array:
 	set(val):
 		instance._last_moves = val
 
+var _expected_score:int = 0
+static var LastScore:int:
+	get():
+		return instance._expected_score
+	set(val):
+		instance._expected_score = val
+
 var _level_stars:Dictionary = Dictionary()
 static var LevelStars:Dictionary:
 	get():
@@ -173,7 +180,7 @@ static var fish_location:Vector2 = Vector2.ZERO;
 var _save_path = "user://puzzler.state"
 static func saveScore():
 	var file = FileAccess.open(instance._save_path, FileAccess.WRITE)
-	print("Save to ", str(file.get_path_absolute()))
+	# print("Save to ", str(file.get_path_absolute()))
 	file.store_line(JSON.stringify({
 		'levels':instance._levels,
 		'GameId':instance._gameId,

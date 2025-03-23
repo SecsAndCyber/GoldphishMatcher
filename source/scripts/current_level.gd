@@ -14,5 +14,7 @@ func _process(_delta: float) -> void:
 		@warning_ignore("integer_division")
 	elif Reg.Levels / 1000:
 		text = "Challenge\n" + str(Reg.Levels % 1000)
+		if Reg.LastScore:
+			text += "\n(" + str(Reg.Levels / 1000) + ")"
 	else:
 		text = "Level\n" + str(Reg.Levels)

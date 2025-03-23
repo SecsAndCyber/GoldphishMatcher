@@ -1,16 +1,30 @@
 extends PlayState
 class_name ReplayState
 
-@export var moves_to_replay = ["1-1", "0-1", "B1", "B1", "0-1", "01", "01", "B-1", "B1", "01", "A1", "01", "01", "B-1"]
+@onready var check_button: CheckButton = $CheckButton
+
+@export var moves_to_replay = []
+
 var replay_array : Array
-var replay_level = 4
+var replay_level = 1
 
 var step_active: bool = false
+var auto_stop: bool = false
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	super._ready()
-	if 'root' == get_parent().get_parent().name:
-		# Running Replay Scene directly!
+	if args:
+		print("# Running Replay Scene from command line!")
+
+		print("Reg.LastLevel ", Reg.LastLevel)
+		print("Reg.LastMoves ", Reg.LastMoves)
+		print("Reg.LastScore ", Reg.LastScore)
+		moves_to_replay =  Reg.LastMoves
+		replay_level = Reg.LastLevel
+		Reg.Levels = replay_level
+		auto_stop = true
+	elif 'root' == get_parent().get_parent().name:
+		print("# Running Replay Scene directly!")
 		Reg.Levels = replay_level
 	call_deferred("do_replay_setup")
 	if not 'root' == get_parent().get_parent().name:
@@ -34,6 +48,8 @@ func do_replay_setup():
 	background.texture = BG_TEXTURE_NORMAL
 	foreground.texture = FG_TEXTURE_NORMAL
 	Reg.PS = self
+	if auto_stop:
+		check_button.button_pressed = true
 	
 func _process(delta: float) -> void:
 	super._process(delta)
@@ -54,8 +70,8 @@ func _process(delta: float) -> void:
 	if replay_array:
 		do_next_step(replay_array[0])
 		replay_array = replay_array.slice(1)
-
-@onready var check_button: CheckButton = $CheckButton
+	else:
+		popup()
 		
 func do_next_step(step_instruction):
 	step_active = true
@@ -133,13 +149,18 @@ func popup(_level_stats:Dictionary = {}):
 		change_scene_to_file("res://source/play_state.tscn")
 		return
 		
-	get_tree().create_timer(4).timeout.connect(func():
-		# This delay is necessary for the texture swap to show up
-		check_button.button_pressed = false
-		check_button.disabled = false
-		super.do_setup()
-		_on_check_button_toggled(true)
-	)
+	if auto_stop:
+		get_tree().create_timer(1).timeout.connect(func():
+			get_tree().quit(99 if Reg.Score != Reg.LastScore else 0)
+		)
+	else:
+		get_tree().create_timer(4).timeout.connect(func():
+			# This delay is necessary for the texture swap to show up
+			check_button.button_pressed = false
+			check_button.disabled = false
+			super.do_setup()
+			_on_check_button_toggled(true)
+		)
 
 
 func _on_check_button_toggled(toggled_on: bool) -> void:
