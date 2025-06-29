@@ -1,5 +1,5 @@
 
-VERSION=${VERSION:="1.9.0"}
+VERSION=${VERSION:="1.9.1"}
 PROJECT="GoldphishMatcher"
 
 FULL_PATH_TO_SCRIPT="$(realpath "${BASH_SOURCE[0]}")"
