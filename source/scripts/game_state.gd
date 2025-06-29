@@ -11,15 +11,15 @@ var FG_TEXTURE_HISCORE = preload("res://assets/backgrounds/foreground-3.png")
 var args: Dictionary
 
 func args_dict(cmdline_args: Array) -> Dictionary:
-	var args: Dictionary = {}
+	var local_args: Dictionary = {}
 	# Remove current scene from the list of command line arguments
 	cmdline_args = cmdline_args.slice(1)
 	for arg in cmdline_args:
 		print(arg)
 		var key_value: Array = arg.split("=")
 		if len(key_value) == 2:
-			args[key_value[0]] = key_value[1]
-	return args
+			local_args[key_value[0]] = key_value[1]
+	return local_args
 
 func moves_from_cmd_string(moves: String) -> Array:
 	var moves_array: Array = []

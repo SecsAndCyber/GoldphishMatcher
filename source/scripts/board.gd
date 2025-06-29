@@ -39,6 +39,20 @@ var closing:bool = false
 var matching:bool = false
 var dragged:bool = false
 
+var valid_starting_board: bool:
+	get:
+		if (blocks == null or blocks.size() == 0):
+			return false
+		var distribution = {}
+		for r in range(xs):
+			for c in range(ys):
+				distribution[blocks[r][c].Value] = distribution.get(blocks[r][c].Value,0) + 1
+		for v in distribution:
+			if distribution[v] == 1:
+				return false
+		return true
+		
+
 var has_match:bool:
 	get:
 		if matching: return false
@@ -76,9 +90,6 @@ func create():
 	for hl in highlights.get_children():
 		highlights.remove_child(hl)
 		hl.queue_free()
-	for cr in crackers.get_children():
-		crackers.remove_child(cr)
-		cr.queue_free()
 	Reg.HiScoreSet = false
 	rebuilding = false
 	rebuild_speed = .25
@@ -97,17 +108,21 @@ func create():
 	rng = GameBoardLayout.new()
 	rng.init(Reg.Levels)
 	
-	blocks = []
-	for r in range(xs):
-		blocks.append([])
-		for c in range(ys):
-			blocks[r].append(null)
-			blocks[r][c] = PuzzleItem.new()
-			blocks[r][c].init(rng.next(), r, c)
-			blocks[r][c].clicked.connect(on_puzzle_item_click)
-			crackers.add_child(blocks[r][c])
-			blocks[r][c].position.x = r * blocks[r][c].size.x * blocks[r][c].scale.x
-			blocks[r][c].position.y = c * blocks[r][c].size.y * blocks[r][c].scale.x
+	while not valid_starting_board:
+		for cr in crackers.get_children():
+			crackers.remove_child(cr)
+			cr.queue_free()
+		blocks = []
+		for r in range(xs):
+			blocks.append([])
+			for c in range(ys):
+				blocks[r].append(null)
+				blocks[r][c] = PuzzleItem.new()
+				blocks[r][c].init(rng.next(), r, c)
+				blocks[r][c].clicked.connect(on_puzzle_item_click)
+				crackers.add_child(blocks[r][c])
+				blocks[r][c].position.x = r * blocks[r][c].size.x * blocks[r][c].scale.x
+				blocks[r][c].position.y = c * blocks[r][c].size.y * blocks[r][c].scale.x
 	offset = blocks[0][0].size * blocks[0][0].scale * .5
 	map = [[],[]]
 	highlight_lines = [[],[]]
