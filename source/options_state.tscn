@@ -41,6 +41,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="SpringFlowers" type="TextureRect" parent="Container/Decorations"]
+visible = false
 z_as_relative = false
 layout_mode = 0
 offset_left = 228.0

@@ -3,7 +3,7 @@ class_name UiState
 
 static var textures:Array = [
 		load("res://assets/HappyGoldfishCookieSquare.png"),
-		load("res://assets/SpringCookie.png"),
+		load("res://assets/SummerCookie.png"),
 		load("res://assets/HappyGoldfishCookieSquare.png"),
 		load("res://assets/EvilGoldfishCookieSquare.png"),
 		load("res://assets/HappyGoldfishCookieSquare.png"),
